@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,8 @@ import lombok.ToString;
 @ToString @EqualsAndHashCode
 public class TeacherModel {
     @Id
-    @GeneratedValue()
+    @GeneratedValue
+    @Column(name = "teacher_id")
     @Getter private Long id;
 
     @Column(name = "teacher_name")
