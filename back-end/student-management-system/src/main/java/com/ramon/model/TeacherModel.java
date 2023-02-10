@@ -15,7 +15,7 @@ import lombok.ToString;
 @Table(name = "teacher")
 @NoArgsConstructor
 @ToString @EqualsAndHashCode
-public class TeacherModel {
+public class TeacherModel extends ExpenseModel{
     @Id
     @GeneratedValue
     @Column(name = "teacher_id")
@@ -30,10 +30,14 @@ public class TeacherModel {
     @Column(name = "teacher_email")
     @Getter @Setter private String email;
 
-    public TeacherModel(String name, String cpf, String email) {
+    @Column(name = "teacher_salary")
+    @Getter @Setter private Double salary;
+
+    public TeacherModel(String name, String cpf, String email, Double salary) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
+        this.salary = salary;
     }
 
 }
