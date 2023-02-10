@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "student")
@@ -30,11 +32,16 @@ public class StudentModel {
     @Column(name = "student_email")
     @Getter @Setter private String email;
 
-    public StudentModel(String name, String cpf, String email) {
+    @ManyToOne
+    @JoinColumn(name = "responsable_id", nullable = false)
+    @Getter @Setter private ResponsableModel responsable;
+
+    public StudentModel(String name, String cpf, String email, ResponsableModel responsable) {
         this.id = GenerateId.id++;
         this.name = name;
         this.cpf = cpf;
         this.email = email;
+        this.responsable = responsable;
     }
 
 }

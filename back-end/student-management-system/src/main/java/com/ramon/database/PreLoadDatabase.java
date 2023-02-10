@@ -1,0 +1,60 @@
+package com.ramon.database;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import com.ramon.repository.*;
+import com.ramon.model.*;
+
+@Component
+public class PreLoadDatabase implements CommandLineRunner {
+
+    private static final Logger logger = LoggerFactory.getLogger(PreLoadDatabase.class);
+
+    private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
+    private final ResponsableRepository responsableRepository;
+
+    public PreLoadDatabase(StudentRepository studentRepository, TeacherRepository teacherRepository, ResponsableRepository responsableRepository) {
+        this.studentRepository = studentRepository;
+        this.teacherRepository = teacherRepository;
+        this.responsableRepository = responsableRepository;
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        studentRepository.deleteAll();
+        teacherRepository.deleteAll();
+        responsableRepository.deleteAll();
+
+        ResponsableModel responsable = new ResponsableModel("Ramon", "124", "email@ramon");
+        responsableRepository.save(responsable);
+
+        responsableRepository.findAll().forEach((respon) -> {
+            logger.info("{}", respon);
+        });
+
+        StudentModel student1 = new StudentModel("Carlos Eduardo", "12332145571", "cemg@ufal.com", responsableRepository.findById(1l).get());
+        studentRepository.save(student1);
+        StudentModel student2 = new StudentModel("José Dani", "11111111111", "djs@ufal.br", responsableRepository.findById(1l).get());
+        studentRepository.save(student2);
+
+        studentRepository.findAll().forEach((student) -> {
+            logger.info("{}", student.getResponsable().getName());
+        });
+
+        TeacherModel teacher1 = new TeacherModel("Paraquinho", "66661111111", "automato@ufal.br");
+        teacherRepository.save(teacher1);
+        teacherRepository.findAll().forEach((teacher) -> {
+            logger.info("{}", teacher);
+        });
+
+        //repository.save(new City("Bratislava", 432000));
+        //repository.save(new City("Budapest", 1759000));
+        //repository.save(new City("Prague", 1280000));
+
+        
+    }
+}
+
