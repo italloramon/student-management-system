@@ -1,6 +1,6 @@
 import { Navbar, Modal } from "../components";
 import { Title, Container } from "../styles";
-import { Button, Form as FormBootstrap } from "react-bootstrap";
+import { Button, Form as FormBootstrap, Table } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useData } from "../context";
 import { useForm } from "react-hook-form";
@@ -32,8 +32,6 @@ const Form = () => {
   } = useForm({ resolver: yupResolver(userSchema) });
 
   const onSubmit = (data) => console.log(data);
-
-
 
   return (
     <FormBootstrap onSubmit={handleSubmit(onSubmit)}>
@@ -95,13 +93,11 @@ export const Home = () => {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    console.log(getAll);
     const result = getAll();
-    console.log(result);
   }, []);
 
-  const { getAll } = useData();
-  
+  const { getAll, data } = useData();
+
   return (
     <>
       <Modal show={show} handleClose={handleClose} title="Adicionar aluno">
@@ -113,6 +109,30 @@ export const Home = () => {
         <Button variant="primary" type="submit" onClick={handleShow}>
           Adicionar
         </Button>
+        <Table striped bordered hover variant="dark" style={{ margin: '1em 0' }}>
+          <thead>
+            <tr>
+              <th>Matrícula</th>
+              <th>Nome</th>
+              <th>CPF</th>
+              <th>Email</th>
+              <th>Responsável</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data && data.map(item => {
+              return (
+                <tr key={item.id}>
+                  <th>{item.id}</th>
+                  <th>{item.name}</th>
+                  <th>{item.cpf}</th>
+                  <th>{item.email}</th>
+                  <th>{item.responsable.name}</th>
+                </tr>
+              )
+            })}
+          </tbody>
+        </Table>
       </Container>
     </>
   );

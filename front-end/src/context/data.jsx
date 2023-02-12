@@ -4,30 +4,21 @@ export const DataContext = createContext({});
 
 import { useFetch } from '../hooks';
 import { GET_ALL_STUDENTS, METHOD_GET } from '../utils';
+import api from '../services/api';
 
 export const DataProvider = ({ children }) => {
   const [data, setData] = useState(null);
   
-  const [config, setConfig] = useState({ 
-    url: '', 
-    method: ''
-  })
-
-  const response = useFetch(config.url, config.method);
-  
-  const getAll = () => {
-    setConfig({ 
-      url: GET_ALL_STUDENTS, 
-      method: METHOD_GET 
-    });
-
-    console.log(response);
+  const getAll = async() => {
+    const result = await api.get('/students/');
+    setData(result.data);
   }
 
   return (
     <DataContext.Provider
       value={{
-        getAll
+        getAll,
+        data
       }}
     >
       {children}
