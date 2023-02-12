@@ -40,9 +40,9 @@ public class ResponsableController {
     @PutMapping("responsables/{id}")
     public ResponsableModel updateResponsable(@RequestBody ResponsableModel newResponsable, @PathVariable Long id) {
         return this.responsableRepository.findById(id).map(responsable -> {
-            responsable.setName(newResponsable.getName());
-            responsable.setCpf(newResponsable.getCpf());
-            responsable.setEmail(newResponsable.getEmail());
+            responsable.setNameResponsable(newResponsable.getNameResponsable());
+            responsable.setCpfResponsable(newResponsable.getCpfResponsable());
+            responsable.setEmailResponsable(newResponsable.getEmailResponsable());
             return this.responsableRepository.save(responsable);
         }).orElseThrow(() -> new ResponsableNotFoundException(id));
     }

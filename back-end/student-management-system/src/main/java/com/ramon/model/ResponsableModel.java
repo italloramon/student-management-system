@@ -25,21 +25,21 @@ public class ResponsableModel {
     @Getter private Long id;
 
     @Column(name = "responsable_name")
-    @Getter @Setter private String name;
+    @Getter @Setter private String nameResponsable;
 
     @Column(name = "reponsable_cpf")
-    @Getter @Setter private String cpf;
+    @Getter @Setter private String cpfResponsable;
 
     @Column(name = "responsable_email")
-    @Getter @Setter private String email;
+    @Getter @Setter private String emailResponsable;
 
     @OneToMany(mappedBy="responsable")
     private List<StudentModel> students;
 
-    public ResponsableModel(String name, String cpf, String email) {
-        this.name = name;
-        this.cpf = cpf;
-        this.email = email;
+    public ResponsableModel(String nameResponsable, String cpfResponsable, String emailResponsable) {
+        this.nameResponsable = nameResponsable;
+        this.cpfResponsable = cpfResponsable;
+        this.emailResponsable = emailResponsable;
     }
 
 }

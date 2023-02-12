@@ -67,11 +67,16 @@ public class StudentController {
     //}
 
     @PostMapping("students/{idResponsable}")
-    public StudentModel createStudent(@RequestBody StudentModel student, @PathVariable Long idResponsable) {
-        ResponsableModel responsable = this.responsableRepository.findById(idResponsable).get();
-        String name = student.getName();
-        String email = student.getEmail();
-        String cpf = student.getEmail();
+    public StudentModel createStudent(@RequestBody Map<String, String> requestBody) {
+        String nameResponsable = requestBody.get("nameResponsable");
+        System.out.println(nameResponsable);
+        String emailResponsable = requestBody.get("emailResponsable");
+        String cpfResponsable = requestBody.get("cpfResponsable");
+        ResponsableModel newResponsable = new ResponsableModel(nameResponsable, emailResponsable, cpfResponsable);
+        responsableRepository.save(newResponsable);
+        String name = requestBody.get("name");
+        String email = requestBody.get("email");
+        String cpf = requestBody.get("cpf");
         English english = new English();
         this.englishRepository.save(english);
         Geography geography = new Geography();
@@ -82,7 +87,7 @@ public class StudentController {
         mathematicsRepository.save(mathematics);
         Portuguese portuguese = new Portuguese();
         portugueseRepository.save(portuguese);
-        StudentModel newStudent = new StudentModel(name, cpf, email, responsable, english, geography, history, mathematics, portuguese);
+        StudentModel newStudent = new StudentModel(name, cpf, email, newResponsable, english, geography, history, mathematics, portuguese);
         return this.studentRepository.save(newStudent);
     }
 
@@ -108,5 +113,13 @@ public class StudentController {
         english.setScore1(score);
         englishRepository.save(english);
     }
+
+    //@GetMapping("students/")
+    //public List<StudentModel> getRankingStudents() {
+    //    List<StudentModel> students = studentRepository.findAll();
+    //    for (StudentModel s: students) {
+
+    //    }
+    //}
 
 }

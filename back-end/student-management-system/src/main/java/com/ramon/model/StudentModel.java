@@ -83,4 +83,8 @@ public class StudentModel {
         //this.courses.add(new Portuguese());
     }
 
+    //public Double getRankingStudent() {
+    //    
+    //}
+
 }

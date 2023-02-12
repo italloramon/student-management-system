@@ -29,16 +29,16 @@ public class Geography {
     @Getter @Setter private Long id;
     
     @Column(name = "geography_score1")
-    @Getter @Setter private Double score1;
+    @Getter @Setter private Double score1 = 0.0;
 
     @Column(name = "geography_score2")
-    @Getter @Setter private Double score2;
+    @Getter @Setter private Double score2 = 0.0;
 
     @Column(name = "geography_score3")
-    @Getter @Setter private Double score3;
+    @Getter @Setter private Double score3 = 0.0;
 
     @Column(name = "geography_score4")
-    @Getter @Setter private Double score4;
+    @Getter @Setter private Double score4 = 0.0;
 
     @OneToMany(mappedBy = "geography")
     private List<StudentModel> students;

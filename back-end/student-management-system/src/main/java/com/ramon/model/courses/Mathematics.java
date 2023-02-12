@@ -29,16 +29,16 @@ public class Mathematics {
     @Getter @Setter private Long id;
     
     @Column(name = "mathematics_score1")
-    @Getter @Setter private Double score1;
+    @Getter @Setter private Double score1 = 0.0;
 
     @Column(name = "mathematics_score2")
-    @Getter @Setter private Double score2;
+    @Getter @Setter private Double score2 = 0.0;
 
     @Column(name = "mathematics_score3")
-    @Getter @Setter private Double score3;
+    @Getter @Setter private Double score3 = 0.0;
 
     @Column(name = "mathematics_score4")
-    @Getter @Setter private Double score4;
+    @Getter @Setter private Double score4 = 0.0;
 
     @OneToMany(mappedBy = "mathematics")
     private List<StudentModel> students;

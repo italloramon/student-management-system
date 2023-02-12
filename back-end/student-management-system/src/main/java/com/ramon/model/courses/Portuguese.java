@@ -29,16 +29,16 @@ public class Portuguese {
     @Getter @Setter private Long id;
     
     @Column(name = "portuguese_score1")
-    @Getter @Setter private Double score1;
+    @Getter @Setter private Double score1 = 0.0;
 
     @Column(name = "portuguese_score2")
-    @Getter @Setter private Double score2;
+    @Getter @Setter private Double score2 = 0.0;
 
     @Column(name = "portuguese_score3")
-    @Getter @Setter private Double score3;
+    @Getter @Setter private Double score3 = 0.0;
 
     @Column(name = "portuguese_score4")
-    @Getter @Setter private Double score4;
+    @Getter @Setter private Double score4 = 0.0;
 
     @OneToMany(mappedBy = "portuguese")
     private List<StudentModel> students;
