@@ -38,3 +38,11 @@ export const updateStudentSchema = yup.object({
     .required("Campo obrigatório."),
   email: yup.string().email("E-mail inválido").required("Campo obrigatório."),
 });
+
+export const loginSchema = yup.object({
+  email: yup.string().email("E-mail inválido").required("Campo obrigatório."),
+  password: yup
+    .string()
+    .max(30, "Limite máximo de 30 caracteres.")
+    .required("Campo obrigatório."),
+});

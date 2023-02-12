@@ -1,5 +1,5 @@
 import Form from "../components/StudentForm";
-import { Navbar, Modal } from "../components";
+import { Modal } from "../components";
 import { Title, Container } from "../styles";
 import { Button, Table } from "react-bootstrap";
 import { useState, useEffect } from "react";
@@ -10,6 +10,7 @@ export const StudentsPage = () => {
   const [show, setShow] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+
   const handleClose = () => {
     setShow(false);
     setIsUpdate(false);

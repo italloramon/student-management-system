@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { StudentsPage } from "./pages/Students";
 import SelectedStudent from "./pages/SelectedStudent";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import PageError from "./pages/404";
 const Router = () => {
   return (

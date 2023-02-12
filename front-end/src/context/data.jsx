@@ -34,13 +34,12 @@ export const DataProvider = ({ children }) => {
 
   const updateStudent = async (data) => {
     const params = {
-      id: data.id,
       email: data.email,
       cpf: data.cpf,
       name: data.name,
     };
     console.log(params);
-    const response = await api.put("/students/", params);
+    const response = await api.put(`/students/${data.id}`, params);
     console.log(response);
   };
 
