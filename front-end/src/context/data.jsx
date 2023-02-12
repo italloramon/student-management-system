@@ -7,12 +7,6 @@ import { GET_ALL_STUDENTS, METHOD_GET } from "../utils";
 import api from "../services/api";
 
 export const DataProvider = ({ children }) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
   const [data, setData] = useState(null);
 
   const getAll = async () => {
@@ -20,15 +14,37 @@ export const DataProvider = ({ children }) => {
     setData(result.data);
   };
 
-  const addStudent = async () => {
-    await api.post("/students/");
+  const addStudent = async (data) => {
+    const params = {
+      email: data.email,
+      cpf: data.cpf,
+      name: data.name,
+      nameResponsable: data.responsable,
+      cpfResponsable: data.cpfResponsable,
+      emailResponsable: data.emailResponsable,
+    };
+    const response = await api.post("/students/", params);
+    console.log(response);
   };
+
+  const removeStudent = async (id) => {
+    const params = {
+      id: id,
+    };
+    console.log(params);
+    const response = await api.delete(`/students/${id}`);
+    console.log(response);
+  };
+
+  useEffect(() => getAll, [addStudent, removeStudent]);
 
   return (
     <DataContext.Provider
       value={{
         getAll,
         data,
+        addStudent,
+        removeStudent,
       }}
     >
       {children}
