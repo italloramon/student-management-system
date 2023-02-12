@@ -77,6 +77,11 @@ public class StudentController {
         String name = requestBody.get("name");
         String email = requestBody.get("email");
         String cpf = requestBody.get("cpf");
+
+        if (studentRepository.existsByCpf(cpf)) {
+            throw new StudentAlreadyCreatedException(cpf);
+        }
+
         English english = new English();
         this.englishRepository.save(english);
         Geography geography = new Geography();
