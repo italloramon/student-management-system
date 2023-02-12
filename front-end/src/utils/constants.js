@@ -1,0 +1,1 @@
+export const GET_ALL_STUDENTS = 'http://localhost:8080/api/students/';
