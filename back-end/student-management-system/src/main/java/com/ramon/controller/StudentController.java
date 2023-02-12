@@ -66,7 +66,7 @@ public class StudentController {
     //    return test;
     //}
 
-    @PostMapping("students/{idResponsable}")
+    @PostMapping("students/")
     public StudentModel createStudent(@RequestBody Map<String, String> requestBody) {
         String nameResponsable = requestBody.get("nameResponsable");
         System.out.println(nameResponsable);
