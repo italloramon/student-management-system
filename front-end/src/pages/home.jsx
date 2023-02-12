@@ -33,13 +33,7 @@ const Form = () => {
 
   const onSubmit = (data) => console.log(data);
 
-  const { getAll } = useData();
 
-  useEffect(() => {
-    console.log(getAll);
-    const result = getAll();
-    console.log(result);
-  }, []);
 
   return (
     <FormBootstrap onSubmit={handleSubmit(onSubmit)}>
@@ -100,6 +94,14 @@ export const Home = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  useEffect(() => {
+    console.log(getAll);
+    const result = getAll();
+    console.log(result);
+  }, []);
+
+  const { getAll } = useData();
+  
   return (
     <>
       <Modal show={show} handleClose={handleClose} title="Adicionar aluno">
