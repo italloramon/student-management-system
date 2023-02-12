@@ -16,12 +16,12 @@ export const Navbar = () => {
       style={{ padding: "1em 2.5em", justifyContent: "space-beetwenn" }}
     >
       <Container>
-        <NavbarBootstrap.Brand href="#home">Escola</NavbarBootstrap.Brand>
+        <NavbarBootstrap.Brand href="/">HOME</NavbarBootstrap.Brand>
         <NavbarBootstrap.Toggle aria-controls="basic-NavbarBootstrap-nav" />
         <NavbarBootstrap.Collapse id="basic-NavbarBootstrap-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+            <Nav.Link href="/students">Students</Nav.Link>
+            <Nav.Link href="#link">Teachers</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">

@@ -1,9 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-
 export const DataContext = createContext({});
-
-import { useFetch } from "../hooks";
-import { GET_ALL_STUDENTS, METHOD_GET } from "../utils";
 import api from "../services/api";
 
 export const DataProvider = ({ children }) => {
