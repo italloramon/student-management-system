@@ -6,6 +6,7 @@ import { useData } from "../context";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import api from "../services/api";
 
 const userSchema = yup.object({
   name: yup
@@ -17,7 +18,17 @@ const userSchema = yup.object({
     .max(11, "CPF inválido.")
     .min(11, "CPF inválido.")
     .required("Campo obrigatório."),
-  responsavel: yup
+  email: yup.string().email("E-mail inválido").required("Campo obrigatório."),
+  emailResponsable: yup
+    .string()
+    .email("E-mail inválido")
+    .required("Campo obrigatório."),
+  cpfResponsable: yup
+    .string()
+    .max(11, "CPF inválido.")
+    .min(11, "CPF inválido.")
+    .required("Campo obrigatório."),
+  responsable: yup
     .string()
     .max(30, "Limite máximo de 30 caracteres.")
     .required("Campo obrigatório."),
@@ -31,21 +42,21 @@ const Form = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(userSchema) });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    const params = {
+      email: data.email,
+      cpf: data.cpf,
+      name: data.name,
+      nameResponsable: data.responsable,
+      cpfResponsable: data.cpfResponsable,
+      emailResponsable: data.emailResponsable,
+    };
+
+    const response = await api.post("/students/", params);
+  };
 
   return (
     <FormBootstrap onSubmit={handleSubmit(onSubmit)}>
-      <FormBootstrap.Group className="mb-3" controlId="FormBootstrapBasicEmail">
-        <FormBootstrap.Label>Tipo</FormBootstrap.Label>
-        <FormBootstrap.Select
-          aria-label="Default select example"
-          {...register("type")}
-        >
-          <option value="student">Estudante</option>
-          <option value="teacher">Professor</option>
-          <option value="parents">Responsável</option>
-        </FormBootstrap.Select>
-      </FormBootstrap.Group>
       <FormBootstrap.Group className="mb-3" controlId="FormBootstrapBasicEmail">
         <FormBootstrap.Label>Nome do aluno:</FormBootstrap.Label>
         <FormBootstrap.Control
@@ -65,20 +76,51 @@ const Form = () => {
         <span className="text-danger mt-10px">{errors?.cpf?.message}</span>
       </FormBootstrap.Group>
       <FormBootstrap.Group className="mb-3" controlId="FormBootstrapBasicEmail">
+        <FormBootstrap.Label>E-mail do aluno:</FormBootstrap.Label>
+        <FormBootstrap.Control
+          type="text"
+          placeholder="Digite o E-mail do aluno"
+          {...register("email")}
+        />
+        <span className="text-danger mt-10px">{errors?.email?.message}</span>
+      </FormBootstrap.Group>
+
+      <FormBootstrap.Group className="mb-3" controlId="FormBootstrapBasicEmail">
         <FormBootstrap.Label>Nome do responsável:</FormBootstrap.Label>
         <FormBootstrap.Control
           type="text"
           placeholder="Digite o nome do responsável do aluno"
-          {...register("responsavel")}
+          {...register("responsable")}
         />
         <span className="text-danger mt-10px">
-          {errors?.responsavel?.message}
+          {errors?.responsable?.message}
         </span>
       </FormBootstrap.Group>
+
       <FormBootstrap.Group className="mb-3" controlId="FormBootstrapBasicEmail">
-        <FormBootstrap.Label>Data de nascimento</FormBootstrap.Label>
-        <FormBootstrap.Control type="date" {...register("date")} />
+        <FormBootstrap.Label>CPF do responsável:</FormBootstrap.Label>
+        <FormBootstrap.Control
+          type="text"
+          placeholder="Digite o E-mail do aluno"
+          {...register("cpfResponsable")}
+        />
+        <span className="text-danger mt-10px">
+          {errors?.cpfResponsable?.message}
+        </span>
       </FormBootstrap.Group>
+
+      <FormBootstrap.Group className="mb-3" controlId="FormBootstrapBasicEmail">
+        <FormBootstrap.Label>E-mail do responsável:</FormBootstrap.Label>
+        <FormBootstrap.Control
+          type="text"
+          placeholder="Digite o E-mail do aluno"
+          {...register("emailResponsable")}
+        />
+        <span className="text-danger mt-10px">
+          {errors?.emailResponsable?.message}
+        </span>
+      </FormBootstrap.Group>
+
       <Button variant="primary" type="submit">
         Enviar
       </Button>
@@ -94,6 +136,7 @@ export const Home = () => {
 
   useEffect(() => {
     const result = getAll();
+    console.log(data);
   }, []);
 
   const { getAll, data } = useData();
@@ -109,7 +152,13 @@ export const Home = () => {
         <Button variant="primary" type="submit" onClick={handleShow}>
           Adicionar
         </Button>
-        <Table striped bordered hover variant="dark" style={{ margin: '1em 0' }}>
+        <Table
+          striped
+          bordered
+          hover
+          variant="light"
+          style={{ margin: "1em 0" }}
+        >
           <thead>
             <tr>
               <th>Matrícula</th>
@@ -120,17 +169,18 @@ export const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {data && data.map(item => {
-              return (
-                <tr key={item.id}>
-                  <th>{item.id}</th>
-                  <th>{item.name}</th>
-                  <th>{item.cpf}</th>
-                  <th>{item.email}</th>
-                  <th>{item.responsable.name}</th>
-                </tr>
-              )
-            })}
+            {data &&
+              data.map((item) => {
+                return (
+                  <tr key={item.id}>
+                    <th>{item.id}</th>
+                    <th>{item.name}</th>
+                    <th>{item.cpf}</th>
+                    <th>{item.email}</th>
+                    <th>{item.responsable.nameResponsable}</th>
+                  </tr>
+                );
+              })}
           </tbody>
         </Table>
       </Container>
