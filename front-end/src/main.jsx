@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import Router from "./Router";
 import { Navbar } from "./components";
 import { BrowserRouter } from "react-router-dom";
-import { DataProvider } from "./context/data";
+import { DataProvider } from "./context/dataContext";
 import AuthContextProvider from "./context/authContextProvider";
 
 import "bootstrap/dist/css/bootstrap.min.css";

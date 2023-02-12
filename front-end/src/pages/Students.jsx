@@ -39,7 +39,11 @@ export const StudentsPage = () => {
           handleClose={handleClose}
           title={isUpdate ? "Alterar dados do Aluno" : "Adicionar aluno"}
         >
-          <Form type={isUpdate ? "update" : "create"} id={selectedId} />
+          <Form
+            type={isUpdate ? "update" : "create"}
+            id={selectedId}
+            handleClose={handleClose}
+          />
         </Modal>
         <Table
           striped

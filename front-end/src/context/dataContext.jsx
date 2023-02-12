@@ -19,17 +19,25 @@ export const DataProvider = ({ children }) => {
       cpfResponsable: data.cpfResponsable,
       emailResponsable: data.emailResponsable,
     };
-    const response = await api.post("/students/", params);
-    console.log(response);
+
+    try {
+      const response = await api.post("/students/", params);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const removeStudent = async (id) => {
     const params = {
       id: id,
     };
-    console.log(params);
-    const response = await api.delete(`/students/${id}`);
-    console.log(response);
+    try {
+      const response = await api.delete(`/students/${id}`);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const updateStudent = async (data) => {
@@ -38,9 +46,13 @@ export const DataProvider = ({ children }) => {
       cpf: data.cpf,
       name: data.name,
     };
-    console.log(params);
-    const response = await api.put(`/students/${data.id}`, params);
-    console.log(response);
+
+    try {
+      const response = await api.put(`/students/${data.id}`, params);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => getAll, [addStudent, removeStudent]);
