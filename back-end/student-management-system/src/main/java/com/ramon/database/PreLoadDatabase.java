@@ -66,6 +66,21 @@ public class PreLoadDatabase implements CommandLineRunner {
         StudentModel student1 = new StudentModel("Carlos Eduardo", "12332145571", "cemg@ufal.com", responsableRepository.findById(1l).get(), englishRepository.findById(1l).get(), geographyRepository.findById(1l).get(), historyRepository.findById(1l).get(), mathematicsRepository.findById(1l).get(), portugueseRepository.findById(1l).get());
         studentRepository.save(student1);
 
+        English english2 = new English();
+        englishRepository.save(english2);
+        
+        Geography geography2 = new Geography();
+        geographyRepository.save(geography2);
+
+        History history2 = new History();
+        historyRepository.save(history2);
+
+        Mathematics mathematics2 = new Mathematics();
+        mathematicsRepository.save(mathematics2);
+
+        Portuguese portuguese2 = new Portuguese();
+        portugueseRepository.save(portuguese2);
+
         StudentModel student2 = new StudentModel("José Dani", "11111111111", "djs@ufal.br", responsableRepository.findById(1l).get(), englishRepository.findById(2l).get(), geographyRepository.findById(2l).get(), historyRepository.findById(2l).get(), mathematicsRepository.findById(2l).get(), portugueseRepository.findById(2l).get());
         studentRepository.save(student2);
 
