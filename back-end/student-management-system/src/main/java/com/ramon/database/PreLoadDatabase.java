@@ -6,6 +6,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import com.ramon.repository.*;
 import com.ramon.model.*;
+import com.ramon.model.courses.English;
+import com.ramon.model.courses.Geography;
+import com.ramon.model.courses.*;
 
 @Component
 public class PreLoadDatabase implements CommandLineRunner {
@@ -15,11 +18,21 @@ public class PreLoadDatabase implements CommandLineRunner {
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
     private final ResponsableRepository responsableRepository;
+    private final EnglishRepository englishRepository;
+    private final GeographyRepository geographyRepository;
+    private final HistoryRepository historyRepository;
+    private final MathematicsRepository mathematicsRepository;
+    private final PortugueseRepository portugueseRepository;
 
-    public PreLoadDatabase(StudentRepository studentRepository, TeacherRepository teacherRepository, ResponsableRepository responsableRepository) {
+    public PreLoadDatabase(StudentRepository studentRepository, TeacherRepository teacherRepository, ResponsableRepository responsableRepository, EnglishRepository englishRepository, GeographyRepository geographyRepository, HistoryRepository historyRepository, MathematicsRepository mathematicsRepository, PortugueseRepository portugueseRepository) {
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
         this.responsableRepository = responsableRepository;
+        this.englishRepository = englishRepository;
+        this.geographyRepository = geographyRepository;
+        this.historyRepository = historyRepository;
+        this.mathematicsRepository = mathematicsRepository;
+        this.portugueseRepository = portugueseRepository;
     }
 
     @Override
@@ -35,9 +48,25 @@ public class PreLoadDatabase implements CommandLineRunner {
             logger.info("{}", respon);
         });
 
-        StudentModel student1 = new StudentModel("Carlos Eduardo", "12332145571", "cemg@ufal.com", responsableRepository.findById(1l).get());
+        English english = new English();
+        englishRepository.save(english);
+        
+        Geography geography = new Geography();
+        geographyRepository.save(geography);
+
+        History history = new History();
+        historyRepository.save(history);
+
+        Mathematics mathematics = new Mathematics();
+        mathematicsRepository.save(mathematics);
+
+        Portuguese portuguese = new Portuguese();
+        portugueseRepository.save(portuguese);
+
+        StudentModel student1 = new StudentModel("Carlos Eduardo", "12332145571", "cemg@ufal.com", responsableRepository.findById(1l).get(), englishRepository.findById(1l).get(), geographyRepository.findById(1l).get(), historyRepository.findById(1l).get(), mathematicsRepository.findById(1l).get(), portugueseRepository.findById(1l).get());
         studentRepository.save(student1);
-        StudentModel student2 = new StudentModel("José Dani", "11111111111", "djs@ufal.br", responsableRepository.findById(1l).get());
+
+        StudentModel student2 = new StudentModel("José Dani", "11111111111", "djs@ufal.br", responsableRepository.findById(1l).get(), englishRepository.findById(2l).get(), geographyRepository.findById(2l).get(), historyRepository.findById(2l).get(), mathematicsRepository.findById(2l).get(), portugueseRepository.findById(2l).get());
         studentRepository.save(student2);
 
         studentRepository.findAll().forEach((student) -> {

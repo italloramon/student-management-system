@@ -15,6 +15,7 @@ import com.ramon.exception.*;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import com.ramon.model.courses.*;
 
 @RestController
 @RequestMapping("/api/")
@@ -22,10 +23,21 @@ public class StudentController {
 
     private final StudentRepository studentRepository;
     private final ResponsableRepository responsableRepository;
+    private final EnglishRepository englishRepository;
+    private final GeographyRepository geographyRepository;
+    private final HistoryRepository historyRepository;
+    private final MathematicsRepository mathematicsRepository;
+    private final PortugueseRepository portugueseRepository;
 
-    public StudentController(StudentRepository studentRepository, ResponsableRepository responsableRepository) {
+
+    public StudentController(StudentRepository studentRepository, ResponsableRepository responsableRepository, EnglishRepository englishRepository, GeographyRepository geographyRepository, HistoryRepository historyRepository, MathematicsRepository mathematicsRepository, PortugueseRepository portugueseRepository) {
         this.studentRepository = studentRepository;
         this.responsableRepository = responsableRepository;
+        this.englishRepository = englishRepository;
+        this.geographyRepository = geographyRepository;
+        this.historyRepository = historyRepository;
+        this.mathematicsRepository = mathematicsRepository;
+        this.portugueseRepository = portugueseRepository;
     }
 
     @GetMapping("students/")
@@ -60,7 +72,17 @@ public class StudentController {
         String name = student.getName();
         String email = student.getEmail();
         String cpf = student.getEmail();
-        StudentModel newStudent = new StudentModel(name, cpf, email, responsable);
+        English english = new English();
+        this.englishRepository.save(english);
+        Geography geography = new Geography();
+        geographyRepository.save(geography);
+        History history = new History();
+        historyRepository.save(history);
+        Mathematics mathematics = new Mathematics();
+        mathematicsRepository.save(mathematics);
+        Portuguese portuguese = new Portuguese();
+        portugueseRepository.save(portuguese);
+        StudentModel newStudent = new StudentModel(name, cpf, email, responsable, english, geography, history, mathematics, portuguese);
         return this.studentRepository.save(newStudent);
     }
 
@@ -77,6 +99,14 @@ public class StudentController {
     @DeleteMapping("students/{id}")
     public void deleteStudent(@PathVariable Long id) {
         this.studentRepository.deleteById(id);
+    }
+
+    @PostMapping("students/{idStudent}/{idCourse}/{score}")
+    public void updateScore (@PathVariable Long idStudent, Long idCourse, @PathVariable Double score) {
+        StudentModel student = studentRepository.findById(idStudent).get();
+        English english = student.getEnglish();
+        english.setScore1(score);
+        englishRepository.save(english);
     }
 
 }
