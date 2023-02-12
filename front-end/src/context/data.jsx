@@ -32,6 +32,18 @@ export const DataProvider = ({ children }) => {
     console.log(response);
   };
 
+  const updateStudent = async (data) => {
+    const params = {
+      id: data.id,
+      email: data.email,
+      cpf: data.cpf,
+      name: data.name,
+    };
+    console.log(params);
+    const response = await api.put("/students/", params);
+    console.log(response);
+  };
+
   useEffect(() => getAll, [addStudent, removeStudent]);
 
   return (
@@ -41,6 +53,7 @@ export const DataProvider = ({ children }) => {
         data,
         addStudent,
         removeStudent,
+        updateStudent,
       }}
     >
       {children}

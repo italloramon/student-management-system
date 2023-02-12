@@ -9,7 +9,12 @@ import { useNavigate } from "react-router-dom";
 export const StudentsPage = () => {
   const [show, setShow] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
-  const handleClose = () => setShow(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const handleClose = () => {
+    setShow(false);
+    setIsUpdate(false);
+    setSelectedId(null);
+  };
   const handleShow = () => setShow(true);
 
   const navigate = useNavigate();
@@ -28,8 +33,12 @@ export const StudentsPage = () => {
         <Button variant="primary" type="submit" onClick={handleShow}>
           Adicionar Estudante
         </Button>
-        <Modal show={show} handleClose={handleClose} title="Adicionar aluno">
-          <Form />
+        <Modal
+          show={show}
+          handleClose={handleClose}
+          title={isUpdate ? "Alterar dados do Aluno" : "Adicionar aluno"}
+        >
+          <Form type={isUpdate ? "update" : "create"} id={selectedId} />
         </Modal>
         <Table
           striped
@@ -53,7 +62,7 @@ export const StudentsPage = () => {
                 return (
                   <tr
                     key={item.id}
-                    onClick={() => navigate(`/students/${item.id}`)}
+                    //onClick={() => navigate(`/students/${item.id}`)}
                   >
                     <td>{item.id}</td>
                     <td>{item.name}</td>
@@ -67,7 +76,11 @@ export const StudentsPage = () => {
                     </td>
                     <td>
                       <Button
-                        onClick={() => removeStudent(item.id)}
+                        onClick={() => {
+                          setSelectedId(item.id);
+                          setIsUpdate(true);
+                          handleShow();
+                        }}
                         variant="primary"
                       >
                         Update
