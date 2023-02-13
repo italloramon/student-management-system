@@ -15,7 +15,7 @@ import lombok.ToString;
 @Table(name = "teacher")
 @NoArgsConstructor
 @ToString @EqualsAndHashCode
-public class TeacherModel extends ExpenseModel{
+public class TeacherModel {
     @Id
     @GeneratedValue
     @Column(name = "teacher_id")

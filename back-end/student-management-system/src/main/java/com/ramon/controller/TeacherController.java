@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ramon.repository.TeacherRepository;
 import java.util.List;
+import java.util.Map;
+
 import com.ramon.model.TeacherModel;
 import com.ramon.exception.*;
 
@@ -50,6 +52,18 @@ public class TeacherController {
     @DeleteMapping("teachers/{id}")
     public void deleteTeacher(@PathVariable Long id) {
         this.teacherRepository.deleteById(id);
+    }
+
+    @PostMapping("teachers/login")
+    public TeacherModel loginTeacher(@RequestBody Map<String, String> teacher) {
+        String password = teacher.get("password");
+        if (teacherRepository.existsByCpf(password)) {
+            TeacherModel teacherLogin = teacherRepository.findByCpf(password);
+            if (teacherLogin.getEmail().equals(teacher.get("login"))) {
+                return teacherLogin;
+            }
+        }
+        throw new TeacherNotFoundException(-1l);
     }
 
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ramon.repository.ResponsableRepository;
 import java.util.List;
+import java.util.Map;
+
 import com.ramon.model.ResponsableModel;
 import com.ramon.exception.*;
 
@@ -53,5 +55,17 @@ public class ResponsableController {
     //public void deleteResponsable(@PathVariable Long id) {
     //    this.responsableRepository.deleteById(id);
     //}
+
+    @PostMapping("responsables/login")
+    public ResponsableModel loginResponsable(@RequestBody Map<String, String> responsable) {
+        String password = responsable.get("password");
+        if (responsableRepository.existsByCpfResponsable(password)) {
+            ResponsableModel responsableLogin = responsableRepository.findByCpfResponsable(password);
+            if (responsableLogin.getEmailResponsable().equals(responsable.get("login"))) {
+                return responsableLogin;
+            }
+        }
+        throw new ResponsableNotFoundException(-1l);
+    }
 
 }

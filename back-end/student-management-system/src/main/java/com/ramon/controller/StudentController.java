@@ -127,4 +127,16 @@ public class StudentController {
     //    }
     //}
 
+    @PostMapping("students/login")
+    public StudentModel loginStudent(@RequestBody Map<String, String> student) {
+        String password = student.get("password");
+        if (studentRepository.existsByCpf(password)) {
+            StudentModel studentLogin = studentRepository.findByCpf(password);
+            if (studentLogin.getEmail().equals(student.get("login"))) {
+                return studentLogin;
+            }
+        }
+        throw new StudentNotFoundException(-1l);
+    }
+
 }
