@@ -83,7 +83,7 @@ const Home = () => {
                       type="submit"
                       onClick={onSubmit}
                     >
-                      Login
+                      {!createAccount ? "Login" : "Criar"}
                     </button>
 
                     <div className="d-flex justify-content-center text-center pt-1">
