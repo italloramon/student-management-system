@@ -9,19 +9,23 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ramon.repository.TeacherRepository;
+import com.ramon.repository.NoticeRepository;
 import java.util.List;
 import java.util.Map;
 
 import com.ramon.model.TeacherModel;
+import com.ramon.model.NoticeModel;
 import com.ramon.exception.*;
 
 @RestController
 @RequestMapping("/api/")
 public class TeacherController {
     private final TeacherRepository teacherRepository;
+    private final NoticeRepository noticeRepository;
 
-    public TeacherController(TeacherRepository teacherRepository) {
+    public TeacherController(TeacherRepository teacherRepository, NoticeRepository noticeRepository) {
         this.teacherRepository = teacherRepository;
+        this.noticeRepository = noticeRepository;
     }
 
     @GetMapping("teachers/")
@@ -64,6 +68,11 @@ public class TeacherController {
             }
         }
         throw new TeacherNotFoundException(-1l);
+    }
+
+    @PostMapping("teachers/sendNotice")
+    public NoticeModel sendNotice(@RequestBody NoticeModel notice) {
+        return noticeRepository.save(notice);
     }
 
 }

@@ -32,9 +32,10 @@ public class StudentController {
     private final HistoryRepository historyRepository;
     private final MathematicsRepository mathematicsRepository;
     private final PortugueseRepository portugueseRepository;
+    private final NoticeRepository noticeRepository;
 
 
-    public StudentController(StudentRepository studentRepository, ResponsableRepository responsableRepository, EnglishRepository englishRepository, GeographyRepository geographyRepository, HistoryRepository historyRepository, MathematicsRepository mathematicsRepository, PortugueseRepository portugueseRepository) {
+    public StudentController(StudentRepository studentRepository, ResponsableRepository responsableRepository, EnglishRepository englishRepository, GeographyRepository geographyRepository, HistoryRepository historyRepository, MathematicsRepository mathematicsRepository, PortugueseRepository portugueseRepository, NoticeRepository noticeRepository) {
         this.studentRepository = studentRepository;
         this.responsableRepository = responsableRepository;
         this.englishRepository = englishRepository;
@@ -42,6 +43,7 @@ public class StudentController {
         this.historyRepository = historyRepository;
         this.mathematicsRepository = mathematicsRepository;
         this.portugueseRepository = portugueseRepository;
+        this.noticeRepository = noticeRepository;
     }
 
     @GetMapping("students/")
@@ -154,6 +156,11 @@ public class StudentController {
         StudentModel[] sorted = students.clone();
         Arrays.sort(sorted, comparator);
         return sorted;
+    }
+
+    @GetMapping("students/getNotices")
+    public List<NoticeModel> getNotices() {
+        return noticeRepository.findAll();
     }
 
 }
