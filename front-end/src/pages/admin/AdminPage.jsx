@@ -1,13 +1,13 @@
-import Form from "../components/StudentForm";
-import FormTeacher from "../components/StudentTeacher";
-import { Modal } from "../components";
-import { Title, Container } from "../styles";
+import Form from "../../components/StudentForm";
+import FormTeacher from "../../components/StudentTeacher";
+import { Modal } from "../../components";
+import { Title, Container } from "../../styles";
 import { Button, Table } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { useData } from "../hooks/useData";
+import { useData } from "../../hooks/useData";
 import { useNavigate } from "react-router-dom";
 
-export const StudentsPage = () => {
+export const AdminPage = () => {
   const [show, setShow] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -42,7 +42,7 @@ export const StudentsPage = () => {
   return (
     <>
       <Container>
-        <Title>Students Page</Title>
+        <Title>Admin Dashboard</Title>
         <section style={{ display: "flex", gap: "1em" }}>
           <Button variant="primary" type="submit" onClick={handleShow}>
             Adicionar Estudante
@@ -97,8 +97,10 @@ export const StudentsPage = () => {
                     key={item.id}
                     //onClick={() => navigate(`/students/${item.id}`)}
                   >
-                    <td onClick={() => navigate(`/students/${item.id}`)}>
-                      {item.id}
+                    <td>
+                      <a onClick={() => navigate(`/students/${item.id}`)}>
+                        {item.id}
+                      </a>
                     </td>
                     <td>{item.name}</td>
                     <td>{item.cpf}</td>

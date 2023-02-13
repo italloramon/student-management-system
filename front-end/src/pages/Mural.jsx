@@ -6,9 +6,10 @@ import { muralSchema } from "../utils/schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
+import { Textarea } from "@chakra-ui/react";
 
 const Mural = () => {
-  const { type } = useAuth();
+  const { roles } = useAuth();
 
   const {
     register,
@@ -19,7 +20,7 @@ const Mural = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(muralSchema) });
 
-  console.log(type);
+  console.log(roles);
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -32,7 +33,7 @@ const Mural = () => {
 
     reset();
   };
-  return type !== "student" ? (
+  return roles !== "student" ? (
     <form
       style={{
         margin: "1em",
@@ -43,11 +44,11 @@ const Mural = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Title>Mural de avisos</Title>
-      <FloatingLabel controlId="floatingTextarea2" label="Comments">
+      <FloatingLabel controlId="floatingTextarea2" label="Aviso:">
         <Form.Control
           as="textarea"
           placeholder="Leave a comment here"
-          style={{ height: "100px" }}
+          style={{ height: "120px" }}
           {...register("mensagem")}
         />
       </FloatingLabel>

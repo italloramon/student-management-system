@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import { StudentsPage } from "./pages/Students";
-import SelectedStudent from "./pages/SelectedStudent";
+import { AdminPage } from "./pages/admin/AdminPage";
+import SelectedStudent from "./pages/admin/SelectedStudent";
 import Home from "./pages/Home";
 import PageError from "./pages/404";
 import PrivateRoute from "./components/Routes/PrivateRoutes";
@@ -26,7 +26,7 @@ const Router = () => {
         path="/students"
         element={
           <PrivateRoute token={token}>
-            <StudentsPage></StudentsPage>
+            <AdminPage></AdminPage>
           </PrivateRoute>
         }
       ></Route>
