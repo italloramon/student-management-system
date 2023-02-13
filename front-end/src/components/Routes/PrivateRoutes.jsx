@@ -10,7 +10,11 @@ const PrivateRoute = ({ children, token }) => {
     }
   }, [token]);
 
-  return <Fragment>{children}</Fragment>;
+  if (token === null) {
+    return <h2>Loading</h2>;
+  } else {
+    return <Fragment>{children}</Fragment>;
+  }
 };
 
 export default PrivateRoute;

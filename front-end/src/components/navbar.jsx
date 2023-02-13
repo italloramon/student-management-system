@@ -5,9 +5,11 @@ import {
   NavDropdown,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export const Navbar = () => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   return (
     <NavbarBootstrap
       bg="dark"
@@ -22,15 +24,14 @@ export const Navbar = () => {
           <Nav className="me-auto">
             <Nav.Link href="/students">Students</Nav.Link>
             <Nav.Link href="#link">Teachers</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+            <NavDropdown title="Opções" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Perfil</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
-                Another action
+                Configurações
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
+              <NavDropdown.Item onClick={() => logout()}>
+                Logout
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

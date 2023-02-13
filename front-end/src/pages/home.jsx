@@ -5,6 +5,7 @@ import { loginSchema } from "../utils/schemas";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const {
@@ -14,13 +15,17 @@ const Home = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(loginSchema) });
 
+  const navigate = useNavigate();
   const [createAccount, setCreateAccount] = useState(false);
-  const { login } = useAuth();
+  const { login, token } = useAuth();
+
   const onSubmit = (data) => {
     if (createAccount) {
       // criar conta
     } else {
-      // login
+      console.log(data);
+      login("teste");
+      navigate("/students");
     }
   };
   return (
