@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ramon.repository.*;
+
+import java.util.Arrays;
 import java.util.List;
 import com.ramon.model.*;
 import com.ramon.exception.*;
@@ -16,6 +18,8 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.ramon.model.courses.*;
+import java.util.Comparator;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/")
@@ -119,13 +123,20 @@ public class StudentController {
         englishRepository.save(english);
     }
 
-    //@GetMapping("students/")
-    //public List<StudentModel> getRankingStudents() {
-    //    List<StudentModel> students = studentRepository.findAll();
-    //    for (StudentModel s: students) {
+    @GetMapping("students/getRanking")
+    public StudentModel[] getRankingStudents() {
+        List<StudentModel> studentsList = studentRepository.findAll();
+        StudentModel[] studentsArray = new StudentModel[studentsList.size()];
 
-    //    }
-    //}
+        for (int i = 0; i  < studentsList.size(); i++) {
+            studentsArray[i] = studentsList.get(i);
+        }
+
+        StudentModel[] studentsArraySorted = StudentController.getSorterdStudents(studentsArray, Comparator.comparing(StudentModel::getRankingStudent).reversed());
+
+        return studentsArraySorted;
+        
+    }
 
     @PostMapping("students/login")
     public StudentModel loginStudent(@RequestBody Map<String, String> student) {
@@ -137,6 +148,12 @@ public class StudentController {
             }
         }
         throw new StudentNotFoundException(-1l);
+    }
+
+    public static StudentModel[] getSorterdStudents(StudentModel[] students, Comparator<StudentModel> comparator) {
+        StudentModel[] sorted = students.clone();
+        Arrays.sort(sorted, comparator);
+        return sorted;
     }
 
 }

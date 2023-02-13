@@ -65,6 +65,8 @@ public class StudentModel {
     @JoinColumn(name = "portuguese_id")
     @Getter @Setter private Portuguese portuguese;
 
+    //@Getter @Setter private Double scoreRanking;
+
     public StudentModel(String name, String cpf, String email, ResponsableModel responsable, English english, Geography geography, History history, Mathematics mathematics, Portuguese portuguese) {
         this.id = GenerateId.id++;
         this.name = name;
@@ -76,6 +78,7 @@ public class StudentModel {
         this.history = history;
         this.mathematics = mathematics;
         this.portuguese = portuguese;
+        //this.scoreRanking = this.getRankingStudent();
         //this.courses.add(new Teste());
         //this.courses.add(new English());
         //this.courses.add(new History());
@@ -83,8 +86,8 @@ public class StudentModel {
         //this.courses.add(new Portuguese());
     }
 
-    //public Double getRankingStudent() {
-    //    
-    //}
+    public Double getRankingStudent() {
+        return (this.english.getScores() + this.geography.getScores() + this.history.getScores() + this.mathematics.getScores() + this.portuguese.getScores()) / 5;    
+    }
 
 }

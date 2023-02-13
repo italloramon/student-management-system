@@ -50,4 +50,8 @@ public class Mathematics {
         this.score4 = score4;
     }
 
+    public Double getScores() {
+        return ((this.score1 + this.score2 + this.score3 + this.score4) / 4);
+    }
+
 }
