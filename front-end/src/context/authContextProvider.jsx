@@ -3,6 +3,7 @@ import AuthContext from "./authContext";
 
 const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [type, setType] = useState("student");
   const isUserLogged = !!token;
 
   const loginHandler = (token) => {
@@ -17,8 +18,9 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const contextValue = {
-    token: token,
-    isUserLogged: isUserLogged,
+    token,
+    type,
+    isUserLogged,
     login: loginHandler,
     logout: logoutHandler,
   };

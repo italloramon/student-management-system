@@ -1,4 +1,5 @@
 import Form from "../components/StudentForm";
+import FormTeacher from "../components/StudentTeacher";
 import { Modal } from "../components";
 import { Title, Container } from "../styles";
 import { Button, Table } from "react-bootstrap";
@@ -18,6 +19,17 @@ export const StudentsPage = () => {
   };
   const handleShow = () => setShow(true);
 
+  const [showTeacher, setShowTeacher] = useState(false);
+  const [isUpdateTeacher, setIsUpdateTeacher] = useState(false);
+  const [selectedIdTeacher, setSelectedIdTeacher] = useState(null);
+
+  const handleCloseTeacher = () => {
+    setShowTeacher(false);
+    setIsUpdateTeacher(false);
+    setSelectedIdTeacher(null);
+  };
+  const handleShowTeacher = () => setShowTeacher(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,9 +43,14 @@ export const StudentsPage = () => {
     <>
       <Container>
         <Title>Students Page</Title>
-        <Button variant="primary" type="submit" onClick={handleShow}>
-          Adicionar Estudante
-        </Button>
+        <section style={{ display: "flex", gap: "1em" }}>
+          <Button variant="primary" type="submit" onClick={handleShow}>
+            Adicionar Estudante
+          </Button>
+          <Button variant="primary" type="submit" onClick={handleShowTeacher}>
+            Adicionar professor
+          </Button>
+        </section>
         <Modal
           show={show}
           handleClose={handleClose}
@@ -43,6 +60,17 @@ export const StudentsPage = () => {
             type={isUpdate ? "update" : "create"}
             id={selectedId}
             handleClose={handleClose}
+          />
+        </Modal>
+        <Modal
+          show={showTeacher}
+          handleClose={handleCloseTeacher}
+          title={isUpdateTeacher ? "Alterar dados do Aluno" : "Adicionar aluno"}
+        >
+          <FormTeacher
+            type={"create"}
+            id={selectedIdTeacher}
+            handleClose={handleCloseTeacher}
           />
         </Modal>
         <Table
@@ -69,7 +97,9 @@ export const StudentsPage = () => {
                     key={item.id}
                     //onClick={() => navigate(`/students/${item.id}`)}
                   >
-                    <td>{item.id}</td>
+                    <td onClick={() => navigate(`/students/${item.id}`)}>
+                      {item.id}
+                    </td>
                     <td>{item.name}</td>
                     <td>{item.cpf}</td>
                     <td>{item.email}</td>

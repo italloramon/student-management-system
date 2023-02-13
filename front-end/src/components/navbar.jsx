@@ -24,6 +24,9 @@ export const Navbar = () => {
           <Nav className="me-auto">
             <Nav.Link href="/students">Students</Nav.Link>
             <Nav.Link href="#link">Teachers</Nav.Link>
+            <Nav.Link href="/ranking">Ranking</Nav.Link>
+            <Nav.Link href="/mural">Mural</Nav.Link>
+
             <NavDropdown title="Opções" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Perfil</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">

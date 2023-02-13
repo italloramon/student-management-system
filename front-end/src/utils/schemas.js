@@ -46,3 +46,7 @@ export const loginSchema = yup.object({
     .max(30, "Limite máximo de 30 caracteres.")
     .required("Campo obrigatório."),
 });
+
+export const muralSchema = yup.object({
+  mensagem: yup.string().required("Campo obrigatório."),
+});

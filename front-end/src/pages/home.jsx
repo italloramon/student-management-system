@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 const Home = () => {
   const {
@@ -17,15 +18,23 @@ const Home = () => {
 
   const navigate = useNavigate();
   const [createAccount, setCreateAccount] = useState(false);
-  const { login, token } = useAuth();
+  const [loginError, setLoginError] = useState(false);
+  const { login } = useAuth();
 
-  const onSubmit = (data) => {
-    if (createAccount) {
-      // criar conta
-    } else {
-      console.log(data);
-      login("teste");
+  const onSubmit = async (data) => {
+    const params = {
+      login: data.email,
+      password: data.password,
+    };
+
+    try {
+      const response = await api.post("/students/login", params);
+      console.log(response);
+      login(response.data.id);
       navigate("/students");
+    } catch (error) {
+      console.log(error);
+      setLoginError(true);
     }
   };
   return (
@@ -43,7 +52,7 @@ const Home = () => {
                     <h2 className="fw-bold mb-5 text-uppercase">
                       {!createAccount ? "Login" : "Criar Conta"}
                     </h2>
-
+                    {loginError && <p>ocorreu algum erro</p>}
                     <div className="form-outline form-white mb-4">
                       <label className="form-label">Email</label>
                       <input
