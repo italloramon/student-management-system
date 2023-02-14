@@ -3,7 +3,7 @@ import AuthContext from "./authContext";
 
 const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [roles, setRoles] = useState("teacher");
+  const [roles, setRoles] = useState("teacher"); // roles tipos : admin, teacher, student
   const isUserLogged = !!token;
 
   const loginHandler = (token) => {

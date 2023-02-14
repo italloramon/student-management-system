@@ -6,7 +6,7 @@ import { Button, Table } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useData } from "../../hooks/useData";
 import { useNavigate } from "react-router-dom";
-import api from '../services/api';
+import api from "../../services/api";
 
 export const AdminPage = () => {
   const [show, setShow] = useState(false);
@@ -37,9 +37,9 @@ export const AdminPage = () => {
 
   useEffect(() => {
     const getTeachers = async () => {
-      const response = await api.get('/teachers/');
+      const response = await api.get("/teachers/");
       setTeachers(response.data);
-    }
+    };
     getTeachers();
   }, []);
 
@@ -79,10 +79,8 @@ export const AdminPage = () => {
             handleClose={handleCloseTeacher}
           />
         </Modal>
-        <center style={{ margin: '3em' }}>
-          <h2>
-            Alunos
-          </h2>
+        <center style={{ margin: "3em" }}>
+          <h2>Alunos</h2>
         </center>
         <Table
           striped
@@ -139,10 +137,8 @@ export const AdminPage = () => {
               })}
           </tbody>
         </Table>
-        <center style={{ margin: '3em' }}>
-          <h2>
-            Professores
-          </h2>
+        <center style={{ margin: "3em" }}>
+          <h2>Professores</h2>
         </center>
         <Table
           striped
@@ -163,12 +159,8 @@ export const AdminPage = () => {
             {teachers &&
               teachers.map((item) => {
                 return (
-                  <tr
-                    key={item.id}
-                  >
-                    <td>
-                      {item.id}
-                    </td>
+                  <tr key={item.id}>
+                    <td>{item.id}</td>
                     <td>{item.name}</td>
                     <td>{item.cpf}</td>
                     <td>{item.email}</td>

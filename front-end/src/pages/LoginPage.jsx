@@ -8,7 +8,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
-const Home = () => {
+const LoginPage = () => {
   const {
     register,
     handleSubmit,
@@ -31,7 +31,7 @@ const Home = () => {
       const response = await api.post("/students/login", params);
       console.log(response);
       login(response.data.id);
-      navigate("/students");
+      navigate("/");
     } catch (error) {
       console.log(error);
       setLoginError(true);
@@ -131,4 +131,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default LoginPage;

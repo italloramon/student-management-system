@@ -1,12 +1,17 @@
 import { Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
-const PrivateRoute = ({ children, token }) => {
+const PrivateRoute = ({ children, canAcess }) => {
+  // evitar que o usuario entre é uma rota sem role ou entre em uma rota sem esta logado
   const navigate = useNavigate();
-  console.log(token);
+  const { roles, token } = useAuth();
+
   useEffect(() => {
     if (token == null) {
-      navigate("/");
+      navigate("/login");
+    } else if (canAcess !== roles && canAcess !== null) {
+      navigate("/home");
     }
   }, [token]);
 
