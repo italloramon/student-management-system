@@ -42,6 +42,9 @@ public class StudentModel {
     @JoinColumn(name = "responsable_id", nullable = false)
     @Getter @Setter private ResponsableModel responsable;
 
+    @Column(name = "student_tuition")
+    @Getter @Setter private Double tuition;
+
     //@ElementCollection
     //@Getter @Setter private List<CourseModel> courses = new ArrayList<>();
     //@ManyToOne
@@ -68,7 +71,7 @@ public class StudentModel {
 
     //@Getter @Setter private Double scoreRanking;
 
-    public StudentModel(String name, String cpf, String email, ResponsableModel responsable, English english, Geography geography, History history, Mathematics mathematics, Portuguese portuguese) {
+    public StudentModel(String name, String cpf, String email, ResponsableModel responsable, English english, Geography geography, History history, Mathematics mathematics, Portuguese portuguese, Double tuition) {
         this.id = GenerateId.id++;
         this.name = name;
         this.cpf = cpf;
@@ -79,6 +82,7 @@ public class StudentModel {
         this.history = history;
         this.mathematics = mathematics;
         this.portuguese = portuguese;
+        this.tuition = tuition;
         //this.scoreRanking = this.getRankingStudent();
         //this.courses.add(new Teste());
         //this.courses.add(new English());

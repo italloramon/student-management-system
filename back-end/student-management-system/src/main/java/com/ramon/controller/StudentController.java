@@ -83,6 +83,7 @@ public class StudentController {
         String name = requestBody.get("name");
         String email = requestBody.get("email");
         String cpf = requestBody.get("cpf");
+        Double tuition = Double.valueOf(requestBody.get("tuition"));
 
         if (studentRepository.existsByCpf(cpf)) {
             throw new StudentAlreadyCreatedException(cpf);
@@ -98,7 +99,7 @@ public class StudentController {
         mathematicsRepository.save(mathematics);
         Portuguese portuguese = new Portuguese();
         portugueseRepository.save(portuguese);
-        StudentModel newStudent = new StudentModel(name, cpf, email, newResponsable, english, geography, history, mathematics, portuguese);
+        StudentModel newStudent = new StudentModel(name, cpf, email, newResponsable, english, geography, history, mathematics, portuguese, tuition);
         return this.studentRepository.save(newStudent);
     }
 
