@@ -14,6 +14,7 @@ import Homepage from "./pages/Homepage";
 
 const Router = () => {
   const { token, roles } = useAuth();
+
   return (
     <Routes>
       <Route path="*" element={<PageError />} />
@@ -33,10 +34,11 @@ const Router = () => {
           </PublicRoute>
         }
       />
+      <Route path="/404" element={<PageError />} />
       <Route
         path="/students"
         element={
-          <PrivateRoute canAcess="admin">
+          <PrivateRoute canAcess="ADMIN">
             <AdminPage></AdminPage>
           </PrivateRoute>
         }
@@ -44,7 +46,7 @@ const Router = () => {
       <Route
         path="/students/:id"
         element={
-          <PrivateRoute canAcess="admin">
+          <PrivateRoute canAcess="ADMIN">
             <SelectedStudent></SelectedStudent>
           </PrivateRoute>
         }
@@ -60,7 +62,7 @@ const Router = () => {
       <Route
         path="/mural"
         element={
-          roles == "teacher" ? (
+          roles == "TEACHER" ? (
             <PrivateRoute>
               <MuralTeacher />
             </PrivateRoute>
@@ -71,7 +73,14 @@ const Router = () => {
           )
         }
       />
-      <Route path="/boletim" element={<Boletim />} />
+      <Route
+        path="/boletim"
+        element={
+          <PrivateRoute>
+            <Boletim />
+          </PrivateRoute>
+        }
+      />
     </Routes>
   );
 };

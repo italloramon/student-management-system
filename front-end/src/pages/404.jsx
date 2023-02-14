@@ -17,7 +17,7 @@ const PageError = () => {
       ></iframe>
 
       <StyledButton color="blue" onClick={() => navigate("/")}>
-        HOME
+        Voltar
       </StyledButton>
     </main>
   );

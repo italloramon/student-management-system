@@ -30,7 +30,7 @@ const LoginPage = () => {
     try {
       const response = await api.post("/students/login", params);
       console.log(response);
-      login(response.data.id);
+      login(response.data.id, response.data.role);
       navigate("/");
     } catch (error) {
       console.log(error);

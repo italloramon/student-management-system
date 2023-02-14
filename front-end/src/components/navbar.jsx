@@ -6,6 +6,7 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -22,11 +23,45 @@ export const Navbar = () => {
         <NavbarBootstrap.Toggle aria-controls="basic-NavbarBootstrap-nav" />
         <NavbarBootstrap.Collapse id="basic-NavbarBootstrap-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/students">Students</Nav.Link>
-            <Nav.Link href="#link">Teachers</Nav.Link>
-            <Nav.Link href="/ranking">Ranking</Nav.Link>
-            <Nav.Link onClick={() => navigate('/mural')}>Mural</Nav.Link>
-            <Nav.Link onClick={() => navigate('/boletim')}>Boletim</Nav.Link>
+            <Nav.Link>
+              <Link
+                to="/students"
+                style={{ textDecoration: "none", color: "darkgray" }}
+              >
+                Admin Dashboard
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link style={{ textDecoration: "none", color: "darkgray" }}>
+                Teachers
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
+              {" "}
+              <Link
+                to="/ranking"
+                style={{ textDecoration: "none", color: "darkgray" }}
+              >
+                Ranking
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
+              {" "}
+              <Link
+                to="/mural"
+                style={{ textDecoration: "none", color: "darkgray" }}
+              >
+                Mural
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link
+                to="/boletim"
+                style={{ textDecoration: "none", color: "darkgray" }}
+              >
+                Boletim
+              </Link>
+            </Nav.Link>
 
             <NavDropdown title="Opções" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Perfil</NavDropdown.Item>

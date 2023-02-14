@@ -6,12 +6,13 @@ const PrivateRoute = ({ children, canAcess }) => {
   // evitar que o usuario entre é uma rota sem role ou entre em uma rota sem esta logado
   const navigate = useNavigate();
   const { roles, token } = useAuth();
+  console.log(roles);
 
   useEffect(() => {
     if (token == null) {
       navigate("/login");
-    } else if (canAcess !== roles && canAcess !== null) {
-      navigate("/home");
+    } else if (canAcess !== roles && canAcess) {
+      navigate("/404");
     }
   }, [token]);
 

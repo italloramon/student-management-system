@@ -1,12 +1,6 @@
 import api from "../../services/api";
-import { FloatingLabel, Form, Button } from "react-bootstrap";
-import { Title } from "../../styles";
-import { useForm } from "react-hook-form";
-import { muralSchema } from "../../utils/schemas";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useAuth } from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
-import { Textarea } from "@chakra-ui/react";
+import { Title } from "../../styles";
 
 const MuralStudent = () => {
   const [data, setData] = useState(null);
@@ -22,6 +16,7 @@ const MuralStudent = () => {
 
   return (
     <section>
+      <Title style={{ padding: "1em" }}>Mural de Estudantes</Title>
       {data && data.map((item, index) => <p key={index}>{item.text}</p>)}
     </section>
   );
