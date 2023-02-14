@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.ramon.repository.ExpenseRepository;
-import com.ramon.repository.TeacherRepository;
 import java.util.List;
 import java.util.*;
-import com.ramon.model.ExpenseModel;
-import com.ramon.model.TeacherModel;
+import com.ramon.model.*;
+import com.ramon.repository.*;
 import com.ramon.exception.*;
 
 @RestController
@@ -21,10 +19,12 @@ import com.ramon.exception.*;
 public class ExpenseController {
     private final ExpenseRepository expenseRepository;
     private final TeacherRepository teacherRepository;
+    private final StudentRepository studentRepository;
 
-    public ExpenseController(ExpenseRepository expenseRepository, TeacherRepository teacherRepository) {
+    public ExpenseController(ExpenseRepository expenseRepository, TeacherRepository teacherRepository, StudentRepository studentRepository) {
         this.expenseRepository = expenseRepository;
         this.teacherRepository = teacherRepository;
+        this.studentRepository = studentRepository;
     }
 
     @GetMapping("expenses/")
@@ -57,14 +57,41 @@ public class ExpenseController {
         this.expenseRepository.deleteById(id);
     }
 
-    @GetMapping("expenses/financial")
-    public Map<Integer, Object> getPayroll(){
+    // @GetMapping("expenses/financial")
+    // public Map<Integer, Object> getPayroll(){
+    //     List<TeacherModel> teachers = teacherRepository.findAll();
+    //     Map<Integer, Object> map = new HashMap<>();
+    //     for (int i = 1; i <= teachers.size(); i++) {
+    //         map.put(i, teachers.get(i-1));
+    //     }
+    //     return map;
+    // }
+
+    @GetMapping("expenses/dashboard")
+    public Map<String, Double> getDashboard() {
+        Map<String, Double> dashboard = new HashMap<>();
+        List<StudentModel> students = studentRepository.findAll();
         List<TeacherModel> teachers = teacherRepository.findAll();
-        Map<Integer, Object> map = new HashMap<>();
-        for (int i = 1; i <= teachers.size(); i++) {
-            map.put(i, teachers.get(i-1));
+        List<ExpenseModel> expenses = expenseRepository.findAll();
+
+        Double total = 0.0;
+        for (StudentModel student: students) {
+            dashboard.put(student.getName(), student.getTuition());
+            total += student.getTuition();
         }
-        return map;
+        for (TeacherModel teacher: teachers) {
+            dashboard.put(teacher.getName(), teacher.getSalary());
+            total -= teacher.getSalary();
+        }
+        for (ExpenseModel expense: expenses) {
+            dashboard.put(expense.getName(), expense.getPrice());
+            total -= expense.getPrice();
+        }
+
+        dashboard.put("Total: ", total);
+
+        return dashboard;
+
     }
 
 }

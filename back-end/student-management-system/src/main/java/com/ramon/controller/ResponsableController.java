@@ -69,7 +69,7 @@ public class ResponsableController {
         throw new ResponsableNotFoundException(-1l);
     }
 
-    @GetMapping("responsables/{id}")
+    @GetMapping("responsables/{id}/total")
     public Map<String, Double> getTotalTuition(@PathVariable Long id) {
         ResponsableModel responsable = responsableRepository.findById(id).get();
         Map<String, Double> studentsTuition = new HashMap<>();
