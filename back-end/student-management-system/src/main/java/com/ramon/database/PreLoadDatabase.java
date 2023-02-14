@@ -90,8 +90,10 @@ public class PreLoadDatabase implements CommandLineRunner {
             logger.info("{}", student.getResponsable().getNameResponsable());
         });
 
-        TeacherModel teacher1 = new TeacherModel("Paraquinho", "66661111111", "automato@ufal.br", 5000.0);
+        TeacherModel teacher1 = new TeacherModel("Paraquinho", "66661111111", "automato@ufal.br", 5000.0, "English");
         teacherRepository.save(teacher1);
+        TeacherModel teacher2 = new TeacherModel("Coutas", "666432111111", "automato@ufal.br", 5000.0, "Portuguese");
+        teacherRepository.save(teacher2);
         teacherRepository.findAll().forEach((teacher) -> {
             logger.info("{}", teacher);
         });

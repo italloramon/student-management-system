@@ -9,17 +9,22 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ramon.repository.ExpenseRepository;
+import com.ramon.repository.TeacherRepository;
 import java.util.List;
+import java.util.*;
 import com.ramon.model.ExpenseModel;
+import com.ramon.model.TeacherModel;
 import com.ramon.exception.*;
 
 @RestController
 @RequestMapping("/api/")
 public class ExpenseController {
     private final ExpenseRepository expenseRepository;
+    private final TeacherRepository teacherRepository;
 
-    public ExpenseController(ExpenseRepository expenseRepository) {
+    public ExpenseController(ExpenseRepository expenseRepository, TeacherRepository teacherRepository) {
         this.expenseRepository = expenseRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     @GetMapping("expenses/")
@@ -50,6 +55,16 @@ public class ExpenseController {
     @DeleteMapping("expenses/{id}")
     public void deleteExpense(@PathVariable Long id) {
         this.expenseRepository.deleteById(id);
+    }
+
+    @GetMapping("expenses/financial")
+    public Map<Integer, Object> getPayroll(){
+        List<TeacherModel> teachers = teacherRepository.findAll();
+        Map<Integer, Object> map = new HashMap<>();
+        for (int i = 1; i <= teachers.size(); i++) {
+            map.put(i, teachers.get(i-1));
+        }
+        return map;
     }
 
 }
