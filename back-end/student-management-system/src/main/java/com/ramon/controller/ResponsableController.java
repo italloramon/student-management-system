@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ramon.repository.ResponsableRepository;
 import java.util.List;
 import java.util.Map;
-
+import java.util.HashMap;
+import com.ramon.model.StudentModel;
 import com.ramon.model.ResponsableModel;
 import com.ramon.exception.*;
 
@@ -66,6 +67,20 @@ public class ResponsableController {
             }
         }
         throw new ResponsableNotFoundException(-1l);
+    }
+
+    @GetMapping("responsables/{id}")
+    public Map<String, Double> getTotalTuition(@PathVariable Long id) {
+        ResponsableModel responsable = responsableRepository.findById(id).get();
+        Map<String, Double> studentsTuition = new HashMap<>();
+        Double total = 0.0;
+        for (StudentModel student : responsable.getStudents()) {
+            studentsTuition.put(student.getName(), student.getTuition());
+            total += student.getTuition();
+        }
+        studentsTuition.put("Total to pay:", total);
+
+        return studentsTuition;
     }
 
 }

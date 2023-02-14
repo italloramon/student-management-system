@@ -34,7 +34,7 @@ public class ResponsableModel {
     @Getter @Setter private String emailResponsable;
 
     @OneToMany(mappedBy="responsable")
-    private List<StudentModel> students;
+    @Getter private List<StudentModel> students;
 
     public ResponsableModel(String nameResponsable, String cpfResponsable, String emailResponsable) {
         this.nameResponsable = nameResponsable;
