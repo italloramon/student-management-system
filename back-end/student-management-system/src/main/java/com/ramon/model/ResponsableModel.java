@@ -42,4 +42,7 @@ public class ResponsableModel {
         this.emailResponsable = emailResponsable;
     }
 
+    public Role getRole() {
+        return Role.RESPONSABLE;
+    }
 }

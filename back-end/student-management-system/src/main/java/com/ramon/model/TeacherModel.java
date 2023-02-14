@@ -40,4 +40,8 @@ public class TeacherModel {
         this.salary = salary;
     }
 
+    public Role getRole() {
+        return Role.TEACHER;
+    }
+
 }

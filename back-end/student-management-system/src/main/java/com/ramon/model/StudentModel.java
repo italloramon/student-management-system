@@ -16,6 +16,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ElementCollection;
 import java.util.*;
+import com.ramon.model.*;
 import com.ramon.model.courses.*;
 
 @Entity
@@ -90,4 +91,7 @@ public class StudentModel {
         return (this.english.getScores() + this.geography.getScores() + this.history.getScores() + this.mathematics.getScores() + this.portuguese.getScores()) / 5;    
     }
 
+    public Role getRole() {
+        return Role.STUDENT;
+    }
 }
