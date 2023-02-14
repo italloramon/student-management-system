@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.EqualsAndHashCode;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.JoinColumn;
 
 @Entity
@@ -34,7 +37,7 @@ public class ResponsableModel {
     @Getter @Setter private String emailResponsable;
 
     @OneToMany(mappedBy="responsable")
-    @Getter private List<StudentModel> students;
+    @JsonIgnore @Getter private List<StudentModel> students;
 
     public ResponsableModel(String nameResponsable, String cpfResponsable, String emailResponsable) {
         this.nameResponsable = nameResponsable;
