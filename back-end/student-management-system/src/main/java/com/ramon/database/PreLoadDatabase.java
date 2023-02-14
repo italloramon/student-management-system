@@ -23,8 +23,9 @@ public class PreLoadDatabase implements CommandLineRunner {
     private final HistoryRepository historyRepository;
     private final MathematicsRepository mathematicsRepository;
     private final PortugueseRepository portugueseRepository;
+    private final ExpenseRepository expenseRepository;
 
-    public PreLoadDatabase(StudentRepository studentRepository, TeacherRepository teacherRepository, ResponsableRepository responsableRepository, EnglishRepository englishRepository, GeographyRepository geographyRepository, HistoryRepository historyRepository, MathematicsRepository mathematicsRepository, PortugueseRepository portugueseRepository) {
+    public PreLoadDatabase(StudentRepository studentRepository, TeacherRepository teacherRepository, ResponsableRepository responsableRepository, EnglishRepository englishRepository, GeographyRepository geographyRepository, HistoryRepository historyRepository, MathematicsRepository mathematicsRepository, PortugueseRepository portugueseRepository, ExpenseRepository expenseRepository) {
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
         this.responsableRepository = responsableRepository;
@@ -33,6 +34,7 @@ public class PreLoadDatabase implements CommandLineRunner {
         this.historyRepository = historyRepository;
         this.mathematicsRepository = mathematicsRepository;
         this.portugueseRepository = portugueseRepository;
+        this.expenseRepository = expenseRepository;
     }
 
     @Override
@@ -93,6 +95,12 @@ public class PreLoadDatabase implements CommandLineRunner {
         teacherRepository.findAll().forEach((teacher) -> {
             logger.info("{}", teacher);
         });
+
+
+        ExpenseModel expense = new ExpenseModel("Water", "Basics", 1250.25);
+        ExpenseModel expense2 = new ExpenseModel("Fire", "Basics", 120.5);
+        expenseRepository.save(expense);
+        expenseRepository.save(expense2);
 
         //repository.save(new City("Bratislava", 432000));
         //repository.save(new City("Budapest", 1759000));

@@ -12,6 +12,7 @@ import com.ramon.repository.TeacherRepository;
 import com.ramon.repository.NoticeRepository;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 import com.ramon.model.TeacherModel;
 import com.ramon.model.NoticeModel;
@@ -73,6 +74,18 @@ public class TeacherController {
     @PostMapping("teachers/sendNotice")
     public NoticeModel sendNotice(@RequestBody NoticeModel notice) {
         return noticeRepository.save(notice);
+    }
+
+    @GetMapping("teachers/payroll")
+    public Map<String, Double> payroll() {
+        List<TeacherModel> teachers = teacherRepository.findAll();
+        Map<String, Double> response = new HashMap<>();
+        Double total = 0.0;
+        for (TeacherModel teacher: teachers) {
+            total += teacher.getSalary();
+        }
+        response.put("Payroll", total);
+        return response;
     }
 
 }
