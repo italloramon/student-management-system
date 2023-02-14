@@ -8,6 +8,7 @@ import PublicRoute from "./components/Routes/PublicRoutes";
 import { useAuth } from "./hooks/useAuth";
 import Ranking from "./pages/Ranking";
 import Mural from "./pages/Mural";
+import Boletim from './pages/Boletim';
 
 const Router = () => {
   const { token } = useAuth();
@@ -34,8 +35,9 @@ const Router = () => {
         path="/students/:id"
         element={<SelectedStudent></SelectedStudent>}
       ></Route>
-      <Route path="/ranking" element={<Ranking></Ranking>}></Route>
-      <Route path="/mural" element={<Mural></Mural>}></Route>
+      <Route path="/ranking" element={<Ranking />} />
+      <Route path="/mural" element={<Mural />} />
+      <Route path="/boletim" element={<Boletim />} />
     </Routes>
   );
 };

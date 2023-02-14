@@ -4,6 +4,7 @@ import api from "../services/api";
 
 export const DataProvider = ({ children }) => {
   const [data, setData] = useState(null);
+  const [id, setId] = useState(20230001);
 
   const getAll = async () => {
     const result = await api.get("/students/");
@@ -65,6 +66,7 @@ export const DataProvider = ({ children }) => {
         addStudent,
         removeStudent,
         updateStudent,
+        id
       }}
     >
       {children}

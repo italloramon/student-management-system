@@ -73,7 +73,7 @@ const MuralStudent = () => {
   }, []);
 
   return (
-    <section>{data && data.map((item, index) => <p>{item.text}</p>)}</section>
+      <section>{data && data.map((item, index) => <p key={index}>{item.text}</p>)}</section>
   );
 };
 

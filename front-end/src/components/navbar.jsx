@@ -25,7 +25,8 @@ export const Navbar = () => {
             <Nav.Link href="/students">Students</Nav.Link>
             <Nav.Link href="#link">Teachers</Nav.Link>
             <Nav.Link href="/ranking">Ranking</Nav.Link>
-            <Nav.Link href="/mural">Mural</Nav.Link>
+            <Nav.Link onClick={() => navigate('/mural')}>Mural</Nav.Link>
+            <Nav.Link onClick={() => navigate('/boletim')}>Boletim</Nav.Link>
 
             <NavDropdown title="Opções" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Perfil</NavDropdown.Item>
