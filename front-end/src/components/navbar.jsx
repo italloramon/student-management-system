@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const navigate = useNavigate();
+  const { roles } = useAuth();
   const { logout } = useAuth();
   return (
     <NavbarBootstrap
@@ -19,7 +20,11 @@ export const Navbar = () => {
       style={{ padding: "1em 2.5em", justifyContent: "space-beetwenn" }}
     >
       <Container>
-        <NavbarBootstrap.Brand href="/">HOME</NavbarBootstrap.Brand>
+        <NavbarBootstrap.Brand>
+          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+            HOME
+          </Link>
+        </NavbarBootstrap.Brand>
         <NavbarBootstrap.Toggle aria-controls="basic-NavbarBootstrap-nav" />
         <NavbarBootstrap.Collapse id="basic-NavbarBootstrap-nav">
           <Nav
@@ -32,25 +37,29 @@ export const Navbar = () => {
               gap: "15px",
             }}
           >
-            <Link
-              to="/students"
-              style={{
-                textDecoration: "none",
-                color: "darkgray",
-                textAlign: "center",
-              }}
-            >
-              Admin Dashboard
-            </Link>
-            <Link
-              style={{
-                textDecoration: "none",
-                color: "darkgray",
-                textAlign: "center",
-              }}
-            >
-              Teachers
-            </Link>{" "}
+            {roles == "ADMIN" && (
+              <Link
+                to="/students"
+                style={{
+                  textDecoration: "none",
+                  color: "darkgray",
+                  textAlign: "center",
+                }}
+              >
+                Admin Dashboard
+              </Link>
+            )}
+            {roles == "TEACHER" && roles == "ADMIN" && (
+              <Link
+                style={{
+                  textDecoration: "none",
+                  color: "darkgray",
+                  textAlign: "center",
+                }}
+              >
+                Teachers
+              </Link>
+            )}
             <Link
               to="/ranking"
               style={{
@@ -71,21 +80,21 @@ export const Navbar = () => {
             >
               Mural
             </Link>
-            <Link
-              to="/boletim"
-              style={{
-                textDecoration: "none",
-                color: "darkgray",
-                textAlign: "center",
-              }}
-            >
-              Boletim
-            </Link>
+            {roles === "STUDENT" && (
+              <Link
+                to="/boletim"
+                style={{
+                  textDecoration: "none",
+                  color: "darkgray",
+                  textAlign: "center",
+                }}
+              >
+                Boletim
+              </Link>
+            )}
             <NavDropdown title="Opções" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Perfil</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Configurações
-              </NavDropdown.Item>
+              <NavDropdown.Item>Perfil</NavDropdown.Item>
+              <NavDropdown.Item>Configurações</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={() => logout()}>
                 Logout

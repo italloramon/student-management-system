@@ -62,7 +62,7 @@ const Router = () => {
       <Route
         path="/mural"
         element={
-          roles == "TEACHER" ? (
+          roles == "TEACHER" && roles == "ADMIN" ? (
             <PrivateRoute>
               <MuralTeacher />
             </PrivateRoute>
