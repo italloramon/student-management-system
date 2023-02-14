@@ -10,8 +10,9 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const navigate = useNavigate();
-  const { roles } = useAuth();
+  const { roles, token } = useAuth();
   const { logout } = useAuth();
+
   return (
     <NavbarBootstrap
       bg="dark"
@@ -26,82 +27,84 @@ export const Navbar = () => {
           </Link>
         </NavbarBootstrap.Brand>
         <NavbarBootstrap.Toggle aria-controls="basic-NavbarBootstrap-nav" />
-        <NavbarBootstrap.Collapse id="basic-NavbarBootstrap-nav">
-          <Nav
-            className="me-auto"
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "15px",
-            }}
-          >
-            {roles == "ADMIN" && (
-              <Link
-                to="/students"
-                style={{
-                  textDecoration: "none",
-                  color: "darkgray",
-                  textAlign: "center",
-                }}
-              >
-                Admin Dashboard
-              </Link>
-            )}
-            {roles == "TEACHER" && roles == "ADMIN" && (
-              <Link
-                style={{
-                  textDecoration: "none",
-                  color: "darkgray",
-                  textAlign: "center",
-                }}
-              >
-                Teachers
-              </Link>
-            )}
-            <Link
-              to="/ranking"
+        {token && (
+          <NavbarBootstrap.Collapse id="basic-NavbarBootstrap-nav">
+            <Nav
+              className="me-auto"
               style={{
-                textDecoration: "none",
-                color: "darkgray",
-                textAlign: "center",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "15px",
               }}
             >
-              Ranking
-            </Link>{" "}
-            <Link
-              to="/mural"
-              style={{
-                textDecoration: "none",
-                color: "darkgray",
-                textAlign: "center",
-              }}
-            >
-              Mural
-            </Link>
-            {roles === "STUDENT" && (
+              {roles == "ADMIN" && (
+                <Link
+                  to="/students"
+                  style={{
+                    textDecoration: "none",
+                    color: "darkgray",
+                    textAlign: "center",
+                  }}
+                >
+                  Admin Dashboard
+                </Link>
+              )}
+              {roles == "TEACHER" && roles == "ADMIN" && (
+                <Link
+                  style={{
+                    textDecoration: "none",
+                    color: "darkgray",
+                    textAlign: "center",
+                  }}
+                >
+                  Teachers
+                </Link>
+              )}
               <Link
-                to="/boletim"
+                to="/ranking"
                 style={{
                   textDecoration: "none",
                   color: "darkgray",
                   textAlign: "center",
                 }}
               >
-                Boletim
+                Ranking
+              </Link>{" "}
+              <Link
+                to="/mural"
+                style={{
+                  textDecoration: "none",
+                  color: "darkgray",
+                  textAlign: "center",
+                }}
+              >
+                Mural
               </Link>
-            )}
-            <NavDropdown title="Opções" id="basic-nav-dropdown">
-              <NavDropdown.Item>Perfil</NavDropdown.Item>
-              <NavDropdown.Item>Configurações</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={() => logout()}>
-                Logout
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </NavbarBootstrap.Collapse>
+              {roles === "STUDENT" && (
+                <Link
+                  to="/boletim"
+                  style={{
+                    textDecoration: "none",
+                    color: "darkgray",
+                    textAlign: "center",
+                  }}
+                >
+                  Boletim
+                </Link>
+              )}
+              <NavDropdown title="Opções" id="basic-nav-dropdown">
+                <NavDropdown.Item>Perfil</NavDropdown.Item>
+                <NavDropdown.Item>Configurações</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={() => logout()}>
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </NavbarBootstrap.Collapse>
+        )}
       </Container>
     </NavbarBootstrap>
   );
