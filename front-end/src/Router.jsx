@@ -76,7 +76,7 @@ const Router = () => {
       <Route
         path="/boletim"
         element={
-          <PrivateRoute>
+          <PrivateRoute canAcess="STUDENT">
             <Boletim />
           </PrivateRoute>
         }

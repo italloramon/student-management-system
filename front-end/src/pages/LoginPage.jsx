@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
 import api from "../services/api";
 
 const LoginPage = () => {
@@ -19,6 +20,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [createAccount, setCreateAccount] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [value, setValue] = useState("students");
   const { login } = useAuth();
 
   const onSubmit = async (data) => {
@@ -28,19 +30,9 @@ const LoginPage = () => {
     };
 
     try {
-      const response = await api.post("/students/login", params);
+      const response = await api.post(`/${value}/login`, params);
       console.log(response);
-      login(
-        response.data.id, 
-        response.data.role, 
-        {
-          english: response.data.english,
-          geography: response.data.geography,
-          history: response.data.history,
-          mathematics: response.data.mathematics,
-          portuguese: response.data.portuguese
-        }
-        );
+      login(response.data.id, response.data.role);
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -59,6 +51,14 @@ const LoginPage = () => {
               <div className="card bg-dark text-white">
                 <div className="card-body p-5 text-center">
                   <div className="mb-md-5 mt-md-4 pb-5">
+                    <RadioGroup onChange={setValue} value={value}>
+                      <Stack direction="row">
+                        <Radio value="students">Estudante</Radio>
+                        <Radio value="teachers">Professor</Radio>
+                        <Radio value="responsables">Responsável</Radio>
+                        <Radio value="admin">Admin</Radio>
+                      </Stack>
+                    </RadioGroup>
                     <h2 className="fw-bold mb-5 text-uppercase">
                       {!createAccount ? "Login" : "Criar Conta"}
                     </h2>
