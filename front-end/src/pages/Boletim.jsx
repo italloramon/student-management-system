@@ -2,7 +2,7 @@ import { Table } from "react-bootstrap";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import api from "../services/api";
-
+import { Title } from "../styles";
 const Boletim = () => {
   const { token } = useAuth();
   const [notas, setNotas] = useState();
@@ -23,7 +23,7 @@ const Boletim = () => {
 
   return (
     <center style={{ padding: "2em" }}>
-      <h2>{`Boletim de ${notas?.name}`}</h2>
+      <Title>{`Boletim de ${notas?.name}`}</Title>
       <Table striped bordered hover variant="light" style={{ margin: "1em 0" }}>
         <thead>
           <tr>

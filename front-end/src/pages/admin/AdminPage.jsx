@@ -4,7 +4,7 @@ import { Modal } from "../../components";
 import { Title, Container } from "../../styles";
 import { Button, Table } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { useData } from "../../hooks/useData";
+import { useData } from "../../hooks/useAdmin";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 

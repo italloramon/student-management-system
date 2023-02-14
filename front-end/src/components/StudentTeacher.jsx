@@ -1,6 +1,6 @@
 import { Button, Form as FormBootstrap } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { useData } from "../hooks/useData";
+import { useData } from "../hooks/useAdmin";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { studentSchema, updateStudentSchema } from "../utils/schemas";

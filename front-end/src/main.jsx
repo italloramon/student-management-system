@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import Router from "./Router";
 import { Navbar } from "./components";
 import { BrowserRouter } from "react-router-dom";
-import { DataProvider } from "./context/dataContext";
-import AuthContextProvider from "./context/authContextProvider";
+import { DataProvider } from "./context/admin/adminContext";
+import AuthContextProvider from "./context/auth/authContextProvider";
 import { ChakraProvider } from "@chakra-ui/react";
 import "bootstrap/dist/css/bootstrap.min.css";
 

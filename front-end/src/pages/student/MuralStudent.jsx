@@ -16,7 +16,9 @@ const MuralStudent = () => {
 
   return (
     <section>
-      <Title style={{ padding: "1em" }}>Mural de Estudantes</Title>
+      <Title style={{ padding: "1em", textAlign: "center" }}>
+        Mural de Estudantes
+      </Title>
       {data && data.map((item, index) => <p key={index}>{item.text}</p>)}
     </section>
   );

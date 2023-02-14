@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 export const DataContext = createContext({});
-import api from "../services/api";
+import api from "../../services/api";
 
 export const DataProvider = ({ children }) => {
   const [data, setData] = useState(null);
@@ -66,7 +66,7 @@ export const DataProvider = ({ children }) => {
         addStudent,
         removeStudent,
         updateStudent,
-        id
+        id,
       }}
     >
       {children}
