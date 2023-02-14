@@ -1,11 +1,11 @@
 import { Table } from 'react-bootstrap';
-import { useData } from '../hooks/useData';
+import { useAuth } from '../hooks/useAuth';
 import { useState } from 'react';
 
 const Boletim = () => {
-	const { data, id } = useData();
+	const { notas } = useAuth();
 
-	const [notas, setNotas] = useState(null);
+	console.log(notas);
 
 	return (
 		<center style={{ padding: '2em' }}>
@@ -13,7 +13,7 @@ const Boletim = () => {
 			<Table striped bordered hover variant="light" style={{ margin: "1em 0" }}>
 		      <thead>
 		        <tr>
-		          <th>#</th>
+		          <th>Avaliação</th>
 		          <th>Inglês</th>
 		          <th>Geografia</th>
 		          <th>História</th>
@@ -21,40 +21,41 @@ const Boletim = () => {
 		          <th>Português</th>
 		        </tr>
 		      </thead>
-		        {data && 
+	              {notas && 
 		      <tbody>
-		              <tr>
-		                <td>AB1</td>
-		                <td>{data.find(item => item.id === id).english.score1}</td>
-		                <td>{data.find(item => item.id === id).geography.score1}</td>
-		                <td>{data.find(item => item.id === id).history.score1}</td>
-		                <td>{data.find(item => item.id === id).mathematics.score1}</td>
-		                <td>{data.find(item => item.id === id).portuguese.score1}</td>
-		              </tr>
-		              <tr>
-		                <td>AB2</td>
-		                <td>{data.find(item => item.id === id).english.score2}</td>
-		                <td>{data.find(item => item.id === id).geography.score2}</td>
-		                <td>{data.find(item => item.id === id).history.score2}</td>
-		                <td>{data.find(item => item.id === id).mathematics.score2}</td>
-		                <td>{data.find(item => item.id === id).portuguese.score2}</td>
-		              </tr>
-		              <tr>
-		                <td>AB3</td>
-		                <td>{data.find(item => item.id === id).english.score3}</td>
-		                <td>{data.find(item => item.id === id).geography.score3}</td>
-		                <td>{data.find(item => item.id === id).history.score3}</td>
-		                <td>{data.find(item => item.id === id).mathematics.score3}</td>
-		                <td>{data.find(item => item.id === id).portuguese.score3}</td>
-		              </tr>
-		              <tr>
-		                <td>AB4</td>
-		                <td>{data.find(item => item.id === id).english.score4}</td>
-		                <td>{data.find(item => item.id === id).geography.score4}</td>
-		                <td>{data.find(item => item.id === id).history.score4}</td>
-		                <td>{data.find(item => item.id === id).mathematics.score4}</td>
-		                <td>{data.find(item => item.id === id).portuguese.score4}</td>
-		              </tr>
+	              	<tr>
+	              		<td>AV1</td>
+	              		<td>{notas.english.score1}</td>
+	              		<td>{notas.geography.score1}</td>
+	              		<td>{notas.history.score1}</td>
+	              		<td>{notas.mathematics.score1}</td>
+	              		<td>{notas.portuguese.score1}</td>
+	              	</tr>
+	              	<tr>
+	              		<td>AV2</td>
+	              		<td>{notas.english.score2}</td>
+	              		<td>{notas.geography.score2}</td>
+	              		<td>{notas.history.score2}</td>
+	              		<td>{notas.mathematics.score2}</td>
+	              		<td>{notas.portuguese.score2}</td>
+	              	</tr>
+	              	<tr>
+	              		<td>AV3</td>
+	              		<td>{notas.english.score3}</td>
+	              		<td>{notas.geography.score3}</td>
+	              		<td>{notas.history.score3}</td>
+	              		<td>{notas.mathematics.score3}</td>
+	              		<td>{notas.portuguese.score3}</td>
+	              	</tr>
+	              	<tr>
+	              		<td>AV4</td>
+	              		<td>{notas.english.score4}</td>
+	              		<td>{notas.geography.score4}</td>
+	              		<td>{notas.history.score4}</td>
+	              		<td>{notas.mathematics.score4}</td>
+	              		<td>{notas.portuguese.score4}</td>
+	              	</tr>
+
 		      </tbody>
 		          }
 		    </Table>
