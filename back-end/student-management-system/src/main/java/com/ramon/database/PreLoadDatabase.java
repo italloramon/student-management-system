@@ -43,12 +43,12 @@ public class PreLoadDatabase implements CommandLineRunner {
         teacherRepository.deleteAll();
         responsableRepository.deleteAll();
 
-        ResponsableModel responsable = new ResponsableModel("Ramon", "124", "email@ramon");
+        ResponsableModel responsable = new ResponsableModel("Trafalgar Law", "12442111110", "traw@gmail.com");
         responsableRepository.save(responsable);
 
-        responsableRepository.findAll().forEach((respon) -> {
-            logger.info("{}", respon);
-        });
+        // responsableRepository.findAll().forEach((respon) -> {
+        //     logger.info("{}", respon);
+        // });
 
         English english = new English();
         englishRepository.save(english);
@@ -65,7 +65,7 @@ public class PreLoadDatabase implements CommandLineRunner {
         Portuguese portuguese = new Portuguese();
         portugueseRepository.save(portuguese);
 
-        StudentModel student1 = new StudentModel("Carlos Eduardo", "12332145571", "cemg@ufal.com", responsableRepository.findById(1l).get(), englishRepository.findById(1l).get(), geographyRepository.findById(1l).get(), historyRepository.findById(1l).get(), mathematicsRepository.findById(1l).get(), portugueseRepository.findById(1l).get(), 254.2);
+        StudentModel student1 = new StudentModel("Monkey D. Luffy", "12332145571", "luffy@gmail.com", responsableRepository.findById(1l).get(), englishRepository.findById(1l).get(), geographyRepository.findById(1l).get(), historyRepository.findById(1l).get(), mathematicsRepository.findById(1l).get(), portugueseRepository.findById(1l).get(), 254.2);
         studentRepository.save(student1);
 
         English english2 = new English();
@@ -83,24 +83,24 @@ public class PreLoadDatabase implements CommandLineRunner {
         Portuguese portuguese2 = new Portuguese();
         portugueseRepository.save(portuguese2);
 
-        StudentModel student2 = new StudentModel("José Dani", "11111111111", "djs@ufal.br", responsableRepository.findById(1l).get(), englishRepository.findById(2l).get(), geographyRepository.findById(2l).get(), historyRepository.findById(2l).get(), mathematicsRepository.findById(2l).get(), portugueseRepository.findById(2l).get(), 1250.345);
+        StudentModel student2 = new StudentModel("Son Goku", "11111111111", "kamehameha@gmail.com", responsableRepository.findById(1l).get(), englishRepository.findById(2l).get(), geographyRepository.findById(2l).get(), historyRepository.findById(2l).get(), mathematicsRepository.findById(2l).get(), portugueseRepository.findById(2l).get(), 1250.345);
         studentRepository.save(student2);
 
-        studentRepository.findAll().forEach((student) -> {
-            logger.info("{}", student.getName());
-        });
+        // studentRepository.findAll().forEach((student) -> {
+        //     logger.info("{}", student.getName());
+        // });
 
-        TeacherModel teacher1 = new TeacherModel("Paraquinho", "66661111111", "automato@ufal.br", 5000.0, "English");
+        TeacherModel teacher1 = new TeacherModel("Hatake Kakashi", "66661111111", "thousandjutsus@gmail.com", 5000.0, "English");
         teacherRepository.save(teacher1);
-        TeacherModel teacher2 = new TeacherModel("Coutas", "666432111111", "automato@ufal.br", 5000.0, "Portuguese");
+        TeacherModel teacher2 = new TeacherModel("Red-Haired Shanks", "666432111111", "onearm@gmail.com", 5000.0, "Portuguese");
         teacherRepository.save(teacher2);
-        teacherRepository.findAll().forEach((teacher) -> {
-            logger.info("{}", teacher);
-        });
+        // teacherRepository.findAll().forEach((teacher) -> {
+        //     logger.info("{}", teacher);
+        // });
 
 
         ExpenseModel expense = new ExpenseModel("Water", "Basics", 1250.25);
-        ExpenseModel expense2 = new ExpenseModel("Fire", "Basics", 120.5);
+        ExpenseModel expense2 = new ExpenseModel("Cleaning Products", "Basics", 120.5);
         expenseRepository.save(expense);
         expenseRepository.save(expense2);
 
