@@ -77,11 +77,17 @@ public class StudentController {
     @PostMapping("students/")
     public StudentModel createStudent(@RequestBody Map<String, String> requestBody) {
         String nameResponsable = requestBody.get("nameResponsable");
-        System.out.println(nameResponsable);
+        //System.out.println(nameResponsable);
         String emailResponsable = requestBody.get("emailResponsable");
         String cpfResponsable = requestBody.get("cpfResponsable");
-        ResponsableModel newResponsable = new ResponsableModel(nameResponsable, emailResponsable, cpfResponsable);
-        responsableRepository.save(newResponsable);
+
+        if (responsableRepository.existsByCpfResponsable(cpfResponsable)) {
+            ResponsableModel newResponsable = responsableRepository.findByCpfResponsable(cpfResponsable);
+        } else {
+            ResponsableModel newResponsable = new ResponsableModel(nameResponsable, emailResponsable, cpfResponsable);
+            responsableRepository.save(newResponsable);
+        }
+
         String name = requestBody.get("name");
         String email = requestBody.get("email");
         String cpf = requestBody.get("cpf");
@@ -101,7 +107,7 @@ public class StudentController {
         mathematicsRepository.save(mathematics);
         Portuguese portuguese = new Portuguese();
         portugueseRepository.save(portuguese);
-        StudentModel newStudent = new StudentModel(name, cpf, email, newResponsable, english, geography, history, mathematics, portuguese, tuition);
+        StudentModel newStudent = new StudentModel(name, cpf, email, responsableRepository.findByCpfResponsable(cpfResponsable), english, geography, history, mathematics, portuguese, tuition);
         return this.studentRepository.save(newStudent);
     }
 
