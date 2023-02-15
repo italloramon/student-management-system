@@ -46,12 +46,31 @@ public class TeacherController {
 
     @PutMapping("teachers/{id}")
     public TeacherModel updateTeacher(@RequestBody TeacherModel newTeacher, @PathVariable Long id) {
-        return this.teacherRepository.findById(id).map(teacher -> {
+        TeacherModel teacher = teacherRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException(id));
+        if (newTeacher.getName() != null) {
             teacher.setName(newTeacher.getName());
+        }
+        if (newTeacher.getCpf() != null) {
             teacher.setCpf(newTeacher.getCpf());
+        }
+        if (newTeacher.getEmail() != null) {
             teacher.setEmail(newTeacher.getEmail());
-            return this.teacherRepository.save(teacher);
-        }).orElseThrow(() -> new TeacherNotFoundException(id));
+        }
+        if (newTeacher.getSalary() != null) {
+            teacher.setSalary(newTeacher.getSalary());
+        }
+        if (newTeacher.getRole() != null) {
+            teacher.setRole(newTeacher.getRole());
+        }
+        // return this.teacherRepository.findById(id).map(teacher -> {
+        //     teacher.setName(newTeacher.getName());
+        //     teacher.setCpf(newTeacher.getCpf());
+        //     teacher.setEmail(newTeacher.getEmail());
+        //     teacher.setSalary(newTeacher.getSalary());
+        //     teacher.setRole(newTeacher.getRole());
+        //     return this.teacherRepository.save(teacher);
+        // }).orElseThrow(() -> new TeacherNotFoundException(id));
+        return teacherRepository.save(teacher);
     }
 
     @DeleteMapping("teachers/{id}")

@@ -41,21 +41,17 @@ public class TeacherModel {
         this.cpf = cpf;
         this.email = email;
         this.salary = salary;
-        if(type == "English") {
+        if(type.equalsIgnoreCase("English")) {
             this.role = Role.TEACHERENGLISH;
-
-        } else if(type == "Geography") {
+        } else if(type.equalsIgnoreCase("Geography")) {
             this.role = Role.TEACHERGEOGRAPHY;
-        } else if(type == "History") {
+        } else if(type.equalsIgnoreCase("History")) {
             this.role = Role.TEACHERHISTORY;
-        } else if(type == "Mathematics") {
-            this.role = Role.TEACHERHISTORY;
-        } else if(type == "Portuguese") {
+        } else if(type.equalsIgnoreCase("Mathematics")) {
+            this.role = Role.TEACHERMATHEMATICS;
+        } else if(type.equalsIgnoreCase("Portuguese")) {
             this.role = Role.TEACHERPORTUGUESE;
-        } else if (type == "Enlgish") {
-            this.role = Role.TEACHERENGLISH;
         }
     }
-
 
 }
