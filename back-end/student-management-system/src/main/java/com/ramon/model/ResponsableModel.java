@@ -3,6 +3,7 @@ package com.ramon.model;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -36,7 +37,7 @@ public class ResponsableModel {
     @Column(name = "responsable_email")
     @Getter @Setter private String emailResponsable;
 
-    @OneToMany(mappedBy="responsable")
+    @OneToMany(mappedBy="responsable", cascade=CascadeType.ALL)
     @JsonIgnore @Getter private List<StudentModel> students;
 
     public ResponsableModel(String nameResponsable, String cpfResponsable, String emailResponsable) {

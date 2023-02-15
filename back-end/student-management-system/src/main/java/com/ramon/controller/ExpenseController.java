@@ -44,12 +44,18 @@ public class ExpenseController {
 
     @PutMapping("expenses/{id}")
     public ExpenseModel updateExpense(@RequestBody ExpenseModel newExpense, @PathVariable Long id) {
-        return this.expenseRepository.findById(id).map(expense -> {
+        ExpenseModel expense = expenseRepository.findById(id).orElseThrow(() -> new ExpenseNotFoundException(id));
+        if (newExpense.getName() != null) {
             expense.setName(newExpense.getName());
+        }
+        if (newExpense.getCategory() != null) {
             expense.setCategory(newExpense.getCategory());
+        }
+        if (newExpense.getPrice() != null) {
             expense.setPrice(newExpense.getPrice());
-            return this.expenseRepository.save(expense);
-        }).orElseThrow(() -> new ExpenseNotFoundException(id));
+        }
+        
+        return expenseRepository.save(expense);
     }
 
     @DeleteMapping("expenses/{id}")

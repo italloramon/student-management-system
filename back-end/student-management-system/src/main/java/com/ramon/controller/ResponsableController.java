@@ -42,20 +42,24 @@ public class ResponsableController {
 
     @PutMapping("responsables/{id}")
     public ResponsableModel updateResponsable(@RequestBody ResponsableModel newResponsable, @PathVariable Long id) {
-        return this.responsableRepository.findById(id).map(responsable -> {
+        ResponsableModel responsable = responsableRepository.findById(id).orElseThrow(() -> new ResponsableNotFoundException(id));
+        if (newResponsable.getNameResponsable() != null) {
             responsable.setNameResponsable(newResponsable.getNameResponsable());
+        }
+        if (newResponsable.getCpfResponsable() != null) {
             responsable.setCpfResponsable(newResponsable.getCpfResponsable());
+        }
+        if (newResponsable.getEmailResponsable() != null) {
             responsable.setEmailResponsable(newResponsable.getEmailResponsable());
-            return this.responsableRepository.save(responsable);
-        }).orElseThrow(() -> new ResponsableNotFoundException(id));
+        }
+        
+        return responsableRepository.save(responsable);
     }
 
-    //TO-DO
-    //When delete a responsable your students should be delete too
-    //@DeleteMapping("responsables/{id}")
-    //public void deleteResponsable(@PathVariable Long id) {
-    //    this.responsableRepository.deleteById(id);
-    //}
+    @DeleteMapping("responsables/{id}")
+    public void deleteResponsable(@PathVariable Long id) {
+        this.responsableRepository.deleteById(id);
+    }
 
     @PostMapping("responsables/login")
     public ResponsableModel loginResponsable(@RequestBody Map<String, String> responsable) {

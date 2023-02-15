@@ -107,12 +107,38 @@ public class StudentController {
 
     @PutMapping("students/{id}")
     public StudentModel updateStudent(@RequestBody StudentModel newStudent, @PathVariable Long id) {
-        return this.studentRepository.findById(id).map(student -> {
+        StudentModel student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+        if (newStudent.getName() != null) {
             student.setName(newStudent.getName());
+        }
+        if (newStudent.getCpf() != null) {
             student.setCpf(newStudent.getCpf());
+        }
+        if (newStudent.getEmail() != null) {
             student.setEmail(newStudent.getEmail());
-            return this.studentRepository.save(student);
-        }).orElseThrow(() -> new StudentNotFoundException(id));
+        }
+        if (newStudent.getTuition() != null) {
+            student.setTuition(newStudent.getTuition());
+        }
+        if (newStudent.getResponsable() != null) {
+            student.setResponsable(newStudent.getResponsable());
+        }
+        if (newStudent.getEnglish() != null) {
+            student.setEnglish(newStudent.getEnglish());
+        }
+        if (newStudent.getGeography() != null) {
+            student.setGeography(newStudent.getGeography());
+        }
+        if (newStudent.getHistory() != null) {
+            student.setHistory(newStudent.getHistory());
+        }
+        if (newStudent.getPortuguese() != null) {
+            student.setPortuguese(newStudent.getPortuguese());
+        }
+        if (newStudent.getMathematics() != null) {
+            student.setMathematics(newStudent.getMathematics());
+        }
+        return studentRepository.save(student);
     }
 
     @DeleteMapping("students/{id}")

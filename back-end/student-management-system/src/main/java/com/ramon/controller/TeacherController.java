@@ -62,14 +62,6 @@ public class TeacherController {
         if (newTeacher.getRole() != null) {
             teacher.setRole(newTeacher.getRole());
         }
-        // return this.teacherRepository.findById(id).map(teacher -> {
-        //     teacher.setName(newTeacher.getName());
-        //     teacher.setCpf(newTeacher.getCpf());
-        //     teacher.setEmail(newTeacher.getEmail());
-        //     teacher.setSalary(newTeacher.getSalary());
-        //     teacher.setRole(newTeacher.getRole());
-        //     return this.teacherRepository.save(teacher);
-        // }).orElseThrow(() -> new TeacherNotFoundException(id));
         return teacherRepository.save(teacher);
     }
 
