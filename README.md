@@ -1,6 +1,6 @@
 
 # Pre-requisites
-- You will nedd the following:
+- You will need the following:
 
     -> [Apache Maven 4.0.0](https://maven.apache.org/download.cgi)
 
