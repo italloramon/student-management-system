@@ -1,5 +1,6 @@
 
 # Pre-requisites
+Link: [Link do documento](https://docs.google.com/document/d/1jkZ6isWWnWep4LSvYH0QKFgl-PgN-F3oZifPZPZfS5U/edit?usp=sharing)
 - You will need the following:
 
     -> [Apache Maven 4.0.0](https://maven.apache.org/download.cgi)
