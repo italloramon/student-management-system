@@ -1,6 +1,14 @@
 
 # Pre-requisites
-Link: [Link do documento](https://docs.google.com/document/d/1jkZ6isWWnWep4LSvYH0QKFgl-PgN-F3oZifPZPZfS5U/edit?usp=sharing)
+Documento
+```
+Observações:
+Alunos, professores e responsáveis são usuários do sistema, logo todos têm atributos em comum. Então todos eles herdam alguns atributos da super classe usuário. 
+Utilizamos polimorfismos e generics de criação, remoção e atualização de usuários (professor, aluno e responsável).
+
+Antes tínhamos funções separadas para criação, remoção e atualização de usuários (professor, aluno e responsável) feitas em cada controller. Agora, criamos um controller principal (classe abstrata) que vai ter as funções de adicionar, remover e atualizar. E os controllers herdam desse controller principal e a especificação do tipo é feito usando generics.
+
+```
 - You will need the following:
 
     -> [Apache Maven 4.0.0](https://maven.apache.org/download.cgi)
