@@ -16,11 +16,12 @@ import java.util.HashMap;
 
 import com.ramon.model.TeacherModel;
 import com.ramon.model.NoticeModel;
+import com.ramon.model.StudentModel;
 import com.ramon.exception.*;
 
 @RestController
 @RequestMapping("/api/")
-public class TeacherController {
+public class TeacherController extends MainController<TeacherModel>{
     private final TeacherRepository teacherRepository;
     private final NoticeRepository noticeRepository;
 
@@ -29,10 +30,11 @@ public class TeacherController {
         this.noticeRepository = noticeRepository;
     }
 
-    @GetMapping("teachers/")
-    public List<TeacherModel> getAllTeachers() {
-        return this.teacherRepository.findAll();
-    }
+	@Override
+	@GetMapping("teachers/")
+	public List<TeacherModel> getAll() {
+		return this.teacherRepository.findAll();
+	}
 
     @GetMapping("teachers/{id}")
     public TeacherModel getTeacher(@PathVariable Long id) {
@@ -44,8 +46,9 @@ public class TeacherController {
         return this.teacherRepository.save(teacher);
     }
 
-    @PutMapping("teachers/{id}")
-    public TeacherModel updateTeacher(@RequestBody TeacherModel newTeacher, @PathVariable Long id) {
+	@Override
+	@PutMapping("teachers/{id}")
+	public TeacherModel update(@RequestBody TeacherModel newTeacher, @PathVariable Long id) {
         TeacherModel teacher = teacherRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException(id));
         if (newTeacher.getName() != null) {
             teacher.setName(newTeacher.getName());
@@ -63,15 +66,17 @@ public class TeacherController {
             teacher.setRole(newTeacher.getRole());
         }
         return teacherRepository.save(teacher);
-    }
+	}
 
-    @DeleteMapping("teachers/{id}")
-    public void deleteTeacher(@PathVariable Long id) {
-        this.teacherRepository.deleteById(id);
-    }
-
-    @PostMapping("teachers/login")
-    public TeacherModel loginTeacher(@RequestBody Map<String, String> teacher) {
+	@Override
+	@DeleteMapping("teachers/{id}")
+	public void delete(@PathVariable Long id) {
+		this.teacherRepository.deleteById(id);
+	}
+	
+	@Override
+	@PostMapping("teachers/login")
+	public TeacherModel create(@RequestBody Map<String, String> teacher) {
         String password = teacher.get("password");
         if (teacherRepository.existsByCpf(password)) {
             TeacherModel teacherLogin = teacherRepository.findByCpf(password);
@@ -80,7 +85,7 @@ public class TeacherController {
             }
         }
         throw new TeacherNotFoundException(-1l);
-    }
+	}
 
     @PostMapping("teachers/sendNotice")
     public NoticeModel sendNotice(@RequestBody NoticeModel notice) {
@@ -98,5 +103,7 @@ public class TeacherController {
         response.put("Payroll", total);
         return response;
     }
+
+ 
 
 }

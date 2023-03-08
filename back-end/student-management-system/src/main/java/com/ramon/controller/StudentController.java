@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/")
-public class StudentController {
+public class StudentController extends MainController<StudentModel> {
 
     private final StudentRepository studentRepository;
     private final ResponsableRepository responsableRepository;
@@ -48,10 +48,12 @@ public class StudentController {
         this.teacherRepository = teacherRepository;
     }
 
-    @GetMapping("students/")
-    public List<StudentModel> getAllStudents() {
-        return this.studentRepository.findAll();
-    }
+	@Override
+	@GetMapping("students/")
+	public List<StudentModel> getAll() {
+		return this.studentRepository.findAll();
+	}
+    
 
     @GetMapping("students/{id}")
     public StudentModel getStudent(@PathVariable Long id) {
@@ -74,9 +76,9 @@ public class StudentController {
     //    return test;
     //}
 
-    @PostMapping("students/")
-    public StudentModel createStudent(@RequestBody Map<String, String> requestBody) {
-        String nameResponsable = requestBody.get("nameResponsable");
+	@PostMapping("students/")
+	public StudentModel createStudent(@RequestBody Map<String, String> requestBody) {
+		String nameResponsable = requestBody.get("nameResponsable");
         //System.out.println(nameResponsable);
         String emailResponsable = requestBody.get("emailResponsable");
         String cpfResponsable = requestBody.get("cpfResponsable");
@@ -109,11 +111,12 @@ public class StudentController {
         portugueseRepository.save(portuguese);
         StudentModel newStudent = new StudentModel(name, cpf, email, responsableRepository.findByCpfResponsable(cpfResponsable), english, geography, history, mathematics, portuguese, tuition);
         return this.studentRepository.save(newStudent);
-    }
+	}
 
-    @PutMapping("students/{id}")
-    public StudentModel updateStudent(@RequestBody StudentModel newStudent, @PathVariable Long id) {
-        StudentModel student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+	@Override
+	@PutMapping("students/{id}")
+	public StudentModel update(@RequestBody StudentModel newStudent, @PathVariable Long id) {
+		StudentModel student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
         if (newStudent.getName() != null) {
             student.setName(newStudent.getName());
         }
@@ -145,12 +148,14 @@ public class StudentController {
             student.setMathematics(newStudent.getMathematics());
         }
         return studentRepository.save(student);
-    }
+	}
 
-    @DeleteMapping("students/{id}")
-    public void deleteStudent(@PathVariable Long id) {
-        this.studentRepository.deleteById(id);
-    }
+	@Override
+	@DeleteMapping("students/{id}")
+	public void delete(@PathVariable Long id) {
+		this.studentRepository.deleteById(id);
+		
+	}
 
     @PostMapping("students/{idStudent}/{idTeacher}/{bimester}/{score}")
     public void updateScore (@PathVariable Long idStudent, @PathVariable Long idTeacher, @PathVariable Integer bimester, @PathVariable Double score) {
@@ -212,8 +217,9 @@ public class StudentController {
         
     }
 
-    @PostMapping("students/login")
-    public StudentModel loginStudent(@RequestBody Map<String, String> student) {
+	@Override
+	@PostMapping("students/login")
+	public StudentModel create(@RequestBody Map<String, String> student) {
         String password = student.get("password");
         if (studentRepository.existsByCpf(password)) {
             StudentModel studentLogin = studentRepository.findByCpf(password);
@@ -222,7 +228,8 @@ public class StudentController {
             }
         }
         throw new StudentNotFoundException(-1l);
-    }
+	}
+    
 
     public static StudentModel[] getSorterdStudents(StudentModel[] students, Comparator<StudentModel> comparator) {
         StudentModel[] sorted = students.clone();
@@ -234,5 +241,6 @@ public class StudentController {
     public List<NoticeModel> getNotices() {
         return noticeRepository.findAll();
     }
+
 
 }

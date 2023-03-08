@@ -15,20 +15,11 @@ import lombok.ToString;
 @Table(name = "teacher")
 @NoArgsConstructor
 @ToString @EqualsAndHashCode
-public class TeacherModel {
+public class TeacherModel extends User{
     @Id
     @GeneratedValue
     @Column(name = "teacher_id")
     @Getter private Long id;
-
-    @Column(name = "teacher_name")
-    @Getter @Setter private String name;
-
-    @Column(name = "teacher_cpf")
-    @Getter @Setter private String cpf;
-
-    @Column(name = "teacher_email")
-    @Getter @Setter private String email;
 
     @Column(name = "teacher_salary")
     @Getter @Setter private Double salary;

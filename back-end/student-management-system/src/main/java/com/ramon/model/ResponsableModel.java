@@ -22,7 +22,7 @@ import jakarta.persistence.JoinColumn;
 @Table(name = "responsable_table")
 @NoArgsConstructor
 @EqualsAndHashCode
-public class ResponsableModel {
+public class ResponsableModel extends User{
     @Id
     @GeneratedValue
     @Column(name = "responsable_id")

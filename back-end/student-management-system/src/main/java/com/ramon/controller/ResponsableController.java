@@ -13,23 +13,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import com.ramon.model.StudentModel;
+import com.ramon.model.TeacherModel;
 import com.ramon.model.ResponsableModel;
 import com.ramon.exception.*;
 
 @RestController
 @RequestMapping("/api/")
-public class ResponsableController {
+public class ResponsableController extends MainController<ResponsableModel> {
     private final ResponsableRepository responsableRepository;
 
     public ResponsableController(ResponsableRepository responsableRepository) {
         this.responsableRepository = responsableRepository;
     }
 
-    @GetMapping("responsables/")
-    public List<ResponsableModel> getAllResponsables() {
-        return this.responsableRepository.findAll();
-    }
-
+	@Override
+	@GetMapping("responsables/")
+	public List<ResponsableModel> getAll() {
+		return this.responsableRepository.findAll();
+	}
     @GetMapping("responsables/{id}")
     public ResponsableModel getResponsable(@PathVariable Long id) {
         return this.responsableRepository.findById(id).orElseThrow(() -> new ResponsableNotFoundException(id));
@@ -40,8 +41,9 @@ public class ResponsableController {
         return this.responsableRepository.save(responsable);
     }
 
-    @PutMapping("responsables/{id}")
-    public ResponsableModel updateResponsable(@RequestBody ResponsableModel newResponsable, @PathVariable Long id) {
+	@Override
+	@PutMapping("responsables/{id}")
+	public ResponsableModel update(@RequestBody ResponsableModel newResponsable, @PathVariable Long id) {
         ResponsableModel responsable = responsableRepository.findById(id).orElseThrow(() -> new ResponsableNotFoundException(id));
         if (newResponsable.getNameResponsable() != null) {
             responsable.setNameResponsable(newResponsable.getNameResponsable());
@@ -54,15 +56,16 @@ public class ResponsableController {
         }
         
         return responsableRepository.save(responsable);
-    }
+	}
+	@Override
+	@DeleteMapping("responsables/{id}")
+	public void delete(@PathVariable Long id) {
+		this.responsableRepository.deleteById(id);
+	}
 
-    @DeleteMapping("responsables/{id}")
-    public void deleteResponsable(@PathVariable Long id) {
-        this.responsableRepository.deleteById(id);
-    }
-
-    @PostMapping("responsables/login")
-    public ResponsableModel loginResponsable(@RequestBody Map<String, String> responsable) {
+	@Override
+	@PostMapping("responsables/login")
+	public ResponsableModel create(@RequestBody Map<String, String> responsable) {
         String password = responsable.get("password");
         if (responsableRepository.existsByCpfResponsable(password)) {
             ResponsableModel responsableLogin = responsableRepository.findByCpfResponsable(password);
@@ -71,7 +74,8 @@ public class ResponsableController {
             }
         }
         throw new ResponsableNotFoundException(-1l);
-    }
+	}
+    
 
     @GetMapping("responsables/{id}/total")
     public Map<String, Double> getTotalTuition(@PathVariable Long id) {

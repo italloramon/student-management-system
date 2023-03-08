@@ -23,20 +23,11 @@ import com.ramon.model.courses.*;
 @Table(name = "student")
 @NoArgsConstructor
 @ToString @EqualsAndHashCode
-public class StudentModel {
+public class StudentModel extends User{
     
     @Id
     @Column(name = "student_id")
     @Getter private Long id;
-
-    @Column(name = "student_name")
-    @Getter @Setter private String name;
-
-    @Column(name = "student_cpf")
-    @Getter @Setter private String cpf;
-
-    @Column(name = "student_email")
-    @Getter @Setter private String email;
 
     @ManyToOne
     @JoinColumn(name = "responsable_id", nullable = false)
