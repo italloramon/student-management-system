@@ -22,9 +22,10 @@ export const get = async (url, token) => {
 export const post = async (url, data, token=null) => {
 	try {
 		const response = await api.post(url, data);
-		response.data.type = 'success';
+		// response.data.type = 'success';
 		return response.data;
 	} catch (error) {
+		console.log(error)
 		error.response.data.type = 'danger';
 		return error.response.data;
 	}

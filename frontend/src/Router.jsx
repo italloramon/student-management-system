@@ -31,19 +31,22 @@ const Router = () => {
           <Route path="student" element={<P.StudentHome />} />
           <Route path="student/boletim" element={<P.StudentBoletim />} />
           <Route path="student/notices" element={<P.StudentNotices />} />
+          <Route path="student/ranking" element={<P.StudentRanking />} />
         </Route>
 
         <Route element={<C.PrivateRoute role="TEACHER" redirectTo="/login" />}>
           <Route path="teacher" element={<P.TeacherHome />} />
           <Route path="teacher/students" element={<P.TeacherStudents />} />
           <Route path="teacher/payroll" element={<P.TeacherPayroll />} />
+          <Route path="teacher/ranking" element={<P.StudentRanking />} />
           <Route path="teacher/notices" element={<P.TeacherNotices />} />
+          <Route path="teacher/form/score" element={<P.FormScore />} />
         </Route>
 
         <Route element={<C.PrivateRoute role="RESPONSABLE" redirectTo="/login" />}>
           <Route path="responsable" element={<P.ResponsableHome />} />
           <Route path="responsable/boletim" element={<P.ResponsableBoletim />} />
-          <Route path="responsable/notices" element={<P.ResponsableNotices />} />
+          <Route path="responsable/notices" element={<P.StudentNotices />} />
           <Route path="responsable/payment" element={<P.ResponsablePayment />} />
           <Route path="responsable/students" element={<P.ResponsableStudents />} />
         </Route>

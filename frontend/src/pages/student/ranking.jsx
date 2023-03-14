@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useMemo } from "react";
 import { useAuth, useContact, useInfo } from "../../context";
 import { api, formatDate } from "../../utils";
-import { Alert, Table } from '../../components';
 import * as Fetch from '../../functions';
+import { Alert, Table } from '../../components';
 
-export const ResponsablePayment = () => {
+export const StudentRanking = () => {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
+  const [ranking, setRanking] = useState(null);
 
   const info = useInfo();
   const auth = useAuth();
@@ -17,32 +17,30 @@ export const ResponsablePayment = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await Fetch.Responsable.getPayment(auth.token);
-
-      
-      
-      setData(response);
+      const response = await Fetch.Student.getRanking();
       setLoading(false);
+      setRanking(response);
+
+      console.log(response);
     };
 
     getData();
   }, []);
 
   if (loading) return <h1>Está carregando...</h1>
-  if (!data) return <h1>Não existe</h1>
 
   return (
     <section>
-      <h1 className="fs-2">Responsável - Pagamento</h1>
-      <Table data={data} columns={["Nome", "Valor"]}>
-        {data && data.map((item, index) => {
+      <h1 className="fs-2 pb-4">Ranking - Estudante {auth.username} Boletim</h1>
+      <Table data={ranking} columns={["posição", "nome", "pontuação"]}>
+        {ranking && ranking.map((student, index) => {
           return <tr key={index}>
-            <td>{item.name}</td>
-            <td>R$ {item.value}</td>
+            <td>{index+1}</td>
+            <td>{student.name}</td>
+            <td>{student.rankingStudent}</td>
           </tr>
         })}
       </Table>
-      <h1 className="fs-5">Total: R$ {data.reduce((sum, item) => sum+=item.value, 0)}</h1>
     </section>
   ) 
 };

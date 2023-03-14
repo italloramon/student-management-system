@@ -48,17 +48,19 @@ export const Login = () => {
           <option value="admin">Diretor</option>
           <option value="teacher">Professor</option>
           <option value="student">Estudante</option>
-          <option value="responsable">Responsável</option>
+          <option selected value="responsable">Responsável</option>
         </Select>
         <Input
           title="Username"
           type="text"
+          defaultValue="traw@gmail.com"
           errors={errors?.username}
           {...register("username")}
         />
         <Input
           title="Senha"
           type="password"
+          defaultValue="12442111110"
           errors={errors?.password}
           {...register("password")}
         />

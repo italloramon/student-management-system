@@ -1,9 +1,10 @@
 import { Table as TableBootstrap } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 
-export const Table = ({ data, columns, children }) => {
+export const Table = ({ data, columns, message = "Não há valores", children }) => {
+	if (!data) return <h1 className="fs-2">{message}</h1>
 	if (data) return (
-		<TableBootstrap striped bordered hover className="w-75" responsive>
+		<TableBootstrap striped bordered hover className="w-75 py-3" responsive>
 			<thead>
 	            <tr>
 	              {columns && columns.map((item, index) => <th key={index}>{item}</th>)}

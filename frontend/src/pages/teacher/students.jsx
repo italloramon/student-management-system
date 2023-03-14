@@ -4,9 +4,11 @@ import { useState, useEffect, useMemo } from "react";
 import { useAuth, useContact, useInfo } from "../../context";
 import { api, formatDate } from "../../utils";
 import { Alert, Table } from '../../components';
+import * as Fetch from '../../functions';
 
 export const TeacherStudents = () => {
   const [loading, setLoading] = useState(true);
+  const [students, setStudents] = useState(null);
 
   const info = useInfo();
   const auth = useAuth();
@@ -15,32 +17,32 @@ export const TeacherStudents = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await contact.getAll();
+      const response = await Fetch.Student.getAll();
+      setStudents(response);
       setLoading(false);
     };
 
-    // getData();
+    getData();
   }, []);
 
-  const create = () => {
-    contact.handleBodyEdit(null);
-    navigate("/form/contact");
-  };
-
-  const remove = async (event, id) => {
-    event.target.disabled = true;
-    const response = await contact.remove(id);
-    event.target.disabled = false;
-  };
-
-  const edit = (data) => {
-    contact.handleBodyEdit(data);
-    navigate("/form/contact");
-  };
+  if (loading) return <h1>Está carregando...</h1>
 
   return (
     <section>
       <h1 className="fs-2">Home - Professor {auth.username} Estudantes</h1>
+      {students && <Table data={students} columns={["id", "nome", "email", "cpf"]}>
+        {students && students.map((student, index) => {
+          return <tr key={index}>
+            <td>{student.id}</td>
+            <td>{student.name}</td>
+            <td>{student.email}</td>
+            <td>{student.cpf}</td>
+            <td>
+              <Button as={Link} to={`/teacher/form/score?idStudent=${student.id}&idTeacher=${auth.token}`} variant="primary">Adicionar nota</Button>
+            </td>
+          </tr>
+        })}
+      </Table>}
     </section>
   ) 
 };

@@ -31,6 +31,7 @@ export const PrivateRoute = ({ role, redirectTo }) => {
   console.log(role, auth.role)
 
   useEffect(() => {
+    console.log(auth.token)
     if (!auth.token) navigate(redirectTo);
     else if (!auth.loading) {
       console.log(auth.role, items);
@@ -42,5 +43,5 @@ export const PrivateRoute = ({ role, redirectTo }) => {
     }
   }, [auth.token, auth.loading]);
 
-  return <Layout>{!auth.loading ? <Outlet /> : <Loading />}</Layout>;
+  return <Layout>{(!auth.loading && auth.token) ? <Outlet /> : <Loading />}</Layout>;
 };

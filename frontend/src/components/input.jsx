@@ -44,3 +44,25 @@ export const Select = forwardRef((props, ref) => {
   );
 });
 
+export const TextArea = forwardRef((props, ref) => {
+  const { title, errors, type, rows, ...rest } = props;
+
+  return (
+    <Form.Group className="mb-3">
+      <Form.Label>{title}</Form.Label>
+      <Form.Control
+        isInvalid={errors}
+        ref={ref}
+        type={type}
+        placeholder={title + "..."}
+        as="textarea"
+        rows={rows}
+        {...rest}
+      />
+      <Form.Control.Feedback type="invalid">
+        {errors?.message}
+      </Form.Control.Feedback>
+    </Form.Group>
+  );
+});
+

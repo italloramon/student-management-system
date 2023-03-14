@@ -5,8 +5,11 @@ import { useAuth, useContact, useInfo } from "../../context";
 import { api, formatDate } from "../../utils";
 import { Alert, Table } from '../../components';
 
+import * as Fetch from '../../functions';
+
 export const StudentNotices = () => {
   const [loading, setLoading] = useState(true);
+  const [notices, setNotices] = useState(null);
 
   const info = useInfo();
   const auth = useAuth();
@@ -15,32 +18,28 @@ export const StudentNotices = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await contact.getAll();
+      const response = await Fetch.Student.getNotices();
+      console.log(response);
       setLoading(false);
+      setNotices(response);
     };
 
-    // getData();
+    getData();
   }, []);
 
-  const create = () => {
-    contact.handleBodyEdit(null);
-    navigate("/form/contact");
-  };
+  if (loading) return <h1>Está carregando...</h1>
 
-  const remove = async (event, id) => {
-    event.target.disabled = true;
-    const response = await contact.remove(id);
-    event.target.disabled = false;
-  };
-
-  const edit = (data) => {
-    contact.handleBodyEdit(data);
-    navigate("/form/contact");
-  };
+  if (!notices) return <h1>Não há notícias</h1>
 
   return (
     <section>
-      <h1 className="fs-2">Home - Estudante {auth.username} Noticias</h1>
+      <h1 className="fs-2">Notícias - {auth.username}</h1>
+      {notices.map(notice => {
+        return <section className="py-3">
+          <h3 className="fs-4 pb-2">Mensagem {notice.id}</h3>
+          <p>{notice.text}</p>
+        </section>
+      })}
     </section>
   ) 
 };

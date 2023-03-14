@@ -27,11 +27,24 @@ const items = [
     role: "STUDENT"
   },
   {
+    link: "/student/ranking",
+    name: "Ranking",
+    private: true,
+    role: "STUDENT"
+  },
+  {
     link: "/teacher",
     name: "Home",
     private: true,
     role: "TEACHER"
   },
+  {
+    link: "/teacher/ranking",
+    name: "Ranking",
+    private: true,
+    role: "TEACHER"
+  },
+
   {
     link: "/teacher/students",
     name: "Alunos",

@@ -20,6 +20,8 @@ export const AuthProvider = ({ children }) => {
     setUsername(response.name);
     setToken(response.id);
     setRole(response.role);
+
+    if (response.role === 'RESPONSABLE') setUsername(response.nameResponsable)
   };
 
   const logout = () => {
