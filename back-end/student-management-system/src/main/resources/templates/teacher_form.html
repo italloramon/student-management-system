@@ -36,24 +36,32 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-				<h1 class="text-center">Add new responsable</h1>
+				<h1 class="text-center">Add new teacher</h1>
 				<div class="card-body">
-					<form th:action="@{/responsables}" th:object="${responsable}" method="POST">
+					<form th:action="@{/teachers}" th:object="${teacher}" method="POST">
 						<div class="form-group">
 							<label>Name</label>
-							<input type="text" name="nameResponsable" th:field="*{nameResponsable}" placeholder="Enter Responsable Name" class="form-control">
-							<p th:if="${#fields.hasErrors('nameResponsable')}" th:errorclass="error" th:errors="*{nameResponsable}"></p>
+							<input type="text" name="name" th:field="*{name}" placeholder="Enter Teacher Name" class="form-control">
+							<p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
 						</div>
 						<div class="form-group">
 							<label>CPF</label>
-							<input type="text" name="cpfResponsable" th:field="*{cpfResponsable}" placeholder="Enter Responsable CPF" class="form-control">
-							<p th:if="${#fields.hasErrors('cpfResponsable')}" th:errorclass="error" th:errors="*{cpfResponsable}"></p>
+							<input type="text" name="cpf" th:field="*{cpf}" placeholder="Enter Teacher CPF" class="form-control">
+							<p th:if="${#fields.hasErrors('cpf')}" th:errorclass="error" th:errors="*{cpf}"></p>
 						</div>
 						<div class="form-group">
 							<label>Email</label>
-							<input type="text" name="emailResponsable" th:field="*{emailResponsable}" placeholder="Enter Responsable Email" class="form-control">
-							<p th:if="${#fields.hasErrors('emailResponsable')}" th:errorclass="error" th:errors="*{emailResponsable}"></p>
+							<input type="text" name="email" th:field="*{email}" placeholder="Enter Teacher Email" class="form-control">
+							<p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
 						</div>
+						<div class="form-group">
+					        <select id="role" th:field="*{role}">		
+							    <option th:each="role : ${T(com.ramon.model.Role).values()}"
+							            th:value="${role}"
+							            th:text="${role}">
+							    </option>
+				            </select>
+				        </div>
 						<div class="box-footer">
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</div>

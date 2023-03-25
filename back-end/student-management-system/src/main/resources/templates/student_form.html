@@ -26,6 +26,9 @@
 	      <li>
 	      	<a class="nav-link" th:href="@{/responsables}">Responsable Management</a>
 	      </li>
+	      <li>
+	      	<a class="nav-link" th:href="@{/teachers}">Teacher Management</a>
+	      </li>	      
 	    </ul>
 	  </div>
 	</nav>	
@@ -58,7 +61,7 @@
 						</div>
 						<div class="form-group">
 					        <select id="responsable" th:field="*{responsable}">
-				                <option th:each="responsable : ${responsables}" th:value="${responsable.id}"  th:text="${responsable.nameResponsable}"></option>
+				                <option th:each="responsable : ${responsables}" th:value="${responsable.id}"  th:text="${responsable.nameResponsable}"></option>   	
 				            </select>
 						</div>
 						<div class="box-footer">
