@@ -22,7 +22,7 @@ import jakarta.persistence.JoinColumn;
 @Table(name = "responsable_table")
 @NoArgsConstructor
 @EqualsAndHashCode
-public class ResponsableModel {
+public class Responsable {
     @Id
     @GeneratedValue
     @Column(name = "responsable_id")
@@ -38,9 +38,9 @@ public class ResponsableModel {
     @Getter @Setter private String emailResponsable;
 
     @OneToMany(mappedBy="responsable", cascade=CascadeType.ALL)
-    @JsonIgnore @Getter private List<StudentModel> students;
+    @JsonIgnore @Getter private List<Student> students;
 
-    public ResponsableModel(String nameResponsable, String cpfResponsable, String emailResponsable) {
+    public Responsable(String nameResponsable, String cpfResponsable, String emailResponsable) {
         this.nameResponsable = nameResponsable;
         this.cpfResponsable = cpfResponsable;
         this.emailResponsable = emailResponsable;

@@ -12,8 +12,8 @@ import com.ramon.repository.ResponsableRepository;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import com.ramon.model.StudentModel;
-import com.ramon.model.ResponsableModel;
+import com.ramon.model.Student;
+import com.ramon.model.Responsable;
 import com.ramon.exception.*;
 
 @RestController
@@ -26,23 +26,23 @@ public class ResponsableController {
     }
 
     @GetMapping("responsables/")
-    public List<ResponsableModel> getAllResponsables() {
+    public List<Responsable> getAllResponsables() {
         return this.responsableRepository.findAll();
     }
 
     @GetMapping("responsables/{id}")
-    public ResponsableModel getResponsable(@PathVariable Long id) {
+    public Responsable getResponsable(@PathVariable Long id) {
         return this.responsableRepository.findById(id).orElseThrow(() -> new ResponsableNotFoundException(id));
     }
 
     @PostMapping("responsables/")
-    public ResponsableModel createResponsable(@RequestBody ResponsableModel responsable) {
+    public Responsable createResponsable(@RequestBody Responsable responsable) {
         return this.responsableRepository.save(responsable);
     }
 
     @PutMapping("responsables/{id}")
-    public ResponsableModel updateResponsable(@RequestBody ResponsableModel newResponsable, @PathVariable Long id) {
-        ResponsableModel responsable = responsableRepository.findById(id).orElseThrow(() -> new ResponsableNotFoundException(id));
+    public Responsable updateResponsable(@RequestBody Responsable newResponsable, @PathVariable Long id) {
+        Responsable responsable = responsableRepository.findById(id).orElseThrow(() -> new ResponsableNotFoundException(id));
         if (newResponsable.getNameResponsable() != null) {
             responsable.setNameResponsable(newResponsable.getNameResponsable());
         }
@@ -62,10 +62,10 @@ public class ResponsableController {
     }
 
     @PostMapping("responsables/login")
-    public ResponsableModel loginResponsable(@RequestBody Map<String, String> responsable) {
+    public Responsable loginResponsable(@RequestBody Map<String, String> responsable) {
         String password = responsable.get("password");
         if (responsableRepository.existsByCpfResponsable(password)) {
-            ResponsableModel responsableLogin = responsableRepository.findByCpfResponsable(password);
+            Responsable responsableLogin = responsableRepository.findByCpfResponsable(password);
             if (responsableLogin.getEmailResponsable().equals(responsable.get("login"))) {
                 return responsableLogin;
             }
@@ -75,10 +75,10 @@ public class ResponsableController {
 
     @GetMapping("responsables/{id}/total")
     public Map<String, Double> getTotalTuition(@PathVariable Long id) {
-        ResponsableModel responsable = responsableRepository.findById(id).get();
+        Responsable responsable = responsableRepository.findById(id).get();
         Map<String, Double> studentsTuition = new HashMap<>();
         Double total = 0.0;
-        for (StudentModel student : responsable.getStudents()) {
+        for (Student student : responsable.getStudents()) {
             studentsTuition.put(student.getName(), student.getTuition());
             total += student.getTuition();
         }

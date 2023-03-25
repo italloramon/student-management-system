@@ -43,7 +43,7 @@ public class PreLoadDatabase implements CommandLineRunner {
         teacherRepository.deleteAll();
         responsableRepository.deleteAll();
 
-        ResponsableModel responsable = new ResponsableModel("Trafalgar Law", "12442111110", "traw@gmail.com");
+        Responsable responsable = new Responsable("Trafalgar Law", "12442111110", "traw@gmail.com");
         responsableRepository.save(responsable);
 
         // responsableRepository.findAll().forEach((respon) -> {
@@ -65,7 +65,7 @@ public class PreLoadDatabase implements CommandLineRunner {
         Portuguese portuguese = new Portuguese();
         portugueseRepository.save(portuguese);
 
-        StudentModel student1 = new StudentModel("Monkey D. Luffy", "12332145571", "luffy@gmail.com", responsableRepository.findById(1l).get(), englishRepository.findById(1l).get(), geographyRepository.findById(1l).get(), historyRepository.findById(1l).get(), mathematicsRepository.findById(1l).get(), portugueseRepository.findById(1l).get(), 254.2);
+        Student student1 = new Student("Monkey D. Luffy", "12332145571", "luffy@gmail.com", responsableRepository.findById(1l).get(), englishRepository.findById(1l).get(), geographyRepository.findById(1l).get(), historyRepository.findById(1l).get(), mathematicsRepository.findById(1l).get(), portugueseRepository.findById(1l).get(), 254.2);
         studentRepository.save(student1);
 
         English english2 = new English();
@@ -83,7 +83,7 @@ public class PreLoadDatabase implements CommandLineRunner {
         Portuguese portuguese2 = new Portuguese();
         portugueseRepository.save(portuguese2);
 
-        StudentModel student2 = new StudentModel("Son Goku", "11111111111", "kamehameha@gmail.com", responsableRepository.findById(1l).get(), englishRepository.findById(2l).get(), geographyRepository.findById(2l).get(), historyRepository.findById(2l).get(), mathematicsRepository.findById(2l).get(), portugueseRepository.findById(2l).get(), 1250.345);
+        Student student2 = new Student("Son Goku", "11111111111", "kamehameha@gmail.com", responsableRepository.findById(1l).get(), englishRepository.findById(2l).get(), geographyRepository.findById(2l).get(), historyRepository.findById(2l).get(), mathematicsRepository.findById(2l).get(), portugueseRepository.findById(2l).get(), 1250.345);
         studentRepository.save(student2);
 
         // studentRepository.findAll().forEach((student) -> {

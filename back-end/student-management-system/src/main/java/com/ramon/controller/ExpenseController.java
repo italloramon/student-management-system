@@ -76,12 +76,12 @@ public class ExpenseController {
     @GetMapping("expenses/dashboard")
     public Map<String, Double> getDashboard() {
         Map<String, Double> dashboard = new HashMap<>();
-        List<StudentModel> students = studentRepository.findAll();
+        List<Student> students = studentRepository.findAll();
         List<TeacherModel> teachers = teacherRepository.findAll();
         List<ExpenseModel> expenses = expenseRepository.findAll();
 
         Double total = 0.0;
-        for (StudentModel student: students) {
+        for (Student student: students) {
             dashboard.put(student.getName(), student.getTuition());
             total += student.getTuition();
         }

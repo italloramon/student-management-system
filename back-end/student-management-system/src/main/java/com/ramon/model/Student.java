@@ -16,14 +16,22 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ElementCollection;
 import java.util.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.ramon.model.*;
 import com.ramon.model.courses.*;
+import com.ramon.repository.EnglishRepository;
+import com.ramon.repository.GeographyRepository;
+import com.ramon.repository.HistoryRepository;
+import com.ramon.repository.MathematicsRepository;
+import com.ramon.repository.PortugueseRepository;
 
 @Entity
 @Table(name = "student")
 @NoArgsConstructor
 @ToString @EqualsAndHashCode
-public class StudentModel {
+public class Student {
     
     @Id
     @Column(name = "student_id")
@@ -40,7 +48,7 @@ public class StudentModel {
 
     @ManyToOne
     @JoinColumn(name = "responsable_id", nullable = false)
-    @Getter @Setter private ResponsableModel responsable;
+    @Getter @Setter private Responsable responsable;
 
     @Column(name = "student_tuition")
     @Getter @Setter private Double tuition;
@@ -70,8 +78,9 @@ public class StudentModel {
     @Getter @Setter private Portuguese portuguese;
 
     //@Getter @Setter private Double scoreRanking;
-
-    public StudentModel(String name, String cpf, String email, ResponsableModel responsable, English english, Geography geography, History history, Mathematics mathematics, Portuguese portuguese, Double tuition) {
+     
+    
+    public Student(String name, String cpf, String email, Responsable responsable, English english, Geography geography, History history, Mathematics mathematics, Portuguese portuguese, Double tuition) {
         this.id = GenerateId.id++;
         this.name = name;
         this.cpf = cpf;
@@ -83,13 +92,8 @@ public class StudentModel {
         this.mathematics = mathematics;
         this.portuguese = portuguese;
         this.tuition = tuition;
-        //this.scoreRanking = this.getRankingStudent();
-        //this.courses.add(new Teste());
-        //this.courses.add(new English());
-        //this.courses.add(new History());
-        //this.courses.add(new Mathematics());
-        //this.courses.add(new Portuguese());
     }
+    
 
     public Double getRankingStudent() {
         return (this.english.getScores() + this.geography.getScores() + this.history.getScores() + this.mathematics.getScores() + this.portuguese.getScores()) / 5;    
@@ -97,5 +101,9 @@ public class StudentModel {
 
     public Role getRole() {
         return Role.STUDENT;
+    }
+    
+    public void createId() {
+    	this.id = GenerateId.id++;
     }
 }

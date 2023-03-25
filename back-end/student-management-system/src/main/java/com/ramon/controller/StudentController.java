@@ -49,12 +49,12 @@ public class StudentController {
     }
 
     @GetMapping("students/")
-    public List<StudentModel> getAllStudents() {
+    public List<Student> getAllStudents() {
         return this.studentRepository.findAll();
     }
 
     @GetMapping("students/{id}")
-    public StudentModel getStudent(@PathVariable Long id) {
+    public Student getStudent(@PathVariable Long id) {
         return this.studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
     
@@ -75,16 +75,16 @@ public class StudentController {
     //}
 
     @PostMapping("students/")
-    public StudentModel createStudent(@RequestBody Map<String, String> requestBody) {
+    public Student createStudent(@RequestBody Map<String, String> requestBody) {
         String nameResponsable = requestBody.get("nameResponsable");
         //System.out.println(nameResponsable);
         String emailResponsable = requestBody.get("emailResponsable");
         String cpfResponsable = requestBody.get("cpfResponsable");
 
         if (responsableRepository.existsByCpfResponsable(cpfResponsable)) {
-            ResponsableModel newResponsable = responsableRepository.findByCpfResponsable(cpfResponsable);
+            Responsable newResponsable = responsableRepository.findByCpfResponsable(cpfResponsable);
         } else {
-            ResponsableModel newResponsable = new ResponsableModel(nameResponsable, emailResponsable, cpfResponsable);
+            Responsable newResponsable = new Responsable(nameResponsable, emailResponsable, cpfResponsable);
             responsableRepository.save(newResponsable);
         }
 
@@ -107,13 +107,13 @@ public class StudentController {
         mathematicsRepository.save(mathematics);
         Portuguese portuguese = new Portuguese();
         portugueseRepository.save(portuguese);
-        StudentModel newStudent = new StudentModel(name, cpf, email, responsableRepository.findByCpfResponsable(cpfResponsable), english, geography, history, mathematics, portuguese, tuition);
+        Student newStudent = new Student(name, cpf, email, responsableRepository.findByCpfResponsable(cpfResponsable), english, geography, history, mathematics, portuguese, tuition);
         return this.studentRepository.save(newStudent);
     }
 
     @PutMapping("students/{id}")
-    public StudentModel updateStudent(@RequestBody StudentModel newStudent, @PathVariable Long id) {
-        StudentModel student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+    public Student updateStudent(@RequestBody Student newStudent, @PathVariable Long id) {
+        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
         if (newStudent.getName() != null) {
             student.setName(newStudent.getName());
         }
@@ -154,7 +154,7 @@ public class StudentController {
 
     @PostMapping("students/{idStudent}/{idTeacher}/{bimester}/{score}")
     public void updateScore (@PathVariable Long idStudent, @PathVariable Long idTeacher, @PathVariable Integer bimester, @PathVariable Double score) {
-        StudentModel student = studentRepository.findById(idStudent).get();
+        Student student = studentRepository.findById(idStudent).get();
         TeacherModel teacher = teacherRepository.findById(idTeacher).get();
 
         if(teacher.getRole().equals(Role.TEACHERENGLISH)) {
@@ -198,25 +198,25 @@ public class StudentController {
     }
 
     @GetMapping("students/getRanking")
-    public StudentModel[] getRankingStudents() {
-        List<StudentModel> studentsList = studentRepository.findAll();
-        StudentModel[] studentsArray = new StudentModel[studentsList.size()];
+    public Student[] getRankingStudents() {
+        List<Student> studentsList = studentRepository.findAll();
+        Student[] studentsArray = new Student[studentsList.size()];
 
         for (int i = 0; i  < studentsList.size(); i++) {
             studentsArray[i] = studentsList.get(i);
         }
 
-        StudentModel[] studentsArraySorted = StudentController.getSorterdStudents(studentsArray, Comparator.comparing(StudentModel::getRankingStudent).reversed());
+        Student[] studentsArraySorted = StudentController.getSorterdStudents(studentsArray, Comparator.comparing(Student::getRankingStudent).reversed());
 
         return studentsArraySorted;
         
     }
 
     @PostMapping("students/login")
-    public StudentModel loginStudent(@RequestBody Map<String, String> student) {
+    public Student loginStudent(@RequestBody Map<String, String> student) {
         String password = student.get("password");
         if (studentRepository.existsByCpf(password)) {
-            StudentModel studentLogin = studentRepository.findByCpf(password);
+            Student studentLogin = studentRepository.findByCpf(password);
             if (studentLogin.getEmail().equals(student.get("login"))) {
                 return studentLogin;
             }
@@ -224,8 +224,8 @@ public class StudentController {
         throw new StudentNotFoundException(-1l);
     }
 
-    public static StudentModel[] getSorterdStudents(StudentModel[] students, Comparator<StudentModel> comparator) {
-        StudentModel[] sorted = students.clone();
+    public static Student[] getSorterdStudents(Student[] students, Comparator<Student> comparator) {
+        Student[] sorted = students.clone();
         Arrays.sort(sorted, comparator);
         return sorted;
     }
