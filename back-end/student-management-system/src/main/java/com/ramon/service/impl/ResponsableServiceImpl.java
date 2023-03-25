@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.Responsable;
+import com.ramon.model.Student;
 import com.ramon.repository.ResponsableRepository;
 import com.ramon.service.ResponsableService;
 
@@ -23,6 +24,31 @@ public class ResponsableServiceImpl implements ResponsableService {
 	@Override
 	public List<Responsable> getAllResponsables() {
 		return responsableRepository.findAll();
+	}
+
+
+	@Override
+	public Responsable save(Responsable responsable) {
+		return responsableRepository.save(responsable);
+	}
+
+
+	@Override
+	public Responsable getResponsableById(Long id) {
+		return responsableRepository.findById(id).get();
+	}
+
+
+	@Override
+	public Responsable updateResponsable(Responsable responsable) {
+		return responsableRepository.save(responsable);
+	}
+
+
+	@Override
+	public void deleteResponsableById(Long id) {
+		responsableRepository.deleteById(id);
+		
 	}
 
 }
