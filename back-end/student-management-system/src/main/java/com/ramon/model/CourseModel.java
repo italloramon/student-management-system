@@ -11,26 +11,15 @@ import lombok.Setter;
 import lombok.ToString;
 
 //@Entity
-@NoArgsConstructor @AllArgsConstructor
-@ToString @EqualsAndHashCode
-public class CourseModel {
+public interface CourseModel {
+    public String courseName();
     
-    //@Id
-    //@Column(name = "course_id")
-    @Getter @Setter private Long id;
-
-    //@Column(name = "course_name")
-    @Getter @Setter private String name;
-
-    //@Column(name = "course_score1")
-    @Getter @Setter private Double score1;
+    public Double score1();
     
-    //@Column(name = "course_score2")
-    @Getter @Setter private Double score2;
+    public Double score2();
     
-    //@Column(name = "course_score3")
-    @Getter @Setter private Double score3;
+    public Double score3();
     
-    //@Column(name = "course_score4")
-    @Getter @Setter private Double score4;
+    public Double score4();
+    
 }

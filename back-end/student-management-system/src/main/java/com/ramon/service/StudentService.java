@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ramon.model.CourseModel;
 import com.ramon.model.Student;
 
 public interface StudentService {
@@ -17,4 +18,8 @@ public interface StudentService {
 	Student updateStudent(Student student);
 	
 	void deleteStudentById(Long id);
+	
+	List<CourseModel> getStudentCourses(Student student);
+	
+	Student[] getRankingStudents();
 }

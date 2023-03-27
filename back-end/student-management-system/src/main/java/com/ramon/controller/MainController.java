@@ -1,5 +1,7 @@
 package com.ramon.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.ramon.model.CourseModel;
+import com.ramon.model.NoticeModel;
 import com.ramon.model.Student;
 import com.ramon.model.courses.English;
 import com.ramon.model.courses.Geography;
@@ -18,10 +22,12 @@ import com.ramon.repository.EnglishRepository;
 import com.ramon.repository.GeographyRepository;
 import com.ramon.repository.HistoryRepository;
 import com.ramon.repository.MathematicsRepository;
+import com.ramon.repository.NoticeRepository;
 import com.ramon.repository.PortugueseRepository;
 import com.ramon.service.impl.ResponsableServiceImpl;
 import com.ramon.service.impl.StudentServiceImpl;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -40,11 +46,13 @@ public class MainController {
     private final MathematicsRepository mathematicsRepository;
     
     private final PortugueseRepository portugueseRepository;
+    
+    private final NoticeRepository noticeRepository;
 	
 	public MainController(StudentServiceImpl studentService, ResponsableServiceImpl responsableService,
 			EnglishRepository englishRepository, GeographyRepository geographyRepository,
 			HistoryRepository historyRepository, MathematicsRepository mathematicsRepository,
-			PortugueseRepository portugueseRepository) {
+			PortugueseRepository portugueseRepository, NoticeRepository noticeRepository) {
 		this.studentService = studentService;
 		this.responsableService = responsableService;
 		this.englishRepository = englishRepository;
@@ -52,6 +60,7 @@ public class MainController {
 		this.historyRepository = historyRepository;
 		this.mathematicsRepository = mathematicsRepository;
 		this.portugueseRepository = portugueseRepository;
+		this.noticeRepository = noticeRepository;
 	}
 		
 	@GetMapping("/students")
@@ -123,5 +132,40 @@ public class MainController {
 	public String deleteStudent(@PathVariable Long id) {
 		studentService.deleteStudentById(id);
 		return "redirect:/students";
+	}
+	
+	@GetMapping("/students/courses/{id}")
+	public String getCourses(@PathVariable Long id, Model model, HttpSession session) {
+		Student student = studentService.getStudentById(id);
+		List<CourseModel> courses = studentService.getStudentCourses(student);
+		
+		model.addAttribute("student", student);
+		model.addAttribute("courses", courses);
+		
+	    // Store student object in session
+	    session.setAttribute("currentStudent", student);
+	    
+		return "home-students";
+	}
+	
+	@GetMapping("/ranking")
+	public String ranking(Model model, HttpSession session) {
+		Student[] rankingStudents = studentService.getRankingStudents();
+		
+		// Retrieve student object from session
+	    Student currentStudent = (Student) session.getAttribute("currentStudent");
+	    
+		model.addAttribute("rankingStudents", rankingStudents);
+		model.addAttribute("student", currentStudent);
+		return "ranking";
+	}
+	
+	@GetMapping("/notices")
+	public String notices(Model model, HttpSession session) {
+		List<NoticeModel> notices = noticeRepository.findAll();
+		Student currentStudent = (Student) session.getAttribute("currentStudent");
+		model.addAttribute("student", currentStudent);
+		model.addAttribute("notices", notices);
+		return "notices";
 	}
 }

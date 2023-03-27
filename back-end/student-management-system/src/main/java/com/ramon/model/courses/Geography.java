@@ -21,7 +21,7 @@ import java.util.*;
 @Table(name = "geography_table")
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Geography {
+public class Geography implements CourseModel {
     
     @Id
     @GeneratedValue
@@ -53,5 +53,30 @@ public class Geography {
     public Double getScores() {
         return ((this.score1 + this.score2 + this.score3 + this.score4) / 4);
     }
+
+	@Override
+	public String courseName() {
+		return "Geography";
+	}
+	
+	@Override
+	public Double score1() {
+		return this.score1;
+	}
+
+	@Override
+	public Double score2() {
+		return this.score2;
+	}
+
+	@Override
+	public Double score3() {
+		return this.score3;
+	}
+
+	@Override
+	public Double score4() {
+		return this.score4;
+	}
 
 }

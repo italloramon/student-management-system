@@ -1,31 +1,22 @@
 package com.ramon.model;
 
+import com.ramon.model.courses.English;
+import com.ramon.model.courses.Geography;
+import com.ramon.model.courses.History;
+import com.ramon.model.courses.Mathematics;
+import com.ramon.model.courses.Portuguese;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.CollectionTable;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ElementCollection;
-import java.util.*;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.ramon.model.*;
-import com.ramon.model.courses.*;
-import com.ramon.repository.EnglishRepository;
-import com.ramon.repository.GeographyRepository;
-import com.ramon.repository.HistoryRepository;
-import com.ramon.repository.MathematicsRepository;
-import com.ramon.repository.PortugueseRepository;
 
 @Entity
 @Table(name = "student")
@@ -106,4 +97,5 @@ public class Student {
     public void createId() {
     	this.id = GenerateId.id++;
     }
+
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Student Scores</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+	  <!-- Brand -->
+	  <a class="navbar-brand" href="#">Student Management System</a>
+	
+	  <!-- Toggler/collapsibe Button -->
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	
+	  <!-- Navbar links -->
+	  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+	    <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link" th:href="@{/students/courses/{id} (id=${student.id})}">Scores</a>
+	      </li>
+	      <li>
+	      	<a class="nav-link" th:href="@{/ranking}">Ranking</a>
+	      </li>
+	      <li>
+	      	<a class="nav-link" th:href="@{/notices}">Notices</a>
+	      </li>
+	    </ul>
+	  </div>
+	</nav>
+	
+	<div class="container">
+		<h1 th:text="${student.name}"></h1>
+		<table class="table table-striped table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>Course</th>
+					<th>Score 1</th>
+					<th>Score 2</th>
+					<th>Score 3</th>
+					<th>Score 4</th>
+					<th>Average Score</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="course : ${courses}">
+					<td th:text="${course.courseName}"></td>
+					<td th:text="${course.score1}"></td>
+					<td th:text="${course.score2}"></td>
+					<td th:text="${course.score3}"></td>
+					<td th:text="${course.score4}"></td>
+					<td th:text="${course.getScores}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+</body>
+</html>
