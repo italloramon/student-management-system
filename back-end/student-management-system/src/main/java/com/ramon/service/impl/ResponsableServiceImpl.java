@@ -51,4 +51,9 @@ public class ResponsableServiceImpl implements ResponsableService {
 		
 	}
 
+	@Override
+	public List<Student> getStudentsOfResponsable(Responsable responsable) {
+		return responsable.getStudents();
+	}
+
 }

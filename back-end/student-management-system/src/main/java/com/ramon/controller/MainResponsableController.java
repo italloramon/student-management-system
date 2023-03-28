@@ -1,5 +1,7 @@
 package com.ramon.controller;
 
+import com.ramon.model.CourseModel;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,8 @@ import com.ramon.service.impl.ResponsableServiceImpl;
 import com.ramon.service.impl.StudentServiceImpl;
 
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 @Controller
 public class MainResponsableController {
@@ -83,5 +87,19 @@ public class MainResponsableController {
 	public String deleteResponsable(@PathVariable Long id) {
 		responsableService.deleteResponsableById(id);
 		return "redirect:/responsables";
+	}
+
+	@GetMapping("/home-responsable/{id}")
+	public String getStudentsOfResponsable(@PathVariable Long id, Model model, HttpSession session) {
+		Responsable responsable = responsableService.getResponsableById(id);
+		List<Student> students = responsableService.getStudentsOfResponsable(responsable);
+
+		model.addAttribute("responsable", responsable);
+		model.addAttribute("students", students);
+
+		// Store student object in session
+		session.setAttribute("currentResponsable", responsable);
+
+		return "home-responsable";
 	}
 }

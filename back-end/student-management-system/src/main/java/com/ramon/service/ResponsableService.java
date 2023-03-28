@@ -16,4 +16,6 @@ public interface ResponsableService {
 	Responsable updateResponsable(Responsable responsable);
 	
 	void deleteResponsableById(Long id);
+
+	List<Student> getStudentsOfResponsable(Responsable responsable);
 }
