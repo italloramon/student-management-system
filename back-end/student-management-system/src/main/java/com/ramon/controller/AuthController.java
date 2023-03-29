@@ -2,7 +2,9 @@ package com.ramon.controller;
 
 import java.util.List;
 
+import com.ramon.model.Responsable;
 import com.ramon.model.TeacherModel;
+import com.ramon.repository.ResponsableRepository;
 import com.ramon.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,6 +25,8 @@ public class AuthController {
 	private StudentRepository studentRepository;
 	@Autowired
 	private TeacherRepository teacherRepository;
+	@Autowired
+	private ResponsableRepository responsableRepository;
 
 	@GetMapping("/")
 	public String homeLoginForm() {
@@ -40,7 +44,7 @@ public class AuthController {
 		} else if (role.equalsIgnoreCase("Student")) {
 			List<Student> students = studentRepository.findAll();
 			for (Student student: students) {
-				if (student.getEmail().equals(username) && student.getCpf().endsWith(password)) {
+				if (student.getEmail().equals(username) && student.getCpf().equals(password)) {
 					redirectAttributes.addAttribute("id", student.getId());
 					return "redirect:/students/courses/{id}";
 				}
@@ -48,9 +52,17 @@ public class AuthController {
 		} else if (role.equalsIgnoreCase("Teacher")) {
 			List<TeacherModel> teachers = teacherRepository.findAll();
 			for (TeacherModel teacher : teachers) {
-				if (teacher.getEmail().equals(username) && teacher.getCpf().endsWith(password)) {
+				if (teacher.getEmail().equals(username) && teacher.getCpf().equals(password)) {
 					redirectAttributes.addAttribute("id", teacher.getId());
 					return "redirect:/teachers/home/{id}";
+				}
+			}
+		} else if (role.equalsIgnoreCase("Responsable")) {
+			List<Responsable> responsables = responsableRepository.findAll();
+			for (Responsable responsable : responsables) {
+				if (responsable.getEmailResponsable().equals(username) && responsable.getCpfResponsable().equals(password)) {
+					redirectAttributes.addAttribute("id", responsable.getId());
+					return "redirect:/home-responsable/{id}";
 				}
 			}
 		}

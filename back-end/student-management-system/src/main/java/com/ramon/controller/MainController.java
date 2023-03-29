@@ -66,6 +66,7 @@ public class MainController {
 	@GetMapping("/students")
 	public String home(Model model) {
 		model.addAttribute("students", studentService.getAllStudents());
+		model.addAttribute("method", "student");
 		return "students";
 	}
 	
@@ -93,6 +94,7 @@ public class MainController {
 		
 		model.addAttribute("student", student);
 		model.addAttribute("responsables", responsableService.getAllResponsables());
+		model.addAttribute("method", "student");
 		return "student_form";
 	}
 	
@@ -110,6 +112,7 @@ public class MainController {
 	public String editStudentForm(@PathVariable Long id, Model model) {
 		model.addAttribute("student", studentService.getStudentById(id));
 		model.addAttribute("responsables", responsableService.getAllResponsables());
+		model.addAttribute("method", "student");
 		return "edit_student_form";
 	}
 	
@@ -124,7 +127,7 @@ public class MainController {
 		olderStudent.setResponsable(student.getResponsable());
 		
 		studentService.updateStudent(olderStudent);
-		
+
 		return "redirect:/students";
 	}
 	
@@ -141,10 +144,25 @@ public class MainController {
 		
 		model.addAttribute("student", student);
 		model.addAttribute("courses", courses);
-		
+		model.addAttribute("method", "student");
+
 	    // Store student object in session
 	    session.setAttribute("currentStudent", student);
 	    
+		return "home-students";
+	}
+
+	@GetMapping("/students/courses/wh/{id}")
+	public String getCoursesWithoutStudent(@PathVariable Long id, Model model, HttpSession session) {
+		Student student = studentService.getStudentById(id);
+		List<CourseModel> courses = studentService.getStudentCourses(student);
+
+		model.addAttribute("student", student);
+		model.addAttribute("courses", courses);
+
+		// Store student object in session
+		session.setAttribute("currentStudent", student);
+
 		return "home-students";
 	}
 	
@@ -157,6 +175,8 @@ public class MainController {
 	    
 		model.addAttribute("rankingStudents", rankingStudents);
 		model.addAttribute("student", currentStudent);
+		model.addAttribute("method", "student");
+
 		return "ranking";
 	}
 	
@@ -166,6 +186,7 @@ public class MainController {
 		Student currentStudent = (Student) session.getAttribute("currentStudent");
 		model.addAttribute("student", currentStudent);
 		model.addAttribute("notices", notices);
+		model.addAttribute("method", "student");
 		return "notices";
 	}
 }
