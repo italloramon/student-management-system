@@ -193,4 +193,5 @@ public class MainController {
 		model.addAttribute("method", "student");
 		return "notices";
 	}
+
 }

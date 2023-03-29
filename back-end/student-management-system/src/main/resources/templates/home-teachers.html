@@ -45,7 +45,7 @@
         </thead>
         <tbody>
         <tr th:each="student: ${students}">
-            <td><a th:if="${student.id}" th:href="@{/students/courses/{id}(id=${student.id})}" th:text="${student.name}"></a></td>
+            <td><a th:if="${student.id}" th:href="@{/students/courses/wh/{id}(id=${student.id})}" th:text="${student.name}"></a></td>
             <td th:text="${student.cpf}"></td>
             <td th:text="${student.email}"></td>
             <td>
