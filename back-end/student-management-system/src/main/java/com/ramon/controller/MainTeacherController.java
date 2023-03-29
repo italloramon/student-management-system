@@ -172,4 +172,25 @@ public class MainTeacherController {
 		teacherService.sendNotice(notice);
 		return "redirect:/send-notice";
 	}
+
+	@GetMapping("/dashboard")
+	public String dashboard(Model model) {
+		List<TeacherModel> teachers = teacherService.getAllTeachers();
+		List<Student> students = studentService.getAllStudents();
+
+		double totalPay = 0;
+		for (TeacherModel teacher: teachers) {
+			totalPay += teacher.getSalary();
+		}
+		double totalReceive = 0;
+		for (Student student: students) {
+			totalReceive += student.getTuition();
+		}
+		double balance = totalReceive - totalPay;
+		model.addAttribute("totalPay", totalPay);
+		model.addAttribute("teachers", teachers);
+		model.addAttribute("students", students);
+		model.addAttribute("balance", balance);
+		return "dashboard";
+	}
 }
