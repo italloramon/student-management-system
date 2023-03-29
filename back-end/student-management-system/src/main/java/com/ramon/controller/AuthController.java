@@ -2,7 +2,10 @@ package com.ramon.controller;
 
 import java.util.List;
 
+import com.ramon.model.TeacherModel;
+import com.ramon.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +21,9 @@ public class AuthController {
 	
 	@Autowired
 	private StudentRepository studentRepository;
-	
+	@Autowired
+	private TeacherRepository teacherRepository;
+
 	@GetMapping("/")
 	public String homeLoginForm() {
 		return "login";
@@ -38,6 +43,14 @@ public class AuthController {
 				if (student.getEmail().equals(username) && student.getCpf().endsWith(password)) {
 					redirectAttributes.addAttribute("id", student.getId());
 					return "redirect:/students/courses/{id}";
+				}
+			}
+		} else if (role.equalsIgnoreCase("Teacher")) {
+			List<TeacherModel> teachers = teacherRepository.findAll();
+			for (TeacherModel teacher : teachers) {
+				if (teacher.getEmail().equals(username) && teacher.getCpf().endsWith(password)) {
+					redirectAttributes.addAttribute("id", teacher.getId());
+					return "redirect:/teachers/home/{id}";
 				}
 			}
 		}

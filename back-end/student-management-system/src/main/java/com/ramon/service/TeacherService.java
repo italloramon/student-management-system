@@ -18,4 +18,7 @@ public interface TeacherService {
 	TeacherModel updateTeacher(TeacherModel teacher);
 	
 	void deleteTeacherById(Long id);
+
+	void sendNotice(String textNotice);
+
 }

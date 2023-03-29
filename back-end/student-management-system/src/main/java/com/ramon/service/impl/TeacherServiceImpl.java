@@ -2,6 +2,8 @@ package com.ramon.service.impl;
 
 import java.util.List;
 
+import com.ramon.model.NoticeModel;
+import com.ramon.repository.NoticeRepository;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.TeacherModel;
@@ -12,10 +14,11 @@ import com.ramon.service.TeacherService;
 public class TeacherServiceImpl implements TeacherService{
 	
 	private final TeacherRepository teacherRepository;
-
-	public TeacherServiceImpl(TeacherRepository teacherRepository) {
+	private final NoticeRepository noticeRepository;
+	public TeacherServiceImpl(TeacherRepository teacherRepository, NoticeRepository noticeRepository) {
 		super();
 		this.teacherRepository = teacherRepository;
+		this.noticeRepository = noticeRepository;
 	}
 
 	@Override
@@ -42,6 +45,13 @@ public class TeacherServiceImpl implements TeacherService{
 	public void deleteTeacherById(Long id) {
 		teacherRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public void sendNotice(String textNotice) {
+		NoticeModel notice = new NoticeModel();
+		notice.setText(textNotice);
+		noticeRepository.save(notice);
 	}
 
 }
