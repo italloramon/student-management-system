@@ -46,6 +46,19 @@ public class PreLoadDatabase implements CommandLineRunner {
         Responsable responsable = new Responsable("Trafalgar Law", "12442111110", "traw@gmail.com");
         responsableRepository.save(responsable);
 
+        Responsable responsable2 = new Responsable("Nico Robin", "34678765432", "nrobin@gmail.com");
+        responsableRepository.save(responsable2);
+
+        Responsable responsable3 = new Responsable("Usopp", "56473829102", "usopp@gmail.com");
+        responsableRepository.save(responsable3);
+
+        Responsable responsable4 = new Responsable("Brook", "90129384756", "brook@gmail.com");
+        responsableRepository.save(responsable4);
+
+        Responsable responsable5 = new Responsable("Jinbe", "87564321901", "jinbe@gmail.com");
+        responsableRepository.save(responsable5);
+
+
         // responsableRepository.findAll().forEach((respon) -> {
         //     logger.info("{}", respon);
         // });
@@ -85,6 +98,60 @@ public class PreLoadDatabase implements CommandLineRunner {
 
         Student student2 = new Student("Son Goku", "11111111111", "kamehameha@gmail.com", responsableRepository.findById(1l).get(), englishRepository.findById(2l).get(), geographyRepository.findById(2l).get(), historyRepository.findById(2l).get(), mathematicsRepository.findById(2l).get(), portugueseRepository.findById(2l).get(), 1250.345);
         studentRepository.save(student2);
+        
+        English english3 = new English();
+        englishRepository.save(english3);
+        
+        Geography geography3 = new Geography();
+        geographyRepository.save(geography3);
+
+        History history3 = new History();
+        historyRepository.save(history3);
+
+        Mathematics mathematics3 = new Mathematics();
+        mathematicsRepository.save(mathematics3);
+
+        Portuguese portuguese3 = new Portuguese();
+        portugueseRepository.save(portuguese3);
+            
+        Student student3 = new Student("Nami", "34567891234", "nami@gmail.com", responsableRepository.findById(1l).get(), englishRepository.findById(3l).get(), geographyRepository.findById(3l).get(), historyRepository.findById(3l).get(), mathematicsRepository.findById(3l).get(), portugueseRepository.findById(3l).get(), 310.5);
+        studentRepository.save(student3);
+
+        English english4 = new English();
+        englishRepository.save(english4);
+
+        Geography geography4 = new Geography();
+        geographyRepository.save(geography4);
+
+        History history4 = new History();
+        historyRepository.save(history4);
+
+        Mathematics mathematics4 = new Mathematics();
+        mathematicsRepository.save(mathematics4);
+
+        Portuguese portuguese4 = new Portuguese();
+        portugueseRepository.save(portuguese4);
+
+        Student student4 = new Student("Sanji", "78901234567", "sanji@gmail.com", responsableRepository.findById(2l).get(), englishRepository.findById(4l).get(), geographyRepository.findById(4l).get(), historyRepository.findById(4l).get(), mathematicsRepository.findById(4l).get(), portugueseRepository.findById(4l).get(), 275.8);
+        studentRepository.save(student4);
+
+        English english5 = new English();
+        englishRepository.save(english5);
+
+        Geography geography5 = new Geography();
+        geographyRepository.save(geography5);
+
+        History history5 = new History();
+        historyRepository.save(history5);
+
+        Mathematics mathematics5 = new Mathematics();
+        mathematicsRepository.save(mathematics5);
+
+        Portuguese portuguese5 = new Portuguese();
+        portugueseRepository.save(portuguese5);
+
+        Student student5 = new Student("Zoro", "90123456789", "zoro@gmail.com", responsableRepository.findById(3l).get(), englishRepository.findById(5l).get(), geographyRepository.findById(5l).get(), historyRepository.findById(5l).get(), mathematicsRepository.findById(5l).get(), portugueseRepository.findById(5l).get(), 298.3);
+        studentRepository.save(student5);
 
         // studentRepository.findAll().forEach((student) -> {
         //     logger.info("{}", student.getName());
@@ -94,6 +161,18 @@ public class PreLoadDatabase implements CommandLineRunner {
         teacherRepository.save(teacher1);
         TeacherModel teacher2 = new TeacherModel("Red-Haired Shanks", "666432111111", "onearm@gmail.com", 5000.0, "Portuguese");
         teacherRepository.save(teacher2);
+        TeacherModel teacher3 = new TeacherModel("Boa Hancock", "888876543210", "boahancock@gmail.com", 4500.0, "Mathematics");
+        teacherRepository.save(teacher3);
+
+        TeacherModel teacher4 = new TeacherModel("Trafalgar D. Water Law", "345678901234", "trafalgarlaw@gmail.com", 5500.0, "Science");
+        teacherRepository.save(teacher4);
+
+        TeacherModel teacher5 = new TeacherModel("Portgas D. Ace", "777788889999", "portgasace@gmail.com", 4000.0, "Geography");
+        teacherRepository.save(teacher5);
+
+        TeacherModel teacher6 = new TeacherModel("Kuzan", "333321111222", "kuzan@gmail.com", 6000.0, "History");
+        teacherRepository.save(teacher6);
+
         // teacherRepository.findAll().forEach((teacher) -> {
         //     logger.info("{}", teacher);
         // });

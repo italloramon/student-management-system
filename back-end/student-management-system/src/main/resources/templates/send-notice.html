@@ -33,12 +33,15 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-      <h1 class="text-center">Edit teacher</h1>
+      <h1 class="text-center">Send notice</h1>
       <div class="card-body">
         <form th:action="@{/send-notice}" method="POST">
           <div class="form-group">
             <label>Text</label>
-            <input type="text" name="notice" placeholder="Enter the notice" class="form-control">
+            <textarea rows="4" cols="50" name="notice" class="form-control">
+              Type your notice here
+            </textarea>
+              
           </div>
           <div class="box-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
