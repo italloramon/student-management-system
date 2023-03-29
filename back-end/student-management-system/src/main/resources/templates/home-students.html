@@ -32,6 +32,9 @@
 	      <li>
 	      	<a class="nav-link" th:href="@{/notices}" th:if="${method == 'student'}">Notices</a>
 	      </li>
+			<li>
+				<a class="nav-link" th:href="@{/home-responsable/{id} (id=${responsable.id})}">Home</a>
+			</li>
 	    </ul>
 	  </div>
 	</nav>

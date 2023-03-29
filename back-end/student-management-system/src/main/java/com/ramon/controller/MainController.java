@@ -2,6 +2,7 @@ package com.ramon.controller;
 
 import java.util.List;
 
+import com.ramon.model.Responsable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -163,6 +164,9 @@ public class MainController {
 		// Store student object in session
 		session.setAttribute("currentStudent", student);
 
+
+		Responsable responsable = (Responsable) session.getAttribute("currentResponsable");
+		model.addAttribute("responsable", responsable);
 		return "home-students";
 	}
 	
