@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.ramon.model.CourseModel;
-import com.ramon.model.NoticeModel;
+import com.ramon.model.Notice;
 import com.ramon.model.Student;
 import com.ramon.model.courses.English;
 import com.ramon.model.courses.Geography;
@@ -186,7 +186,7 @@ public class MainController {
 	
 	@GetMapping("/notices")
 	public String notices(Model model, HttpSession session) {
-		List<NoticeModel> notices = noticeRepository.findAll();
+		List<Notice> notices = noticeRepository.findAll();
 		Student currentStudent = (Student) session.getAttribute("currentStudent");
 		model.addAttribute("student", currentStudent);
 		model.addAttribute("notices", notices);

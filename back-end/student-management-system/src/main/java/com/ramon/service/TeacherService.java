@@ -2,20 +2,18 @@ package com.ramon.service;
 
 import java.util.List;
 
-import com.ramon.model.Responsable;
-import com.ramon.model.Student;
-import com.ramon.model.TeacherModel;
+import com.ramon.model.Teacher;
 
 
 public interface TeacherService {
 	
-	List<TeacherModel> getAllTeachers();
+	List<Teacher> getAllTeachers();
 	
-	TeacherModel save(TeacherModel teacher);
+	Teacher save(Teacher teacher);
 	
-	TeacherModel getTeacherById(Long id);
+	Teacher getTeacherById(Long id);
 	
-	TeacherModel updateTeacher(TeacherModel teacher);
+	Teacher updateTeacher(Teacher teacher);
 	
 	void deleteTeacherById(Long id);
 

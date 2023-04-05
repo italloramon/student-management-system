@@ -22,7 +22,7 @@ import lombok.ToString;
 @Table(name = "student")
 @NoArgsConstructor
 @ToString @EqualsAndHashCode
-public class Student {
+public class Student implements User{
     
     @Id
     @Column(name = "student_id")
@@ -98,4 +98,13 @@ public class Student {
     	this.id = GenerateId.id++;
     }
 
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return cpf;
+    }
 }

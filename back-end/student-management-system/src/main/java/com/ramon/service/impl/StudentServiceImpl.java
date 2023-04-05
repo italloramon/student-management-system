@@ -1,12 +1,12 @@
 package com.ramon.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.ramon.controller.StudentController;
 import com.ramon.model.CourseModel;
 import com.ramon.model.Student;
 import com.ramon.model.courses.English;
@@ -92,6 +92,11 @@ public class StudentServiceImpl implements StudentService{
 		return courses;
 	}
 
+	public static Student[] getSorterdStudents(Student[] students, Comparator<Student> comparator) {
+		Student[] sorted = students.clone();
+		Arrays.sort(sorted, comparator);
+		return sorted;
+	}
 	@Override
 	public Student[] getRankingStudents() {
         List<Student> studentsList = studentRepository.findAll();
@@ -101,7 +106,7 @@ public class StudentServiceImpl implements StudentService{
             studentsArray[i] = studentsList.get(i);
         }
 
-        Student[] studentsArraySorted = StudentController.getSorterdStudents(studentsArray, Comparator.comparing(Student::getRankingStudent).reversed());
+        Student[] studentsArraySorted = this.getSorterdStudents(studentsArray, Comparator.comparing(Student::getRankingStudent).reversed());
 
         return studentsArraySorted;
 	}

@@ -2,11 +2,11 @@ package com.ramon.service.impl;
 
 import java.util.List;
 
-import com.ramon.model.NoticeModel;
+import com.ramon.model.Notice;
 import com.ramon.repository.NoticeRepository;
 import org.springframework.stereotype.Service;
 
-import com.ramon.model.TeacherModel;
+import com.ramon.model.Teacher;
 import com.ramon.repository.TeacherRepository;
 import com.ramon.service.TeacherService;
 
@@ -22,22 +22,22 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public List<TeacherModel> getAllTeachers() {
+	public List<Teacher> getAllTeachers() {
 		return teacherRepository.findAll();
 	}
 
 	@Override
-	public TeacherModel save(TeacherModel teacher) {
+	public Teacher save(Teacher teacher) {
 		return teacherRepository.save(teacher);
 	}
 
 	@Override
-	public TeacherModel getTeacherById(Long id) {
+	public Teacher getTeacherById(Long id) {
 		return teacherRepository.findById(id).get();
 	}
 
 	@Override
-	public TeacherModel updateTeacher(TeacherModel teacher) {
+	public Teacher updateTeacher(Teacher teacher) {
 		return teacherRepository.save(teacher);
 	}
 
@@ -49,7 +49,7 @@ public class TeacherServiceImpl implements TeacherService{
 
 	@Override
 	public void sendNotice(String textNotice) {
-		NoticeModel notice = new NoticeModel();
+		Notice notice = new Notice();
 		notice.setText(textNotice);
 		noticeRepository.save(notice);
 	}

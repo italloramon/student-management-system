@@ -22,7 +22,7 @@ import jakarta.persistence.JoinColumn;
 @Table(name = "responsable_table")
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Responsable {
+public class Responsable implements User {
     @Id
     @GeneratedValue
     @Column(name = "responsable_id")
@@ -48,5 +48,15 @@ public class Responsable {
 
     public Role getRole() {
         return Role.RESPONSABLE;
+    }
+
+    @Override
+    public String getUsername() {
+        return emailResponsable;
+    }
+
+    @Override
+    public String getPassword() {
+        return cpfResponsable;
     }
 }

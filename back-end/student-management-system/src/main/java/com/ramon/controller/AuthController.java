@@ -1,9 +1,9 @@
 package com.ramon.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.ramon.model.Responsable;
-import com.ramon.model.TeacherModel;
+import com.ramon.model.*;
 import com.ramon.repository.ResponsableRepository;
 import com.ramon.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ramon.model.Student;
 import com.ramon.repository.StudentRepository;
 
 @Controller
 public class AuthController {
-	
+
 	@Autowired
 	private StudentRepository studentRepository;
 	@Autowired
@@ -32,38 +31,37 @@ public class AuthController {
 	public String homeLoginForm() {
 		return "login";
 	}
-	
+
 	@PostMapping("/login")
-	public String login(@RequestParam String username, @RequestParam String password, @RequestParam String role, 
-			RedirectAttributes redirectAttributes) {
-		
-		if (role.equalsIgnoreCase("Admin")) {
-			if (username.equals("admin") && password.equals("admin")) {
-				return "redirect:/students";
-			}
-		} else if (role.equalsIgnoreCase("Student")) {
-			List<Student> students = studentRepository.findAll();
-			for (Student student: students) {
-				if (student.getEmail().equals(username) && student.getCpf().equals(password)) {
-					redirectAttributes.addAttribute("id", student.getId());
+	public String login(@RequestParam String username, @RequestParam String password, @RequestParam String role,
+						RedirectAttributes redirectAttributes) {
+
+
+		List<User> users = new ArrayList<>();
+		users.addAll(studentRepository.findAll());
+		users.addAll(teacherRepository.findAll());
+		users.addAll(responsableRepository.findAll());
+
+		for (User user: users) {
+			if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+				Long id = user.getId();
+				if (user.getRole().equals(Role.STUDENT)) {
+					redirectAttributes.addAttribute("id", id);
 					return "redirect:/students/courses/{id}";
-				}
-			}
-		} else if (role.equalsIgnoreCase("Teacher")) {
-			List<TeacherModel> teachers = teacherRepository.findAll();
-			for (TeacherModel teacher : teachers) {
-				if (teacher.getEmail().equals(username) && teacher.getCpf().equals(password)) {
-					redirectAttributes.addAttribute("id", teacher.getId());
+				} else if (user.getRole().equals(Role.TEACHERENGLISH) ||
+						user.getRole().equals(Role.TEACHERGEOGRAPHY) ||
+						user.getRole().equals(Role.TEACHERHISTORY) ||
+						user.getRole().equals(Role.TEACHERMATHEMATICS) ||
+						user.getRole().equals(Role.TEACHERENGLISH) ||
+						user.getRole().equals(Role.TEACHERPORTUGUESE)) {
+					redirectAttributes.addAttribute("id", id);
 					return "redirect:/teachers/home/{id}";
-				}
-			}
-		} else if (role.equalsIgnoreCase("Responsable")) {
-			List<Responsable> responsables = responsableRepository.findAll();
-			for (Responsable responsable : responsables) {
-				if (responsable.getEmailResponsable().equals(username) && responsable.getCpfResponsable().equals(password)) {
-					redirectAttributes.addAttribute("id", responsable.getId());
+				} else if (user.getRole().equals(Role.RESPONSABLE)) {
+					redirectAttributes.addAttribute("id", id);
 					return "redirect:/home-responsable/{id}";
 				}
+			} else if (username.equals("admin") && password.equals("admin")) {
+				return "redirect:/students";
 			}
 		}
 		return "redirect:/";

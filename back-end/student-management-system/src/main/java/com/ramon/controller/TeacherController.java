@@ -1,102 +1,196 @@
 package com.ramon.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import com.ramon.repository.TeacherRepository;
-import com.ramon.repository.NoticeRepository;
+import com.ramon.model.Role;
+import com.ramon.model.courses.*;
+import com.ramon.repository.*;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import com.ramon.model.Student;
+import com.ramon.model.Teacher;
+import com.ramon.service.impl.StudentServiceImpl;
+import com.ramon.service.impl.TeacherServiceImpl;
+
+import jakarta.validation.Valid;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
-import com.ramon.model.TeacherModel;
-import com.ramon.model.NoticeModel;
-import com.ramon.exception.*;
-
-@RestController
-@RequestMapping("/api/")
+@Controller
 public class TeacherController {
-    private final TeacherRepository teacherRepository;
-    private final NoticeRepository noticeRepository;
 
-    public TeacherController(TeacherRepository teacherRepository, NoticeRepository noticeRepository) {
-        this.teacherRepository = teacherRepository;
-        this.noticeRepository = noticeRepository;
-    }
+	private final TeacherServiceImpl teacherService;
+	private final StudentServiceImpl studentService;
+	private final EnglishRepository englishRepository;
+	private final PortugueseRepository portugueseRepository;
+	private final MathematicsRepository mathematicsRepository;
+	private final GeographyRepository geographyRepository;
+	private final HistoryRepository historyRepository;
 
-    @GetMapping("teachers/")
-    public List<TeacherModel> getAllTeachers() {
-        return this.teacherRepository.findAll();
-    }
+	public TeacherController(TeacherServiceImpl teacherService, StudentServiceImpl studentService, EnglishRepository englishRepository, PortugueseRepository portugueseRepository, MathematicsRepository mathematicsRepository, GeographyRepository geographyRepository, HistoryRepository historyRepository) {
+		this.teacherService = teacherService;
+		this.studentService = studentService;
+		this.englishRepository = englishRepository;
+		this.portugueseRepository = portugueseRepository;
+		this.mathematicsRepository = mathematicsRepository;
+		this.geographyRepository = geographyRepository;
+		this.historyRepository = historyRepository;
+	}
 
-    @GetMapping("teachers/{id}")
-    public TeacherModel getTeacher(@PathVariable Long id) {
-        return this.teacherRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException(id));
-    }
+	@GetMapping("/teachers")
+	public String home(Model model) {
+		model.addAttribute("teachers", teacherService.getAllTeachers());
+		return "teachers";
+	}
 
-    @PostMapping("teachers/")
-    public TeacherModel createTeacher(@RequestBody TeacherModel teacher) {
-        return this.teacherRepository.save(teacher);
-    }
+	@GetMapping("/teachers/form")
+	public String teachersForm(Model model) {
+		Teacher teacher= new Teacher();
 
-    @PutMapping("teachers/{id}")
-    public TeacherModel updateTeacher(@RequestBody TeacherModel newTeacher, @PathVariable Long id) {
-        TeacherModel teacher = teacherRepository.findById(id).orElseThrow(() -> new TeacherNotFoundException(id));
-        if (newTeacher.getName() != null) {
-            teacher.setName(newTeacher.getName());
-        }
-        if (newTeacher.getCpf() != null) {
-            teacher.setCpf(newTeacher.getCpf());
-        }
-        if (newTeacher.getEmail() != null) {
-            teacher.setEmail(newTeacher.getEmail());
-        }
-        if (newTeacher.getSalary() != null) {
-            teacher.setSalary(newTeacher.getSalary());
-        }
-        if (newTeacher.getRole() != null) {
-            teacher.setRole(newTeacher.getRole());
-        }
-        return teacherRepository.save(teacher);
-    }
+		model.addAttribute("teacher", teacher);
 
-    @DeleteMapping("teachers/{id}")
-    public void deleteTeacher(@PathVariable Long id) {
-        this.teacherRepository.deleteById(id);
-    }
+		return "teacher_form";
+	}
 
-    @PostMapping("teachers/login")
-    public TeacherModel loginTeacher(@RequestBody Map<String, String> teacher) {
-        String password = teacher.get("password");
-        if (teacherRepository.existsByCpf(password)) {
-            TeacherModel teacherLogin = teacherRepository.findByCpf(password);
-            if (teacherLogin.getEmail().equals(teacher.get("login"))) {
-                return teacherLogin;
-            }
-        }
-        throw new TeacherNotFoundException(-1l);
-    }
+	@PostMapping("/teachers")
+	public String saveTeacher(@Valid @ModelAttribute("teacher") Teacher teacher, BindingResult result) {
+		if (result.hasErrors()) {
+			return "teacher_form";
+		}
 
-    @PostMapping("teachers/sendNotice")
-    public NoticeModel sendNotice(@RequestBody NoticeModel notice) {
-        return noticeRepository.save(notice);
-    }
+		teacherService.save(teacher);
+		return "redirect:/teachers";
+	}
 
-    @GetMapping("teachers/payroll")
-    public Map<String, Double> payroll() {
-        List<TeacherModel> teachers = teacherRepository.findAll();
-        Map<String, Double> response = new HashMap<>();
-        Double total = 0.0;
-        for (TeacherModel teacher: teachers) {
-            total += teacher.getSalary();
-        }
-        response.put("Payroll", total);
-        return response;
-    }
+	@GetMapping("/teachers/edit/{id}")
+	public String editTeacherForm(@PathVariable Long id, Model model) {
+		model.addAttribute("teacher", teacherService.getTeacherById(id));
+		return "edit_teacher_form";
+	}
 
+	@PostMapping("/teachers/{id}")
+	public String updateTeacher(@PathVariable Long id, @ModelAttribute("teacher") Teacher teacher, Model model) {
+		Teacher olderTeacher= teacherService.getTeacherById(id);
+
+		olderTeacher.setName(teacher.getName());
+		olderTeacher.setCpf(teacher.getCpf());
+		olderTeacher.setEmail(teacher.getEmail());
+		olderTeacher.setSalary(teacher.getSalary());
+		olderTeacher.setRole(teacher.getRole());
+
+		teacherService.updateTeacher(olderTeacher);
+
+		return "redirect:/teachers";
+	}
+
+	@GetMapping("/teachers/{id}")
+	public String deleteTeacher(@PathVariable Long id) {
+		teacherService.deleteTeacherById(id);
+		return "redirect:/teachers";
+	}
+
+	@GetMapping("/teachers/home/{id}")
+	public String getHomeTeacher(@PathVariable Long id, Model model, HttpSession session) {
+		Teacher teacher = teacherService.getTeacherById(id);
+		List<Student> students = studentService.getAllStudents();
+
+		session.setAttribute("currentTeacher", teacher);
+
+		model.addAttribute("teacher", teacher);
+		model.addAttribute("students", students);
+
+		return "home-teachers";
+	}
+
+	@GetMapping("/edit-score/{studentId}")
+	public String getEditScoreForm(@PathVariable Long studentId, HttpSession session, Model model) {
+		Student student = studentService.getStudentById(studentId);
+		session.setAttribute("currentStudent", student);
+		Teacher teacher = (Teacher) session.getAttribute("currentTeacher");
+		model.addAttribute("teacher", teacher);
+		return "edit-score";
+	}
+
+	@PostMapping("/update-score")
+	public String updateScore(@RequestParam("bimester") Long bimester, @RequestParam("score") Double score,
+							HttpSession session, RedirectAttributes redirectAttributes) {
+		Teacher teacher = (Teacher) session.getAttribute("currentTeacher");
+		Student student = (Student) session.getAttribute("currentStudent");
+
+		if(teacher.getRole().equals(Role.TEACHERENGLISH)) {
+			English english = student.getEnglish();
+			if (bimester == 1) english.setScore1(score);
+			else if (bimester == 2) english.setScore2(score);
+			else if (bimester == 3) english.setScore3(score);
+			else if (bimester == 4) english.setScore4(score);
+			englishRepository.save(english);
+		} else if(teacher.getRole().equals(Role.TEACHERPORTUGUESE)) {
+			Portuguese portuguese = student.getPortuguese();
+			if (bimester == 1) portuguese.setScore1(score);
+			else if (bimester == 2) portuguese.setScore2(score);
+			else if (bimester == 3) portuguese.setScore3(score);
+			else if (bimester == 4) portuguese.setScore4(score);
+			portugueseRepository.save(portuguese);
+		} else if(teacher.getRole().equals(Role.TEACHERHISTORY)) {
+			History history = student.getHistory();
+			if (bimester == 1) history.setScore1(score);
+			else if (bimester == 2) history.setScore2(score);
+			else if (bimester == 3) history.setScore3(score);
+			else if (bimester == 4) history.setScore4(score);
+			historyRepository.save(history);
+		} else if(teacher.getRole().equals(Role.TEACHERGEOGRAPHY)) {
+			Geography geography = student.getGeography();
+			if (bimester == 1) geography.setScore1(score);
+			else if (bimester == 2) geography.setScore2(score);
+			else if (bimester == 3) geography.setScore3(score);
+			else if (bimester == 4) geography.setScore4(score);
+			geographyRepository.save(geography);
+		} else if (teacher.getRole().equals(Role.TEACHERMATHEMATICS)) {
+			Mathematics mathematics = student.getMathematics();
+			if (bimester == 1) mathematics.setScore1(score);
+			else if (bimester == 2) mathematics.setScore2(score);
+			else if (bimester == 3) mathematics.setScore3(score);
+			else if (bimester == 4) mathematics.setScore4(score);
+			mathematicsRepository.save(mathematics);
+		}
+		redirectAttributes.addAttribute("id", teacher.getId());
+
+		return "redirect:/teachers/home/{id}";
+	}
+	@GetMapping("/send-notice")
+	public String getFormSendNotice(HttpSession session, Model model) {
+		Teacher teacher = (Teacher) session.getAttribute("currentTeacher");
+		model.addAttribute("teacher", teacher);
+		return "send-notice";
+	}
+
+	@PostMapping("/send-notice")
+	public String sendNotice(@RequestParam String notice) {
+		teacherService.sendNotice(notice);
+		return "redirect:/send-notice";
+	}
+
+	@GetMapping("/dashboard")
+	public String dashboard(Model model) {
+		List<Teacher> teachers = teacherService.getAllTeachers();
+		List<Student> students = studentService.getAllStudents();
+
+		double totalPay = 0;
+		for (Teacher teacher: teachers) {
+			totalPay += teacher.getSalary();
+		}
+		double totalReceive = 0;
+		for (Student student: students) {
+			totalReceive += student.getTuition();
+		}
+		double balance = totalReceive - totalPay;
+		model.addAttribute("totalPay", totalPay);
+		model.addAttribute("teachers", teachers);
+		model.addAttribute("students", students);
+		model.addAttribute("balance", balance);
+		return "dashboard";
+	}
 }
