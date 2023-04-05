@@ -5,18 +5,7 @@ import java.util.List;
 import com.ramon.model.Teacher;
 
 
-public interface TeacherService {
-	
-	List<Teacher> getAllTeachers();
-	
-	Teacher save(Teacher teacher);
-	
-	Teacher getTeacherById(Long id);
-	
-	Teacher updateTeacher(Teacher teacher);
-	
-	void deleteTeacherById(Long id);
-
+public interface TeacherService extends UserService<Teacher>{
 	void sendNotice(String textNotice);
 
 }

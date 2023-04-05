@@ -66,7 +66,7 @@ public class MainController {
 		
 	@GetMapping("/students")
 	public String home(Model model) {
-		model.addAttribute("students", studentService.getAllStudents());
+		model.addAttribute("students", studentService.getAll());
 		model.addAttribute("method", "student");
 		return "students";
 	}
@@ -94,7 +94,7 @@ public class MainController {
         
 		
 		model.addAttribute("student", student);
-		model.addAttribute("responsables", responsableService.getAllResponsables());
+		model.addAttribute("responsables", responsableService.getAll());
 		model.addAttribute("method", "student");
 		return "student_form";
 	}
@@ -111,15 +111,15 @@ public class MainController {
 	
 	@GetMapping("/students/edit/{id}")
 	public String editStudentForm(@PathVariable Long id, Model model) {
-		model.addAttribute("student", studentService.getStudentById(id));
-		model.addAttribute("responsables", responsableService.getAllResponsables());
+		model.addAttribute("student", studentService.getById(id));
+		model.addAttribute("responsables", responsableService.getAll());
 		model.addAttribute("method", "student");
 		return "edit_student_form";
 	}
 	
 	@PostMapping("/students/{id}")
 	public String updateStudent(@PathVariable Long id, @ModelAttribute("student") Student student, Model model) {
-		Student olderStudent = studentService.getStudentById(id);
+		Student olderStudent = studentService.getById(id);
 	
 		olderStudent.setName(student.getName());
 		olderStudent.setCpf(student.getCpf());
@@ -127,20 +127,20 @@ public class MainController {
 		olderStudent.setTuition(student.getTuition());
 		olderStudent.setResponsable(student.getResponsable());
 		
-		studentService.updateStudent(olderStudent);
+		studentService.update(olderStudent);
 
 		return "redirect:/students";
 	}
 	
 	@GetMapping("/students/{id}")
 	public String deleteStudent(@PathVariable Long id) {
-		studentService.deleteStudentById(id);
+		studentService.deleteById(id);
 		return "redirect:/students";
 	}
 	
 	@GetMapping("/students/courses/{id}")
 	public String getCourses(@PathVariable Long id, Model model, HttpSession session) {
-		Student student = studentService.getStudentById(id);
+		Student student = studentService.getById(id);
 		List<CourseModel> courses = studentService.getStudentCourses(student);
 		
 		model.addAttribute("student", student);
@@ -155,7 +155,7 @@ public class MainController {
 
 	@GetMapping("/students/courses/wh/{id}")
 	public String getCoursesWithoutStudent(@PathVariable Long id, Model model, HttpSession session) {
-		Student student = studentService.getStudentById(id);
+		Student student = studentService.getById(id);
 		List<CourseModel> courses = studentService.getStudentCourses(student);
 
 		model.addAttribute("student", student);

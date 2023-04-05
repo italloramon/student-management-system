@@ -42,7 +42,7 @@ public class TeacherController {
 
 	@GetMapping("/teachers")
 	public String home(Model model) {
-		model.addAttribute("teachers", teacherService.getAllTeachers());
+		model.addAttribute("teachers", teacherService.getAll());
 		return "teachers";
 	}
 
@@ -67,13 +67,13 @@ public class TeacherController {
 
 	@GetMapping("/teachers/edit/{id}")
 	public String editTeacherForm(@PathVariable Long id, Model model) {
-		model.addAttribute("teacher", teacherService.getTeacherById(id));
+		model.addAttribute("teacher", teacherService.getById(id));
 		return "edit_teacher_form";
 	}
 
 	@PostMapping("/teachers/{id}")
 	public String updateTeacher(@PathVariable Long id, @ModelAttribute("teacher") Teacher teacher, Model model) {
-		Teacher olderTeacher= teacherService.getTeacherById(id);
+		Teacher olderTeacher= teacherService.getById(id);
 
 		olderTeacher.setName(teacher.getName());
 		olderTeacher.setCpf(teacher.getCpf());
@@ -81,21 +81,21 @@ public class TeacherController {
 		olderTeacher.setSalary(teacher.getSalary());
 		olderTeacher.setRole(teacher.getRole());
 
-		teacherService.updateTeacher(olderTeacher);
+		teacherService.update(olderTeacher);
 
 		return "redirect:/teachers";
 	}
 
 	@GetMapping("/teachers/{id}")
 	public String deleteTeacher(@PathVariable Long id) {
-		teacherService.deleteTeacherById(id);
+		teacherService.deleteById(id);
 		return "redirect:/teachers";
 	}
 
 	@GetMapping("/teachers/home/{id}")
 	public String getHomeTeacher(@PathVariable Long id, Model model, HttpSession session) {
-		Teacher teacher = teacherService.getTeacherById(id);
-		List<Student> students = studentService.getAllStudents();
+		Teacher teacher = teacherService.getById(id);
+		List<Student> students = studentService.getAll();
 
 		session.setAttribute("currentTeacher", teacher);
 
@@ -107,7 +107,7 @@ public class TeacherController {
 
 	@GetMapping("/edit-score/{studentId}")
 	public String getEditScoreForm(@PathVariable Long studentId, HttpSession session, Model model) {
-		Student student = studentService.getStudentById(studentId);
+		Student student = studentService.getById(studentId);
 		session.setAttribute("currentStudent", student);
 		Teacher teacher = (Teacher) session.getAttribute("currentTeacher");
 		model.addAttribute("teacher", teacher);
@@ -175,8 +175,8 @@ public class TeacherController {
 
 	@GetMapping("/dashboard")
 	public String dashboard(Model model) {
-		List<Teacher> teachers = teacherService.getAllTeachers();
-		List<Student> students = studentService.getAllStudents();
+		List<Teacher> teachers = teacherService.getAll();
+		List<Student> students = studentService.getAll();
 
 		double totalPay = 0;
 		for (Teacher teacher: teachers) {

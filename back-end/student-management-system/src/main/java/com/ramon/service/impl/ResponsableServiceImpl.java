@@ -22,7 +22,7 @@ public class ResponsableServiceImpl implements ResponsableService {
 
 
 	@Override
-	public List<Responsable> getAllResponsables() {
+	public List<Responsable> getAll() {
 		return responsableRepository.findAll();
 	}
 
@@ -34,19 +34,19 @@ public class ResponsableServiceImpl implements ResponsableService {
 
 
 	@Override
-	public Responsable getResponsableById(Long id) {
+	public Responsable getById(Long id) {
 		return responsableRepository.findById(id).get();
 	}
 
 
 	@Override
-	public Responsable updateResponsable(Responsable responsable) {
+	public Responsable update(Responsable responsable) {
 		return responsableRepository.save(responsable);
 	}
 
 
 	@Override
-	public void deleteResponsableById(Long id) {
+	public void deleteById(Long id) {
 		responsableRepository.deleteById(id);
 		
 	}

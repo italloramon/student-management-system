@@ -28,7 +28,7 @@ public class ResponsableController {
 		
 	@GetMapping("/responsables")
 	public String home(Model model) {
-		model.addAttribute("responsables", responsableService.getAllResponsables());
+		model.addAttribute("responsables", responsableService.getAll());
 		return "responsables";
 	}
 	
@@ -53,33 +53,33 @@ public class ResponsableController {
 	
 	@GetMapping("/responsables/edit/{id}")
 	public String editResponsableForm(@PathVariable Long id, Model model) {
-		model.addAttribute("responsable", responsableService.getResponsableById(id));
+		model.addAttribute("responsable", responsableService.getById(id));
 		return "edit_responsable_form";
 	}
 	
 	@PostMapping("/responsables/{id}")
 	public String updateResponsable(@PathVariable Long id, @ModelAttribute("responsable") Responsable responsable, Model model) {
-		Responsable olderResponsable = responsableService.getResponsableById(id);
+		Responsable olderResponsable = responsableService.getById(id);
 	
 		olderResponsable.setNameResponsable(responsable.getNameResponsable());
 		olderResponsable.setCpfResponsable(responsable.getCpfResponsable());
 		olderResponsable.setEmailResponsable(responsable.getEmailResponsable());
 
 		
-		responsableService.updateResponsable(olderResponsable);
+		responsableService.update(olderResponsable);
 		
 		return "redirect:/responsables";
 	}
 	
 	@GetMapping("/responsables/{id}")
 	public String deleteResponsable(@PathVariable Long id) {
-		responsableService.deleteResponsableById(id);
+		responsableService.deleteById(id);
 		return "redirect:/responsables";
 	}
 
 	@GetMapping("/home-responsable/{id}")
 	public String getStudentsOfResponsable(@PathVariable Long id, Model model, HttpSession session) {
-		Responsable responsable = responsableService.getResponsableById(id);
+		Responsable responsable = responsableService.getById(id);
 		List<Student> students = responsableService.getStudentsOfResponsable(responsable);
 
 		model.addAttribute("responsable", responsable);

@@ -51,31 +51,31 @@ public class StudentServiceImpl implements StudentService{
 		this.historyRepository = historyRepository;
 	}
 
+
 	@Override
-	public List<Student> getAllStudents() {
+	public List<Student> getAll() {
 		return studentRepository.findAll();
 	}
 
 	@Override
-	public Student save(Student student) {
-		return studentRepository.save(student);
+	public Student save(Student element) {
+		return studentRepository.save(element);
 	}
 
 	@Override
-	public Student getStudentById(Long id) {
+	public Student getById(Long id) {
 		return studentRepository.findById(id).get();
 	}
 
 	@Override
-	public Student updateStudent(Student student) {
-		return studentRepository.save(student);
+	public Student update(Student element) {
+		return studentRepository.save(element);
 	}
 
 	@Override
-	public void deleteStudentById(Long id) {
+	public void deleteById(Long id) {
 		studentRepository.deleteById(id);
 	}
-
 	@Override
 	public List<CourseModel> getStudentCourses(Student student) {
 		List<CourseModel> courses = new ArrayList<>();
@@ -110,6 +110,5 @@ public class StudentServiceImpl implements StudentService{
 
         return studentsArraySorted;
 	}
-	
-	
+
 }
