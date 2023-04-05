@@ -21,7 +21,7 @@ import java.util.*;
 @Table(name = "history_table")
 @NoArgsConstructor
 @EqualsAndHashCode
-public class History {
+public class History implements CourseModel {
     
     @Id
     @GeneratedValue
@@ -41,7 +41,7 @@ public class History {
     @Getter @Setter private Double score4 = 0.0;
 
     @OneToMany(mappedBy = "history")
-    private List<StudentModel> students;
+    private List<Student> students;
 
     public History(Double score1, Double score2, Double score3, Double score4) {
         this.score1 = score1;
@@ -53,5 +53,30 @@ public class History {
     public Double getScores() {
         return ((this.score1 + this.score2 + this.score3 + this.score4) / 4);
     }
+
+	@Override
+	public String courseName() {
+		return "History";
+	}
+	
+	@Override
+	public Double score1() {
+		return this.score1;
+	}
+
+	@Override
+	public Double score2() {
+		return this.score2;
+	}
+
+	@Override
+	public Double score3() {
+		return this.score3;
+	}
+
+	@Override
+	public Double score4() {
+		return this.score4;
+	}
 
 }

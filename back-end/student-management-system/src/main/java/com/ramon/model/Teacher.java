@@ -15,7 +15,7 @@ import lombok.ToString;
 @Table(name = "teacher")
 @NoArgsConstructor
 @ToString @EqualsAndHashCode
-public class TeacherModel {
+public class Teacher implements User {
     @Id
     @GeneratedValue
     @Column(name = "teacher_id")
@@ -36,7 +36,7 @@ public class TeacherModel {
     @Column(name = "teacher_role")
     @Getter @Setter private Role role;
 
-    public TeacherModel(String name, String cpf, String email, Double salary, String type) {
+    public Teacher(String name, String cpf, String email, Double salary, String type) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
@@ -54,4 +54,13 @@ public class TeacherModel {
         }
     }
 
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return cpf;
+    }
 }

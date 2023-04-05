@@ -21,7 +21,7 @@ import java.util.*;
 @Table(name = "mathematics_table")
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Mathematics {
+public class Mathematics implements CourseModel {
     
     @Id
     @GeneratedValue
@@ -41,7 +41,7 @@ public class Mathematics {
     @Getter @Setter private Double score4 = 0.0;
 
     @OneToMany(mappedBy = "mathematics")
-    private List<StudentModel> students;
+    private List<Student> students;
 
     public Mathematics(Double score1, Double score2, Double score3, Double score4) {
         this.score1 = score1;
@@ -53,5 +53,30 @@ public class Mathematics {
     public Double getScores() {
         return ((this.score1 + this.score2 + this.score3 + this.score4) / 4);
     }
+
+	@Override
+	public String courseName() {
+		return "Mathematics";
+	}
+	
+	@Override
+	public Double score1() {
+		return this.score1;
+	}
+
+	@Override
+	public Double score2() {
+		return this.score2;
+	}
+
+	@Override
+	public Double score3() {
+		return this.score3;
+	}
+
+	@Override
+	public Double score4() {
+		return this.score4;
+	}
 
 }

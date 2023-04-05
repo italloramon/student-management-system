@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Student Management System</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{styles.css}">
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+	  <!-- Brand -->
+	  <a class="navbar-brand" href="#">Student Management System</a>
+	
+	  <!-- Toggler/collapsibe Button -->
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	
+	  <!-- Navbar links -->
+	  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+	    <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link" th:href="@{/students}">Student Management</a>
+	      </li>
+	      <li>
+	      	<a class="nav-link" th:href="@{/responsables}">Responsable Management</a>
+	      </li>
+	      <li>
+	      	<a class="nav-link" th:href="@{/teachers}">Teacher Management</a>
+	      </li>	      
+	    </ul>
+	  </div>
+	</nav>	
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+				<h1 class="text-center">Add new student</h1>
+				<div class="card-body">
+					<form th:action="@{/students}" th:object="${student}" method="POST">
+						<div class="form-group">
+							<label>Name</label>
+							<input type="text" name="name" th:field="*{name}" placeholder="Enter Student Name" class="form-control">
+							<p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
+						</div>
+						<div class="form-group">
+							<label>CPF</label>
+							<input type="text" name="cpf" th:field="*{cpf}" placeholder="Enter Student CPF" class="form-control">
+							<p th:if="${#fields.hasErrors('cpf')}" th:errorclass="error" th:errors="*{cpf}"></p>
+						</div>
+						<div class="form-group">
+							<label>Email</label>
+							<input type="text" name="email" th:field="*{email}" placeholder="Enter Student Email" class="form-control">
+							<p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
+						</div>
+						<div class="form-group">
+							<label>Tuition</label>
+							<input type="number" name="tuition" th:field="*{tuition}" placeholder="Enter Student Tuition" class="form-control">
+							<p th:if="${#fields.hasErrors('tuition')}" th:errorclass="error" th:errors="*{tuition}"></p>
+						</div>
+						<div class="form-group">
+					        <select id="responsable" th:field="*{responsable}">
+				                <option th:each="responsable : ${responsables}" th:value="${responsable.id}"  th:text="${responsable.nameResponsable}"></option>   	
+				            </select>
+						</div>
+						<div class="box-footer">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
