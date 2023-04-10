@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Management System</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" th:href="@{styles.css}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">Student Management System</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/students}">Student Management</a>
+      </li>
+      <li>
+        <a class="nav-link" th:href="@{/responsables}">Responsable Management</a>
+      </li>
+      <li>
+        <a class="nav-link" th:href="@{/teachers}">Teacher Management</a>
+      </li>
+      <li>
+        <a class="nav-link" th:href="@{/dashboard}">Balance</a>
+      </li>
+      <li>
+        <a class="nav-link" th:href="@{/users}"></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <h1>List Users</h1>
+  </div>
+
+  <table class="table table-striped table-bordered">
+    <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Role</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user: ${users}">
+      <td th:text="${user.getId}"></td>
+      <td th:text="${user.getUsername}"></td>
+      <td th:text="${user.getRole()}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

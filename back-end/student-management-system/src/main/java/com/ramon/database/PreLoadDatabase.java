@@ -162,7 +162,7 @@ public class PreLoadDatabase implements CommandLineRunner {
         Teacher teacher3 = new Teacher("Boa Hancock", "888876543210", "boahancock@gmail.com", 4500.0, "Mathematics");
         teacherRepository.save(teacher3);
 
-        Teacher teacher4 = new Teacher("Trafalgar D. Water Law", "345678901234", "trafalgarlaw@gmail.com", 5500.0, "Science");
+        Teacher teacher4 = new Teacher("Trafalgar D. Water Law", "345678901234", "trafalgarlaw@gmail.com", 5500.0, "History");
         teacherRepository.save(teacher4);
 
         Teacher teacher5 = new Teacher("Portgas D. Ace", "777788889999", "portgasace@gmail.com", 4000.0, "Geography");

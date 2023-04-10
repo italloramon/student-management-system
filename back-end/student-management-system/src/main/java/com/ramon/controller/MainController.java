@@ -1,8 +1,11 @@
 package com.ramon.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.ramon.model.Responsable;
+import com.ramon.model.*;
+import com.ramon.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,20 +14,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.ramon.model.CourseModel;
-import com.ramon.model.Notice;
-import com.ramon.model.Student;
 import com.ramon.model.courses.English;
 import com.ramon.model.courses.Geography;
 import com.ramon.model.courses.History;
 import com.ramon.model.courses.Mathematics;
 import com.ramon.model.courses.Portuguese;
-import com.ramon.repository.EnglishRepository;
-import com.ramon.repository.GeographyRepository;
-import com.ramon.repository.HistoryRepository;
-import com.ramon.repository.MathematicsRepository;
-import com.ramon.repository.NoticeRepository;
-import com.ramon.repository.PortugueseRepository;
 import com.ramon.service.impl.ResponsableServiceImpl;
 import com.ramon.service.impl.StudentServiceImpl;
 
@@ -49,6 +43,12 @@ public class MainController {
     private final PortugueseRepository portugueseRepository;
     
     private final NoticeRepository noticeRepository;
+	@Autowired
+	private StudentRepository studentRepository;
+	@Autowired
+	private TeacherRepository teacherRepository;
+	@Autowired
+	private ResponsableRepository responsableRepository;
 	
 	public MainController(StudentServiceImpl studentService, ResponsableServiceImpl responsableService,
 			EnglishRepository englishRepository, GeographyRepository geographyRepository,
@@ -194,4 +194,13 @@ public class MainController {
 		return "notices";
 	}
 
+	@GetMapping("/users")
+	public String users(Model model) {
+		List<User> users = new ArrayList<>();
+		users.addAll(studentRepository.findAll());
+		users.addAll(teacherRepository.findAll());
+		users.addAll(responsableRepository.findAll());
+		model.addAttribute("users", users);
+		return "users";
+	}
 }
