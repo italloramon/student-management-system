@@ -7,11 +7,7 @@ import com.ramon.model.courses.Mathematics;
 import com.ramon.model.courses.Portuguese;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Table(name = "student")

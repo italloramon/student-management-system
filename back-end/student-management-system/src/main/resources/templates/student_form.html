@@ -64,6 +64,7 @@
 				                <option th:each="responsable : ${responsables}" th:value="${responsable.id}"  th:text="${responsable.nameResponsable}"></option>   	
 				            </select>
 						</div>
+						<span th:if="${exception}" th:text="${exception}">Error</span>
 						<div class="box-footer">
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</div>

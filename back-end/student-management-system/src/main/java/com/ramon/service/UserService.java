@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface UserService<T> {
     List<T> getAll();
-    T save(T element);
+    T save(T element) throws Exception;
     T getById(Long id);
     T update(T element);
     void deleteById(Long id);

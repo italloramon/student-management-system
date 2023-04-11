@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import com.ramon.exception.EmptyValuesException;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.CourseModel;
@@ -58,7 +59,11 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public Student save(Student element) {
+	public Student save(Student element) throws EmptyValuesException {
+
+		if(element.getName().isEmpty() || element.getCpf().isEmpty() || element.getEmail().isEmpty()) {
+			throw new EmptyValuesException("You cannot leave empty fields!");
+		}
 		return studentRepository.save(element);
 	}
 

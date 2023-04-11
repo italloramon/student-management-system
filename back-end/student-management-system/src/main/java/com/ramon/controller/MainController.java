@@ -85,31 +85,39 @@ public class MainController {
 	}
 	
 	@PostMapping("/students")
-	public String saveStudent(@Valid @ModelAttribute("student") Student student, BindingResult result) {
-		if (result.hasErrors()) {
+	public String saveStudent(@Valid @ModelAttribute("student") Student student, BindingResult result, Model model) {
+
+		try {
+			English english = new English();
+			this.englishRepository.save(english);
+			Geography geography = new Geography();
+			geographyRepository.save(geography);
+			History history = new History();
+			historyRepository.save(history);
+			Mathematics mathematics = new Mathematics();
+			mathematicsRepository.save(mathematics);
+			Portuguese portuguese = new Portuguese();
+			portugueseRepository.save(portuguese);
+
+			student.setEnglish(english);
+			student.setGeography(geography);
+			student.setHistory(history);
+			student.setMathematics(mathematics);
+			student.setPortuguese(portuguese);
+
+			student.createId();
+			studentService.save(student);
+			return "redirect:/students";
+		} catch (Exception ex) {
+			Student newStudent = new Student();
+
+			model.addAttribute("student", newStudent);
+			model.addAttribute("responsables", responsableService.getAll());
+			model.addAttribute("method", "student");
+			model.addAttribute("exception", ex.getMessage());
 			return "student_form";
 		}
 
-		English english = new English();
-		this.englishRepository.save(english);
-		Geography geography = new Geography();
-		geographyRepository.save(geography);
-		History history = new History();
-		historyRepository.save(history);
-		Mathematics mathematics = new Mathematics();
-		mathematicsRepository.save(mathematics);
-		Portuguese portuguese = new Portuguese();
-		portugueseRepository.save(portuguese);
-
-		student.setEnglish(english);
-		student.setGeography(geography);
-		student.setHistory(history);
-		student.setMathematics(mathematics);
-		student.setPortuguese(portuguese);
-
-		student.createId();
-		studentService.save(student);
-		return "redirect:/students";
 	}
 	
 	@GetMapping("/students/edit/{id}")
