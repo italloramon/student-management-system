@@ -54,8 +54,8 @@
 							<input type="text" name="emailResponsable" th:field="*{emailResponsable}" placeholder="Enter Responsable Email" class="form-control">
 							<p th:if="${#fields.hasErrors('emailResponsable')}" th:errorclass="error" th:errors="*{emailResponsable}"></p>
 						</div>
-						<span th:if="${exception}" th:text="${exception}">Error</span>
-						<div class="box-footer">
+						<span th:if="${exception}" class="alert alert-danger" role="alert" th:text="${exception}">Error</span>
+						<div class="box-footer space-top">
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</div>
 					</form>
