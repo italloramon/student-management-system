@@ -42,13 +42,15 @@ public class ResponsableController {
 	}
 	
 	@PostMapping("/responsables")
-	public String saveResponsable(@Valid @ModelAttribute("responsable") Responsable responsable, BindingResult result) {
-		if (result.hasErrors()) {
+	public String saveResponsable(@Valid @ModelAttribute("responsable") Responsable responsable, BindingResult result,
+								  Model model) {
+		try {
+			responsableService.save(responsable);
+			return "redirect:/responsables";
+		} catch (Exception ex) {
+			model.addAttribute("exception", ex.getMessage());
 			return "responsable_form";
 		}
-
-		responsableService.save(responsable);
-		return "redirect:/responsables";
 	}
 	
 	@GetMapping("/responsables/edit/{id}")

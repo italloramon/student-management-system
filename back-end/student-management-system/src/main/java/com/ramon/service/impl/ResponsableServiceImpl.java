@@ -2,6 +2,7 @@ package com.ramon.service.impl;
 
 import java.util.List;
 
+import com.ramon.exception.EmptyValuesException;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.Responsable;
@@ -28,7 +29,12 @@ public class ResponsableServiceImpl implements ResponsableService {
 
 
 	@Override
-	public Responsable save(Responsable responsable) {
+	public Responsable save(Responsable responsable) throws EmptyValuesException {
+		if (responsable.getNameResponsable().isEmpty() ||
+				responsable.getEmailResponsable().isEmpty() ||
+				responsable.getCpfResponsable().isEmpty()) {
+			throw new EmptyValuesException("Cannot leave empty fields!");
+		}
 		return responsableRepository.save(responsable);
 	}
 
