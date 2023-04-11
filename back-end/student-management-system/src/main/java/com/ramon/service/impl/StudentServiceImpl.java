@@ -8,6 +8,7 @@ import java.util.List;
 import com.ramon.exception.EmptyValuesException;
 import com.ramon.exception.InvalidFieldException;
 import com.ramon.utils.CheckCPF;
+import com.ramon.utils.CheckEmail;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.CourseModel;
@@ -27,24 +28,23 @@ import com.ramon.service.StudentService;
 
 @Service
 public class StudentServiceImpl implements StudentService{
-	
-	private final StudentRepository studentRepository;
-	
-	private final EnglishRepository englishRepository;
-	
-	private final PortugueseRepository portugueseRepository;
-	
-	private final MathematicsRepository mathematicsRepository;
-	
-	private final GeographyRepository geographyRepository;
-	
-	private final HistoryRepository historyRepository;
-	
 
-	
+	private final StudentRepository studentRepository;
+
+	private final EnglishRepository englishRepository;
+
+	private final PortugueseRepository portugueseRepository;
+
+	private final MathematicsRepository mathematicsRepository;
+
+	private final GeographyRepository geographyRepository;
+
+	private final HistoryRepository historyRepository;
+
+
 	public StudentServiceImpl(StudentRepository studentRepository, EnglishRepository englishRepository,
-			PortugueseRepository portugueseRepository, MathematicsRepository mathematicsRepository,
-			GeographyRepository geographyRepository, HistoryRepository historyRepository) {
+							  PortugueseRepository portugueseRepository, MathematicsRepository mathematicsRepository,
+							  GeographyRepository geographyRepository, HistoryRepository historyRepository) {
 		super();
 		this.studentRepository = studentRepository;
 		this.englishRepository = englishRepository;
@@ -67,6 +67,8 @@ public class StudentServiceImpl implements StudentService{
 			throw new EmptyValuesException("You cannot leave empty fields!");
 		} else if(!CheckCPF.isCPF(element.getCpf())) {
 			throw new InvalidFieldException("CPF", element.getCpf());
+		} else if(!CheckEmail.isEmail(element.getEmail())){
+			throw new InvalidFieldException("Email", element.getEmail());
 		}
 		return studentRepository.save(element);
 	}
@@ -85,6 +87,7 @@ public class StudentServiceImpl implements StudentService{
 	public void deleteById(Long id) {
 		studentRepository.deleteById(id);
 	}
+
 	@Override
 	public List<CourseModel> getStudentCourses(Student student) {
 		List<CourseModel> courses = new ArrayList<>();
@@ -106,6 +109,7 @@ public class StudentServiceImpl implements StudentService{
 		Arrays.sort(sorted, comparator);
 		return sorted;
 	}
+
 	@Override
 	public Student[] getRankingStudents() {
         List<Student> studentsList = studentRepository.findAll();

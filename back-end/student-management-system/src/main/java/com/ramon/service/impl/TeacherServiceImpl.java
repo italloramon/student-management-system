@@ -7,6 +7,7 @@ import com.ramon.exception.InvalidFieldException;
 import com.ramon.model.Notice;
 import com.ramon.repository.NoticeRepository;
 import com.ramon.utils.CheckCPF;
+import com.ramon.utils.CheckEmail;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.Teacher;
@@ -35,6 +36,8 @@ public class TeacherServiceImpl implements TeacherService{
 			throw new EmptyValuesException("You cannot leave empty fields!");
 		} else if (!CheckCPF.isCPF(teacher.getCpf())) {
 			throw new InvalidFieldException("CPF", teacher.getCpf());
+		} else if(!CheckEmail.isEmail(teacher.getEmail())){
+			throw new InvalidFieldException("Email", teacher.getEmail());
 		}
 		return teacherRepository.save(teacher);
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import com.ramon.exception.EmptyValuesException;
 import com.ramon.exception.InvalidFieldException;
 import com.ramon.utils.CheckCPF;
+import com.ramon.utils.CheckEmail;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.Responsable;
@@ -38,6 +39,8 @@ public class ResponsableServiceImpl implements ResponsableService {
 			throw new EmptyValuesException("Cannot leave empty fields!");
 		} else if (!CheckCPF.isCPF(responsable.getCpfResponsable())) {
 			throw new InvalidFieldException("CPF", responsable.getCpfResponsable());
+		} else if(!CheckEmail.isEmail(responsable.getEmailResponsable())){
+			throw new InvalidFieldException("Email", responsable.getEmailResponsable());
 		}
 		return responsableRepository.save(responsable);
 	}
