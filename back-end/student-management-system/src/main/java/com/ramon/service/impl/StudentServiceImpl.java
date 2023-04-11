@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.ramon.exception.EmptyValuesException;
+import com.ramon.exception.InvalidCPFException;
+import com.ramon.utils.CheckCPF;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.CourseModel;
@@ -59,10 +61,12 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public Student save(Student element) throws EmptyValuesException {
+	public Student save(Student element) throws EmptyValuesException, InvalidCPFException {
 
 		if(element.getName().isEmpty() || element.getCpf().isEmpty() || element.getEmail().isEmpty()) {
 			throw new EmptyValuesException("You cannot leave empty fields!");
+		} else if(!CheckCPF.isCPF(element.getCpf())) {
+			throw new InvalidCPFException(element.getCpf());
 		}
 		return studentRepository.save(element);
 	}
