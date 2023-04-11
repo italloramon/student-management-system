@@ -40,9 +40,6 @@ public class Mathematics implements CourseModel {
     @Column(name = "mathematics_score4")
     @Getter @Setter private Double score4 = 0.0;
 
-    @OneToMany(mappedBy = "mathematics")
-    private List<Student> students;
-
     public Mathematics(Double score1, Double score2, Double score3, Double score4) {
         this.score1 = score1;
         this.score2 = score2;

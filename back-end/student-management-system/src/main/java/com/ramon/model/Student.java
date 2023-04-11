@@ -6,12 +6,7 @@ import com.ramon.model.courses.History;
 import com.ramon.model.courses.Mathematics;
 import com.ramon.model.courses.Portuguese;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,27 +39,23 @@ public class Student implements User{
     @Column(name = "student_tuition")
     @Getter @Setter private Double tuition;
 
-    //@ElementCollection
-    //@Getter @Setter private List<CourseModel> courses = new ArrayList<>();
-    //@ManyToOne
-
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "english_id")
     @Getter @Setter private English english;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "geography_id")
     @Getter @Setter private Geography geography;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "history_id")
     @Getter @Setter private History history;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "mathematics_id")
     @Getter @Setter private Mathematics mathematics;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "portuguese_id")
     @Getter @Setter private Portuguese portuguese;
 

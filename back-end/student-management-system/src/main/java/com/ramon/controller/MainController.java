@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.ramon.model.*;
 import com.ramon.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,17 +43,17 @@ public class MainController {
     private final PortugueseRepository portugueseRepository;
     
     private final NoticeRepository noticeRepository;
-	@Autowired
-	private StudentRepository studentRepository;
-	@Autowired
-	private TeacherRepository teacherRepository;
-	@Autowired
-	private ResponsableRepository responsableRepository;
+
+	private final StudentRepository studentRepository;
+
+	private final TeacherRepository teacherRepository;
+
+	private final ResponsableRepository responsableRepository;
 	
 	public MainController(StudentServiceImpl studentService, ResponsableServiceImpl responsableService,
-			EnglishRepository englishRepository, GeographyRepository geographyRepository,
-			HistoryRepository historyRepository, MathematicsRepository mathematicsRepository,
-			PortugueseRepository portugueseRepository, NoticeRepository noticeRepository) {
+						  EnglishRepository englishRepository, GeographyRepository geographyRepository,
+						  HistoryRepository historyRepository, MathematicsRepository mathematicsRepository,
+						  PortugueseRepository portugueseRepository, NoticeRepository noticeRepository, StudentRepository studentRepository, TeacherRepository teacherRepository, ResponsableRepository responsableRepository) {
 		this.studentService = studentService;
 		this.responsableService = responsableService;
 		this.englishRepository = englishRepository;
@@ -62,6 +62,9 @@ public class MainController {
 		this.mathematicsRepository = mathematicsRepository;
 		this.portugueseRepository = portugueseRepository;
 		this.noticeRepository = noticeRepository;
+		this.studentRepository = studentRepository;
+		this.teacherRepository = teacherRepository;
+		this.responsableRepository = responsableRepository;
 	}
 		
 	@GetMapping("/students")
@@ -74,25 +77,7 @@ public class MainController {
 	@GetMapping("/students/form")
 	public String studentForm(Model model) {
 		Student student = new Student();
-		
-        English english = new English();
-        this.englishRepository.save(english);
-        Geography geography = new Geography();
-        geographyRepository.save(geography);
-        History history = new History();
-        historyRepository.save(history);
-        Mathematics mathematics = new Mathematics();
-        mathematicsRepository.save(mathematics);
-        Portuguese portuguese = new Portuguese();
-        portugueseRepository.save(portuguese);
-        
-        student.setEnglish(english);
-        student.setGeography(geography);
-        student.setHistory(history);
-        student.setMathematics(mathematics);
-        student.setPortuguese(portuguese);
-        
-		
+
 		model.addAttribute("student", student);
 		model.addAttribute("responsables", responsableService.getAll());
 		model.addAttribute("method", "student");
@@ -104,6 +89,24 @@ public class MainController {
 		if (result.hasErrors()) {
 			return "student_form";
 		}
+
+		English english = new English();
+		this.englishRepository.save(english);
+		Geography geography = new Geography();
+		geographyRepository.save(geography);
+		History history = new History();
+		historyRepository.save(history);
+		Mathematics mathematics = new Mathematics();
+		mathematicsRepository.save(mathematics);
+		Portuguese portuguese = new Portuguese();
+		portugueseRepository.save(portuguese);
+
+		student.setEnglish(english);
+		student.setGeography(geography);
+		student.setHistory(history);
+		student.setMathematics(mathematics);
+		student.setPortuguese(portuguese);
+
 		student.createId();
 		studentService.save(student);
 		return "redirect:/students";
