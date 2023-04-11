@@ -2,6 +2,7 @@ package com.ramon.service.impl;
 
 import java.util.List;
 
+import com.ramon.exception.EmptyValuesException;
 import com.ramon.model.Notice;
 import com.ramon.repository.NoticeRepository;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,10 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public Teacher save(Teacher teacher) {
+	public Teacher save(Teacher teacher) throws EmptyValuesException {
+		if (teacher.getEmail().isEmpty() || teacher.getCpf().isEmpty() || teacher.getEmail().isEmpty()) {
+			throw new EmptyValuesException("You cannot leave empty fields!");
+		}
 		return teacherRepository.save(teacher);
 	}
 

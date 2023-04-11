@@ -55,6 +55,7 @@
 							<p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
 						</div>
 						<div class="form-group">
+							<label>Type of teacher</label>
 					        <select id="role" th:field="*{role}">		
 							    <option th:each="role : ${T(com.ramon.model.Role).values()}"
 							            th:value="${role}"
@@ -62,6 +63,12 @@
 							    </option>
 				            </select>
 				        </div>
+						<div class="form-group">
+							<label>Salary</label>
+							<input type="number" name="salary" th:field="*{salary}" placeholder="Enter Teacher Salary" class="form-control">
+							<p th:if="${#fields.hasErrors('salary')}" th:errorclass="error" th:errors="*{salary}"></p>
+						</div>
+						<span th:if="${exception}" th:text="${exception}">Error</span>
 						<div class="box-footer">
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</div>

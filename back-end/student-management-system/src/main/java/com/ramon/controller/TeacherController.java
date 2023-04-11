@@ -56,13 +56,15 @@ public class TeacherController {
 	}
 
 	@PostMapping("/teachers")
-	public String saveTeacher(@Valid @ModelAttribute("teacher") Teacher teacher, BindingResult result) {
-		if (result.hasErrors()) {
+	public String saveTeacher(@Valid @ModelAttribute("teacher") Teacher teacher, BindingResult result, Model model) {
+		try {
+			teacherService.save(teacher);
+			return "redirect:/teachers";
+		}
+		catch (Exception ex) {
+			model.addAttribute("exception", ex.getMessage());
 			return "teacher_form";
 		}
-
-		teacherService.save(teacher);
-		return "redirect:/teachers";
 	}
 
 	@GetMapping("/teachers/edit/{id}")
