@@ -3,7 +3,7 @@ package com.ramon.service.impl;
 import java.util.List;
 
 import com.ramon.exception.EmptyValuesException;
-import com.ramon.exception.InvalidCPFException;
+import com.ramon.exception.InvalidFieldException;
 import com.ramon.utils.CheckCPF;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +31,13 @@ public class ResponsableServiceImpl implements ResponsableService {
 
 
 	@Override
-	public Responsable save(Responsable responsable) throws EmptyValuesException, InvalidCPFException {
+	public Responsable save(Responsable responsable) throws EmptyValuesException, InvalidFieldException {
 		if (responsable.getNameResponsable().isEmpty() ||
 				responsable.getEmailResponsable().isEmpty() ||
 				responsable.getCpfResponsable().isEmpty()) {
 			throw new EmptyValuesException("Cannot leave empty fields!");
 		} else if (!CheckCPF.isCPF(responsable.getCpfResponsable())) {
-			throw new InvalidCPFException(responsable.getCpfResponsable());
+			throw new InvalidFieldException("CPF", responsable.getCpfResponsable());
 		}
 		return responsableRepository.save(responsable);
 	}
