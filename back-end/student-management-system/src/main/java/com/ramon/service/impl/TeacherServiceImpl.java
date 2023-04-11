@@ -3,8 +3,10 @@ package com.ramon.service.impl;
 import java.util.List;
 
 import com.ramon.exception.EmptyValuesException;
+import com.ramon.exception.InvalidCPFException;
 import com.ramon.model.Notice;
 import com.ramon.repository.NoticeRepository;
+import com.ramon.utils.CheckCPF;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.Teacher;
@@ -28,9 +30,11 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public Teacher save(Teacher teacher) throws EmptyValuesException {
+	public Teacher save(Teacher teacher) throws EmptyValuesException, InvalidCPFException {
 		if (teacher.getEmail().isEmpty() || teacher.getCpf().isEmpty() || teacher.getEmail().isEmpty()) {
 			throw new EmptyValuesException("You cannot leave empty fields!");
+		} else if (!CheckCPF.isCPF(teacher.getCpf())) {
+			throw new InvalidCPFException(teacher.getCpf());
 		}
 		return teacherRepository.save(teacher);
 	}
