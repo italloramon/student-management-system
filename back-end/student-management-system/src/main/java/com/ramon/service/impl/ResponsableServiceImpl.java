@@ -6,6 +6,7 @@ import com.ramon.exception.EmptyValuesException;
 import com.ramon.exception.InvalidFieldException;
 import com.ramon.utils.CheckCPF;
 import com.ramon.utils.CheckEmail;
+import com.ramon.utils.CheckName;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.Responsable;
@@ -41,6 +42,8 @@ public class ResponsableServiceImpl implements ResponsableService {
 			throw new InvalidFieldException("CPF", responsable.getCpfResponsable());
 		} else if(!CheckEmail.isEmail(responsable.getEmailResponsable())){
 			throw new InvalidFieldException("Email", responsable.getEmailResponsable());
+		} else if(!CheckName.isValidName(responsable.getNameResponsable())) {
+			throw new InvalidFieldException("Name", responsable.getNameResponsable());
 		}
 		return responsableRepository.save(responsable);
 	}

@@ -8,6 +8,7 @@ import com.ramon.model.Notice;
 import com.ramon.repository.NoticeRepository;
 import com.ramon.utils.CheckCPF;
 import com.ramon.utils.CheckEmail;
+import com.ramon.utils.CheckName;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.Teacher;
@@ -38,6 +39,8 @@ public class TeacherServiceImpl implements TeacherService{
 			throw new InvalidFieldException("CPF", teacher.getCpf());
 		} else if(!CheckEmail.isEmail(teacher.getEmail())){
 			throw new InvalidFieldException("Email", teacher.getEmail());
+		} else if(!CheckName.isValidName(teacher.getName())) {
+			throw new InvalidFieldException("Name", teacher.getName());
 		}
 		return teacherRepository.save(teacher);
 	}

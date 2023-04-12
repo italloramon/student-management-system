@@ -9,6 +9,7 @@ import com.ramon.exception.EmptyValuesException;
 import com.ramon.exception.InvalidFieldException;
 import com.ramon.utils.CheckCPF;
 import com.ramon.utils.CheckEmail;
+import com.ramon.utils.CheckName;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.CourseModel;
@@ -69,6 +70,8 @@ public class StudentServiceImpl implements StudentService{
 			throw new InvalidFieldException("CPF", element.getCpf());
 		} else if(!CheckEmail.isEmail(element.getEmail())){
 			throw new InvalidFieldException("Email", element.getEmail());
+		} else if(!CheckName.isValidName(element.getName())) {
+			throw new InvalidFieldException("Name", element.getName());
 		}
 		return studentRepository.save(element);
 	}
