@@ -62,15 +62,21 @@ public class ResponsableController {
 	@PostMapping("/responsables/{id}")
 	public String updateResponsable(@PathVariable Long id, @ModelAttribute("responsable") Responsable responsable, Model model) {
 		Responsable olderResponsable = responsableService.getById(id);
-	
-		olderResponsable.setNameResponsable(responsable.getNameResponsable());
-		olderResponsable.setCpfResponsable(responsable.getCpfResponsable());
-		olderResponsable.setEmailResponsable(responsable.getEmailResponsable());
 
-		
-		responsableService.update(olderResponsable);
-		
-		return "redirect:/responsables";
+		try {
+			olderResponsable.setNameResponsable(responsable.getNameResponsable());
+			olderResponsable.setCpfResponsable(responsable.getCpfResponsable());
+			olderResponsable.setEmailResponsable(responsable.getEmailResponsable());
+
+
+			responsableService.update(olderResponsable);
+
+			return "redirect:/responsables";
+		} catch (Exception ex) {
+			model.addAttribute("responsable", olderResponsable);
+			model.addAttribute("exception", ex.getMessage());
+			return "edit_responsable_form";
+		}
 	}
 	
 	@GetMapping("/responsables/{id}")

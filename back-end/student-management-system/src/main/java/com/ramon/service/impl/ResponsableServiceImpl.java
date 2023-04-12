@@ -59,8 +59,8 @@ public class ResponsableServiceImpl implements ResponsableService {
 
 
 	@Override
-	public Responsable update(Responsable responsable) {
-		return responsableRepository.save(responsable);
+	public Responsable update(Responsable responsable) throws EmptyValuesException, InvalidFieldException {
+		return this.save(responsable);
 	}
 
 
