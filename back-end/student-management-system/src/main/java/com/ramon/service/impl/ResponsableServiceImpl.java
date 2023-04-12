@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ramon.exception.EmptyValuesException;
 import com.ramon.exception.InvalidFieldException;
+import com.ramon.utils.CheckAllFields;
 import com.ramon.utils.CheckCPF;
 import com.ramon.utils.CheckEmail;
 import com.ramon.utils.CheckName;
@@ -37,14 +38,16 @@ public class ResponsableServiceImpl implements ResponsableService {
 		if (responsable.getNameResponsable().isEmpty() ||
 				responsable.getEmailResponsable().isEmpty() ||
 				responsable.getCpfResponsable().isEmpty()) {
-			throw new EmptyValuesException("Cannot leave empty fields!");
-		} else if (!CheckCPF.isCPF(responsable.getCpfResponsable())) {
-			throw new InvalidFieldException("CPF", responsable.getCpfResponsable());
-		} else if(!CheckEmail.isEmail(responsable.getEmailResponsable())){
-			throw new InvalidFieldException("Email", responsable.getEmailResponsable());
-		} else if(!CheckName.isValidName(responsable.getNameResponsable())) {
-			throw new InvalidFieldException("Name", responsable.getNameResponsable());
+			throw new EmptyValuesException();
 		}
+
+		try {
+			Boolean checkAllFields = CheckAllFields.checkAllFields(responsable.getNameResponsable(),
+					responsable.getCpfResponsable(), responsable.getEmailResponsable());
+		} catch (InvalidFieldException ex) {
+			throw ex;
+		}
+
 		return responsableRepository.save(responsable);
 	}
 

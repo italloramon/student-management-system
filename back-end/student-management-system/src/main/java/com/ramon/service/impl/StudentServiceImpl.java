@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.ramon.exception.EmptyValuesException;
 import com.ramon.exception.InvalidFieldException;
+import com.ramon.utils.CheckAllFields;
 import com.ramon.utils.CheckCPF;
 import com.ramon.utils.CheckEmail;
 import com.ramon.utils.CheckName;
@@ -64,15 +65,17 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public Student save(Student element) throws EmptyValuesException, InvalidFieldException {
 
-		if(element.getName().isEmpty() || element.getCpf().isEmpty() || element.getEmail().isEmpty()) {
-			throw new EmptyValuesException("You cannot leave empty fields!");
-		} else if(!CheckCPF.isCPF(element.getCpf())) {
-			throw new InvalidFieldException("CPF", element.getCpf());
-		} else if(!CheckEmail.isEmail(element.getEmail())){
-			throw new InvalidFieldException("Email", element.getEmail());
-		} else if(!CheckName.isValidName(element.getName())) {
-			throw new InvalidFieldException("Name", element.getName());
+		if(element.getName().isEmpty() || element.getCpf().isEmpty() || element.getEmail().isEmpty() ||
+				element.getTuition() == null) {
+			throw new EmptyValuesException();
 		}
+
+		try {
+			Boolean checkAllFields = CheckAllFields.checkAllFields(element.getName(), element.getCpf(), element.getEmail());
+		} catch (InvalidFieldException ex) {
+			throw ex;
+		}
+
 		return studentRepository.save(element);
 	}
 

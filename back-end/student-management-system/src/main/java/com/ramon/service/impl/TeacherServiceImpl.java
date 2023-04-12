@@ -6,6 +6,7 @@ import com.ramon.exception.EmptyValuesException;
 import com.ramon.exception.InvalidFieldException;
 import com.ramon.model.Notice;
 import com.ramon.repository.NoticeRepository;
+import com.ramon.utils.CheckAllFields;
 import com.ramon.utils.CheckCPF;
 import com.ramon.utils.CheckEmail;
 import com.ramon.utils.CheckName;
@@ -34,14 +35,16 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public Teacher save(Teacher teacher) throws EmptyValuesException, InvalidFieldException {
 		if (teacher.getEmail().isEmpty() || teacher.getCpf().isEmpty() || teacher.getEmail().isEmpty()) {
-			throw new EmptyValuesException("You cannot leave empty fields!");
-		} else if (!CheckCPF.isCPF(teacher.getCpf())) {
-			throw new InvalidFieldException("CPF", teacher.getCpf());
-		} else if(!CheckEmail.isEmail(teacher.getEmail())){
-			throw new InvalidFieldException("Email", teacher.getEmail());
-		} else if(!CheckName.isValidName(teacher.getName())) {
-			throw new InvalidFieldException("Name", teacher.getName());
+			throw new EmptyValuesException();
 		}
+
+		try {
+			Boolean checkAllFields = CheckAllFields.checkAllFields(teacher.getName(),
+					teacher.getCpf(), teacher.getEmail());
+		} catch (InvalidFieldException ex) {
+			throw ex;
+		}
+
 		return teacherRepository.save(teacher);
 	}
 
