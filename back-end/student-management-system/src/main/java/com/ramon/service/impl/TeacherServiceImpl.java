@@ -34,7 +34,8 @@ public class TeacherServiceImpl implements TeacherService{
 
 	@Override
 	public Teacher save(Teacher teacher) throws EmptyValuesException, InvalidFieldException {
-		if (teacher.getEmail().isEmpty() || teacher.getCpf().isEmpty() || teacher.getEmail().isEmpty()) {
+		if (teacher.getEmail().isEmpty() || teacher.getCpf().isEmpty() || teacher.getEmail().isEmpty() ||
+		teacher.getSalary() == null) {
 			throw new EmptyValuesException();
 		}
 
