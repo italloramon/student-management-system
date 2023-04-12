@@ -55,8 +55,8 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 
 	@Override
-	public Teacher update(Teacher teacher) {
-		return teacherRepository.save(teacher);
+	public Teacher update(Teacher teacher) throws EmptyValuesException, InvalidFieldException {
+		return this.save(teacher);
 	}
 
 	@Override

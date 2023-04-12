@@ -139,6 +139,9 @@ public class MainController {
 			olderStudent.setResponsable(student.getResponsable());
 
 			studentService.update(olderStudent);
+
+			return "redirect:/students";
+
 		} catch (Exception ex) {
 			model.addAttribute("student", olderStudent);
 			model.addAttribute("responsables", responsableService.getAll());
@@ -147,7 +150,6 @@ public class MainController {
 			return "edit_student_form";
 		}
 
-		return "redirect:/students";
 	}
 	
 	@GetMapping("/students/{id}")

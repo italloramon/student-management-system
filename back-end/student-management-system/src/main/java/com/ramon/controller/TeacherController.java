@@ -77,15 +77,24 @@ public class TeacherController {
 	public String updateTeacher(@PathVariable Long id, @ModelAttribute("teacher") Teacher teacher, Model model) {
 		Teacher olderTeacher= teacherService.getById(id);
 
-		olderTeacher.setName(teacher.getName());
-		olderTeacher.setCpf(teacher.getCpf());
-		olderTeacher.setEmail(teacher.getEmail());
-		olderTeacher.setSalary(teacher.getSalary());
-		olderTeacher.setRole(teacher.getRole());
+		try {
+			olderTeacher.setName(teacher.getName());
+			olderTeacher.setCpf(teacher.getCpf());
+			olderTeacher.setEmail(teacher.getEmail());
+			olderTeacher.setSalary(teacher.getSalary());
+			olderTeacher.setRole(teacher.getRole());
 
-		teacherService.update(olderTeacher);
+			teacherService.update(olderTeacher);
 
-		return "redirect:/teachers";
+			return "redirect:/teachers";
+		} catch (Exception ex) {
+			model.addAttribute("exception", ex.getMessage());
+			model.addAttribute("teacher", olderTeacher);
+
+			return "edit_teacher_form";
+		}
+
+
 	}
 
 	@GetMapping("/teachers/{id}")
