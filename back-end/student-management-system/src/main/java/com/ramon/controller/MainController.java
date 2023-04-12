@@ -131,14 +131,21 @@ public class MainController {
 	@PostMapping("/students/{id}")
 	public String updateStudent(@PathVariable Long id, @ModelAttribute("student") Student student, Model model) {
 		Student olderStudent = studentService.getById(id);
-	
-		olderStudent.setName(student.getName());
-		olderStudent.setCpf(student.getCpf());
-		olderStudent.setEmail(student.getEmail());
-		olderStudent.setTuition(student.getTuition());
-		olderStudent.setResponsable(student.getResponsable());
-		
-		studentService.update(olderStudent);
+		try {
+			olderStudent.setName(student.getName());
+			olderStudent.setCpf(student.getCpf());
+			olderStudent.setEmail(student.getEmail());
+			olderStudent.setTuition(student.getTuition());
+			olderStudent.setResponsable(student.getResponsable());
+
+			studentService.update(olderStudent);
+		} catch (Exception ex) {
+			model.addAttribute("student", olderStudent);
+			model.addAttribute("responsables", responsableService.getAll());
+			model.addAttribute("method", "student");
+			model.addAttribute("exception", ex.getMessage());
+			return "edit_student_form";
+		}
 
 		return "redirect:/students";
 	}

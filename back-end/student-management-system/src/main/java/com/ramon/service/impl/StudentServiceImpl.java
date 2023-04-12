@@ -85,8 +85,12 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public Student update(Student element) {
-		return studentRepository.save(element);
+	public Student update(Student element) throws EmptyValuesException, InvalidFieldException {
+		try {
+			return this.save(element);
+		} catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 	@Override
