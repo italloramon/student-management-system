@@ -36,11 +36,10 @@ public class Teacher implements User {
     @Column(name = "teacher_role")
     @Getter @Setter private Role role;
 
-    public Teacher(String name, String cpf, String email, Double salary, String type) {
+    public Teacher(String name, String cpf, String email, String type) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
-        this.salary = salary;
         if(type.equalsIgnoreCase("English")) {
             this.role = Role.TEACHERENGLISH;
         } else if(type.equalsIgnoreCase("Geography")) {
@@ -52,6 +51,11 @@ public class Teacher implements User {
         } else if(type.equalsIgnoreCase("Portuguese")) {
             this.role = Role.TEACHERPORTUGUESE;
         }
+    }
+
+    public Teacher(String name, String cpf, String email, Double salary, String type) {
+        this(name, cpf, email, type);
+        this.salary=salary;
     }
 
     @Override
