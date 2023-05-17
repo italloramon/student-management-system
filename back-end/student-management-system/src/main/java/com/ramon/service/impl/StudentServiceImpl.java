@@ -35,8 +35,6 @@ import com.ramon.service.StudentService;
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService{
 
-	private final StudentRepository studentRepository;
-
 	private final CommandFactory commandFactory;
 
 	@Override

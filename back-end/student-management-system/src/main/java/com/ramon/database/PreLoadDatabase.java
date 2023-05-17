@@ -46,12 +46,15 @@ public class PreLoadDatabase implements CommandLineRunner {
         responsableRepository.deleteAll();
 
         Responsable responsable = new Responsable("Trafalgar Law", "12442111110", "traw@gmail.com");
+        responsable.setWithStudents(true);
         responsableRepository.save(responsable);
 
         Responsable responsable2 = new Responsable("Nico Robin", "34678765432", "nrobin@gmail.com");
+        responsable2.setWithStudents(true);
         responsableRepository.save(responsable2);
 
         Responsable responsable3 = new Responsable("Usopp", "56473829102", "usopp@gmail.com");
+        responsable3.setWithStudents(true);
         responsableRepository.save(responsable3);
 
         Responsable responsable4 = new Responsable("Brook", "90129384756", "brook@gmail.com");

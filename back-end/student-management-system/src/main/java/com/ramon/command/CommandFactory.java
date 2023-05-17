@@ -1,6 +1,7 @@
 package com.ramon.command;
 
 import com.ramon.model.Student;
+import com.ramon.repository.ResponsableRepository;
 import com.ramon.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import static com.ramon.command.Command.*;
 public class CommandFactory {
 
     private final StudentRepository studentRepository;
+    private final ResponsableRepository responsableRepository;
 
     public Command create(int commandCode, Object... params) {
         switch (commandCode) {
@@ -24,7 +26,7 @@ public class CommandFactory {
             case GET_STUDENTS:
                 return new GetStudentsCommand(studentRepository);
             case SAVE_STUDENT:
-                return new SaveStudent(studentRepository, (Student) params[0]);
+                return new SaveStudent(studentRepository, (Student) params[0], responsableRepository);
             default:
                 return null;
         }

@@ -88,6 +88,7 @@ public class ResponsableController {
 	@GetMapping("/home-responsable/{id}")
 	public String getStudentsOfResponsable(@PathVariable Long id, Model model, HttpSession session) {
 		Responsable responsable = responsableService.getById(id);
+		System.out.println(responsable.printStatus());
 		List<Student> students = responsableService.getStudentsOfResponsable(responsable);
 
 		model.addAttribute("responsable", responsable);

@@ -1,22 +1,13 @@
 package com.ramon.model;
 
-import jakarta.persistence.Entity;
-import lombok.Getter;
-import lombok.Setter;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.OneToMany;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.EqualsAndHashCode;
+import com.ramon.state.State;
+import com.ramon.state.WithoutStudents;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "responsable_table")
@@ -40,6 +31,19 @@ public class Responsable implements User {
     @OneToMany(mappedBy="responsable", cascade=CascadeType.ALL)
     @JsonIgnore @Getter private List<Student> students;
 
+    @Column(name = "with_students")
+    @Getter @Setter
+    private Boolean withStudents = false;
+
+    @Transient
+    @Getter @Setter
+    private State state = new WithoutStudents();
+    public void nextState() {
+        state.next(this);
+    }
+    public String printStatus() {
+        return state.printStatus();
+    }
     public Responsable(String nameResponsable, String cpfResponsable, String emailResponsable) {
         this.nameResponsable = nameResponsable;
         this.cpfResponsable = cpfResponsable;
