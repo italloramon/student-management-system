@@ -8,6 +8,8 @@ public class WithoutStudents implements State{
         if (responsable.getStudents().size() > 0) {
             responsable.setState(new WithStudentsState());
             responsable.setWithStudents(true);
+        } else {
+            responsable.setWithStudents(false);
         }
     }
 

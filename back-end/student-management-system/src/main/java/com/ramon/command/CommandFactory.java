@@ -18,7 +18,7 @@ public class CommandFactory {
     public Command create(int commandCode, Object... params) {
         switch (commandCode) {
             case DELETE_STUDENT:
-                return new DeleteStudentCommand(studentRepository, (Long) params[0]);
+                return new DeleteStudentCommand(studentRepository, (Long) params[0], responsableRepository);
             case RANKING_STUDENTS:
                 return new RankingStudentsCommand(studentRepository);
             case GET_STUDENT:
