@@ -5,12 +5,15 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import com.ramon.command.Command;
+import com.ramon.command.CommandFactory;
 import com.ramon.exception.EmptyValuesException;
 import com.ramon.exception.InvalidFieldException;
 import com.ramon.utils.CheckAllFields;
 import com.ramon.utils.CheckCPF;
 import com.ramon.utils.CheckEmail;
 import com.ramon.utils.CheckName;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.ramon.model.CourseModel;
@@ -29,6 +32,7 @@ import com.ramon.repository.StudentRepository;
 import com.ramon.service.StudentService;
 
 @Service
+@RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService{
 
 	private final StudentRepository studentRepository;
@@ -43,19 +47,7 @@ public class StudentServiceImpl implements StudentService{
 
 	private final HistoryRepository historyRepository;
 
-
-	public StudentServiceImpl(StudentRepository studentRepository, EnglishRepository englishRepository,
-							  PortugueseRepository portugueseRepository, MathematicsRepository mathematicsRepository,
-							  GeographyRepository geographyRepository, HistoryRepository historyRepository) {
-		super();
-		this.studentRepository = studentRepository;
-		this.englishRepository = englishRepository;
-		this.portugueseRepository = portugueseRepository;
-		this.mathematicsRepository = mathematicsRepository;
-		this.geographyRepository = geographyRepository;
-		this.historyRepository = historyRepository;
-	}
-
+	private final CommandFactory commandFactory;
 
 	@Override
 	public List<Student> getAll() {
@@ -95,7 +87,7 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public void deleteById(Long id) {
-		studentRepository.deleteById(id);
+		commandFactory.create(Command.DELETE_STUDENT, id).execute();
 	}
 
 	@Override
