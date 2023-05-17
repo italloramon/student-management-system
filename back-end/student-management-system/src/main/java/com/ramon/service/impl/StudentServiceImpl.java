@@ -51,7 +51,7 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public List<Student> getAll() {
-		return studentRepository.findAll();
+		return (List<Student>) commandFactory.create(Command.GET_STUDENTS).execute();
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public Student getById(Long id) {
-		return studentRepository.findById(id).get();
+		return (Student) commandFactory.create(Command.GET_STUDENT, id).execute();
 	}
 
 	@Override
