@@ -5,6 +5,12 @@ public interface Command {
         int RANKING_STUDENTS = 2;
         int GET_STUDENT = 3;
         int GET_STUDENTS = 4;
+        int SAVE_STUDENT = 5;
 
-        Object execute();
+        default Object execute() {
+                return null;
+        }
+        default Object executeWithException() throws Exception {
+                return null;
+        }
 }

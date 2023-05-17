@@ -23,6 +23,8 @@ public class CommandFactory {
                 return new GetStudentCommand(studentRepository, (Long) params[0]);
             case GET_STUDENTS:
                 return new GetStudentsCommand(studentRepository);
+            case SAVE_STUDENT:
+                return new SaveStudent(studentRepository, (Student) params[0]);
             default:
                 return null;
         }

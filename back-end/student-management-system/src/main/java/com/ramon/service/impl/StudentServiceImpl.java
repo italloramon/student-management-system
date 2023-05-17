@@ -37,16 +37,6 @@ public class StudentServiceImpl implements StudentService{
 
 	private final StudentRepository studentRepository;
 
-	private final EnglishRepository englishRepository;
-
-	private final PortugueseRepository portugueseRepository;
-
-	private final MathematicsRepository mathematicsRepository;
-
-	private final GeographyRepository geographyRepository;
-
-	private final HistoryRepository historyRepository;
-
 	private final CommandFactory commandFactory;
 
 	@Override
@@ -55,20 +45,8 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public Student save(Student element) throws EmptyValuesException, InvalidFieldException {
-
-		if(element.getName().isEmpty() || element.getCpf().isEmpty() || element.getEmail().isEmpty() ||
-				element.getTuition() == null) {
-			throw new EmptyValuesException();
-		}
-
-		try {
-			Boolean checkAllFields = CheckAllFields.checkAllFields(element.getName(), element.getCpf(), element.getEmail());
-		} catch (InvalidFieldException ex) {
-			throw ex;
-		}
-
-		return studentRepository.save(element);
+	public Student save(Student element) throws Exception {
+		return (Student) commandFactory.create(Command.SAVE_STUDENT, element).executeWithException();
 	}
 
 	@Override
@@ -77,7 +55,7 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public Student update(Student element) throws EmptyValuesException, InvalidFieldException {
+	public Student update(Student element) throws Exception {
 		try {
 			return this.save(element);
 		} catch (Exception ex) {
