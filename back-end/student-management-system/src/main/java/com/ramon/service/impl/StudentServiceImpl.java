@@ -105,25 +105,9 @@ public class StudentServiceImpl implements StudentService{
 		courses.add(mathematics);
 		return courses;
 	}
-
-	public static Student[] getSorterdStudents(Student[] students, Comparator<Student> comparator) {
-		Student[] sorted = students.clone();
-		Arrays.sort(sorted, comparator);
-		return sorted;
-	}
-
 	@Override
 	public Student[] getRankingStudents() {
-        List<Student> studentsList = studentRepository.findAll();
-        Student[] studentsArray = new Student[studentsList.size()];
-
-        for (int i = 0; i  < studentsList.size(); i++) {
-            studentsArray[i] = studentsList.get(i);
-        }
-
-        Student[] studentsArraySorted = this.getSorterdStudents(studentsArray, Comparator.comparing(Student::getRankingStudent).reversed());
-
-        return studentsArraySorted;
+		return (Student[]) commandFactory.create(Command.RANKING_STUDENTS).execute();
 	}
 
 }
